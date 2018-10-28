@@ -4,4 +4,28 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scene/StartScene.unity
+    guid: c4a281556fa3cd348ae51694b2b3a0b9
+  - enabled: 1
+    path: Assets/Scene/InitScene.unity
+    guid: 5822f8979a1b11e43a4e369baf1b3867
+  - enabled: 1
+    path: Assets/Scene/MainScene.unity
+    guid: 8519c6a654b3b36438168788fed0b579
+  - enabled: 1
+    path: Assets/Scene/TianXScene.unity
+    guid: 522c770463f9a7d4787fd71aab1a23e4
+  - enabled: 1
+    path: Assets/Scene/ChaoTScene.unity
+    guid: 8c891259fd85e8b4fb25ed94e9ab09bd
+  - enabled: 1
+    path: Assets/Scene/HouGScene.unity
+    guid: 88afeab67634e0a4a93d08ab508af718
+  - enabled: 1
+    path: Assets/Scene/StatistScene.unity
+    guid: 0e3901eff11af4e48b7b91d60d745776
+  - enabled: 1
+    path: Assets/Scene/EndScene.unity
+    guid: 0c1c4b9a38dad274e9f4eb399c7cd6d3
