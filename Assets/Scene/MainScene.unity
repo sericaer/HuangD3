@@ -1109,7 +1109,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1515359862}
+      - m_Target: {fileID: 0}
         m_MethodName: OnSelectScene
         m_Mode: 2
         m_Arguments:
@@ -1700,7 +1700,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1515359862}
+      - m_Target: {fileID: 0}
         m_MethodName: onEmperorButtonClick
         m_Mode: 1
         m_Arguments:
@@ -2069,7 +2069,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1515359862}
+      - m_Target: {fileID: 0}
         m_MethodName: OnSelectScene
         m_Mode: 2
         m_Arguments:
@@ -3009,7 +3009,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1515359862}
+      - m_Target: {fileID: 0}
         m_MethodName: OnExit
         m_Mode: 1
         m_Arguments:
@@ -3557,7 +3557,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1515359861}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8eb3feee79a34fa4ea0e07dd468641b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 31e1753fd419d9e41965eab7b32181ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1515359863
@@ -3748,7 +3748,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1515359862}
+      - m_Target: {fileID: 0}
         m_MethodName: OnSelectScene
         m_Mode: 2
         m_Arguments:
@@ -4070,7 +4070,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1515359862}
+      - m_Target: {fileID: 0}
         m_MethodName: OnSelectScene
         m_Mode: 2
         m_Arguments:
@@ -4196,7 +4196,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1515359862}
+      - m_Target: {fileID: 0}
         m_MethodName: OnSelectScene
         m_Mode: 2
         m_Arguments:
@@ -4286,7 +4286,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1515359862}
+      - m_Target: {fileID: 0}
         m_MethodName: OnSave
         m_Mode: 1
         m_Arguments:
