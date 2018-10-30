@@ -6,8 +6,14 @@ using UnityEngine.UI;
 
 public class InitScene : MonoBehaviour
 {
+    public static string dynastyName;
+    public static string yearName;
+    public static string emperorName;
+
     void Awake()
     {
+        StreamManager.Load();
+
         inputDynastyName = GameObject.Find("Canvas/Panel/DynastyName/InputField").GetComponent<InputField>();
         inputYearName = GameObject.Find("Canvas/Panel/YearName/InputField").GetComponent<InputField>();
         inputEmperorName = GameObject.Find("Canvas/Panel/EmperorName/InputField").GetComponent<InputField>();
@@ -15,6 +21,10 @@ public class InitScene : MonoBehaviour
         RandomName();
 
         GameObject.Find("Canvas/Panel/BtnConfirm").GetComponent<Button>().onClick.AddListener(() => {
+
+            dynastyName = inputDynastyName.text;
+            yearName = inputYearName.text;
+            emperorName = inputEmperorName.text;
 
             SceneManager.LoadSceneAsync("MainScene");
         });

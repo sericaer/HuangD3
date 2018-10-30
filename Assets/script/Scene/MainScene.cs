@@ -9,6 +9,8 @@ public class MainScene : MonoBehaviour
 {
     void Awake()
     {
+        _gmData = new GMData(InitScene.dynastyName, InitScene.yearName, InitScene.emperorName);
+
         var Toggles = GameObject.Find("Canvas/PanelRight/").GetComponentsInChildren<Toggle>();
         foreach (var toggle in Toggles)
         {
@@ -35,7 +37,16 @@ public class MainScene : MonoBehaviour
                 SceneManager.LoadSceneAsync(toggle.name, LoadSceneMode.Additive);
                 });
         }
+
+        _gmData.GMTimeChangeEvent += (string gmTime)=>{
+            GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>().text = gmTime;
+        };
+
+        _gmData.Test();
+
+
     }
+
 
     // Use this for initialization
     void Start ()
@@ -48,4 +59,6 @@ public class MainScene : MonoBehaviour
     {
 		
 	}
+
+    GMData _gmData;
 }

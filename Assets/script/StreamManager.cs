@@ -5,6 +5,11 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 
+using UnityEngine;
+
+using Tools;
+
+
 public class StreamManager
 {
     public class DynastyName
@@ -53,7 +58,7 @@ public class StreamManager
             FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 
             FieldInfo nameField = fields.Where(x => x.Name == "name").First();
-            yearName.names.AddRange((string[])nameField.GetValue(obj));
+            names.AddRange((string[])nameField.GetValue(obj));
         }
 
         internal static List<string> names = new List<string>();
@@ -118,6 +123,14 @@ public class StreamManager
         internal static List<string> givenfemale = new List<string>();
     }
 
+    public static void Load()
+    {
+        if(_inst == null)
+        {
+            _inst = new StreamManager();
+        } 
+    }
+
     private StreamManager()
     {
         csharpLoader = new CSharpCompiler.ScriptBundleLoader(null);
@@ -140,6 +153,7 @@ public class StreamManager
     {
         Debug.Log(string.Format("*****************Start Load mod {0}********************", path));
 
+        List<string> sourceCodes = new List<string>();
         foreach (string filename in Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories))
         {
             string script = File.ReadAllText(filename);
@@ -148,7 +162,7 @@ public class StreamManager
 
         CSharpCompiler.ScriptBundleLoader.IScriptBundle bd = csharpLoader.LoadAndWatchSourceBundle(sourceCodes.ToArray());
 
-        Types = bd.assembly.GetTypes();
+        Type[] Types = bd.assembly.GetTypes();
 
         DynastyName.Load(Types);
         YearName.Load(Types);
@@ -157,6 +171,7 @@ public class StreamManager
         Debug.Log(string.Format("******************End Load mod {0}********************", path));
     }
 
-    
+    private static StreamManager _inst;
+    private CSharpCompiler.ScriptBundleLoader csharpLoader;
 }
 
