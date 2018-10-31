@@ -38,13 +38,22 @@ public class MainScene : MonoBehaviour
                 });
         }
 
-        _gmData.GMTimeChangeEvent += (string gmTime)=>{
+        Text GMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
+        GMTime.text = _gmData.
+        _gmData.EventGMTimeChange += (string gmTime) =>
+        {
             GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>().text = gmTime;
         };
 
-        _gmData.Test();
+        _gmData.emperor.EventAgeChange += (int age) =>
+        {
+            GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>().text = age;
+        };
 
-
+        _gmData.emperor.EventHeathChange += (int heath) =>
+        {
+            GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>().text = heath;
+        };
     }
 
 
