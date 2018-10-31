@@ -39,12 +39,34 @@ public class MainScene : MonoBehaviour
         }
 
         Text GMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
-        GMTime.text = _gmData.
-        _gmData.EventGMTimeChange += (string gmTime) =>
+        _gmData.eventGMTimeChange += (string gmTime) =>
         {
-            GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>().text = gmTime;
+            GMTime.text = gmTime;
         };
 
+        var PanelEmperor = GameObject.Find("Canvas/PanelEmperor/");
+        {
+            var EmperorName = PanelEmperor.transform.Find("emperorName/value").GetComponent<Text>();
+            EmperorName.text = _gmData.emperor.name;
+
+            var EmperorDetail = PanelEmperor.transform.Find("emperorDetail").gameObject;
+            EmperorDetail.transform.Find("emperorAge/value").GetComponent<Text>();
+            {
+                EmperorDetail.SetActive(false);
+
+                
+
+                EmperorName.text = _gmData.emperor.name;
+            }
+            
+            PanelEmperor.GetComponent<Button>().onClick.AddListener(() => {
+                EmperorDetail.SetActive(!EmperorDetail.activeSelf);
+            });
+        }
+        
+        Text EmperorAge = GameObject.Find("Canvas/PanelEmperor/emperorDetail/value").GetComponent<Text>();
+
+        Text GMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
         _gmData.emperor.EventAgeChange += (int age) =>
         {
             GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>().text = age;

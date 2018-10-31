@@ -10,14 +10,14 @@ public class GMData
 
     public void Test()
     {
-        GMTimeChangeEvent(yearName);
+        eventGMTimeChange(yearName);
     }
 
     public Emperor emperor;
 
     public delegate void EventGMTimeChange(string gmTime);
 
-    public event EventGMTimeChange GMTimeChangeEvent;
+    public event EventGMTimeChange eventGMTimeChange;
 
     string dynastyName;
     string yearName;
