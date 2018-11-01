@@ -9,7 +9,22 @@ public class MainScene : MonoBehaviour
 {
     void Awake()
     {
+
         _gmData = new GMData(InitScene.dynastyName, InitScene.yearName, InitScene.emperorName);
+
+        _uiGMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
+        _uiEmperorName = GameObject.Find("Canvas/PanelEmperor/emperorName/value").GetComponent<Text>();
+        _uiEmperorAge = GameObject.Find("Canvas/PanelEmperor/emperorDetail/age/value").GetComponent<Text>();
+        _uiEmperorHeath = GameObject.Find("Canvas/PanelEmperor/emperorDetail/heath/slider").GetComponent<Slider>();
+
+        var PanelEmperor = GameObject.Find("Canvas/PanelEmperor/");
+        {
+            PanelEmperor.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                var PanelEmperorDetail = PanelEmperor.transform.Find("emperorDetail").gameObject;
+                PanelEmperorDetail.SetActive(!PanelEmperorDetail.activeSelf);
+            });
+        }
 
         var Toggles = GameObject.Find("Canvas/PanelRight/").GetComponentsInChildren<Toggle>();
         foreach (var toggle in Toggles)
@@ -37,45 +52,6 @@ public class MainScene : MonoBehaviour
                 SceneManager.LoadSceneAsync(toggle.name, LoadSceneMode.Additive);
                 });
         }
-
-        Text GMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
-        _gmData.eventGMTimeChange += (string gmTime) =>
-        {
-            GMTime.text = gmTime;
-        };
-
-        var PanelEmperor = GameObject.Find("Canvas/PanelEmperor/");
-        {
-            var EmperorName = PanelEmperor.transform.Find("emperorName/value").GetComponent<Text>();
-            EmperorName.text = _gmData.emperor.name;
-
-            var EmperorDetail = PanelEmperor.transform.Find("emperorDetail").gameObject;
-            EmperorDetail.transform.Find("emperorAge/value").GetComponent<Text>();
-            {
-                EmperorDetail.SetActive(false);
-
-                
-
-                EmperorName.text = _gmData.emperor.name;
-            }
-            
-            PanelEmperor.GetComponent<Button>().onClick.AddListener(() => {
-                EmperorDetail.SetActive(!EmperorDetail.activeSelf);
-            });
-        }
-        
-        Text EmperorAge = GameObject.Find("Canvas/PanelEmperor/emperorDetail/value").GetComponent<Text>();
-
-        Text GMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
-        _gmData.emperor.EventAgeChange += (int age) =>
-        {
-            GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>().text = age;
-        };
-
-        _gmData.emperor.EventHeathChange += (int heath) =>
-        {
-            GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>().text = heath;
-        };
     }
 
 
@@ -88,8 +64,16 @@ public class MainScene : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		
+        _uiEmperorName.text = _gmData.emperor.name;
+        _uiEmperorAge.text  = _gmData.emperor.age.ToString();
+        _uiEmperorHeath.value = _gmData.emperor.heath;
+        _uiEmperorHeath.maxValue = _gmData.emperor.heathMax;
 	}
 
-    GMData _gmData;
+    private GMData _gmData;
+
+    private Text _uiGMTime;
+    private Text _uiEmperorName;
+    private Text _uiEmperorAge;
+    private Slider _uiEmperorHeath;
 }

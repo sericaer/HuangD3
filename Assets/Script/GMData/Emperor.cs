@@ -29,6 +29,14 @@ public class Emperor
         }
     }
 
+    public int heathMax
+    {
+        get
+        {
+            return _heath;
+        }
+    }
+
     public Emperor(string name, int age, int heath)
     {
         _name = name;
