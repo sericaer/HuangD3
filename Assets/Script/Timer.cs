@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    public static event Action eventOnTimer;
+    public static event Action evtOnTimer;
 
     public static void Pause()
     {
@@ -42,7 +42,7 @@ public class Timer : MonoBehaviour
 
         if(!isPause)
         {
-            eventOnTimer();
+            evtOnTimer();
         }
 
         StartCoroutine(OnTimer());

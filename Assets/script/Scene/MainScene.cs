@@ -22,8 +22,11 @@ public class MainScene : MonoBehaviour
 
         _eventManager = new EventManager();
 
-        Timer.eventOnTimer += _gmData.date.Increase;
-        Timer.eventOnTimer += _eventManager.OnTimer;
+        Timer.evtOnTimer += _gmData.date.Increase;
+        Timer.evtOnTimer += _eventManager.OnTimer;
+
+        _eventManager.evtNewGMEvent += (GMEvent evt)=>{ Timer.Pause(); }
+        _eventManager.evtNewGMEvent += this.OnNewGMEvent;
 
         _uiGMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
         _uiStability = GameObject.Find("Canvas/PanelTop/Stability/value").GetComponent<Text>();
@@ -101,7 +104,7 @@ public class MainScene : MonoBehaviour
         _uiEmperorHeath.maxValue = _gmData.emperor.heathMax;
 
         OnKeyBoard();
-	}
+    }
 
     private void OnKeyBoard()
     {
@@ -111,7 +114,10 @@ public class MainScene : MonoBehaviour
         }
     }
 
-
+    void OnNewGMEvent(GMEvent gmevent)
+    {
+        _uiDialog = DialogLogic.newDialogInstace(gmevent.title, gmevent.content, gmevent.options);
+    }
 
     private Text _uiGMTime;
     private Text _uiStability;
@@ -121,6 +127,8 @@ public class MainScene : MonoBehaviour
     private Slider _uiEmperorHeath;
 
     private GameObject _uiPanelCenter;
+    private GameObject _uiDialog;
 
     private EventManager _eventManager;
+
 }
