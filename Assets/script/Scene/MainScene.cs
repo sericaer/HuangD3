@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class MainScene : MonoBehaviour
 {
+    public static GMData _gmData = null;
+
     void Awake()
     {
         if (InitScene.isNew)
@@ -17,6 +19,8 @@ public class MainScene : MonoBehaviour
         {
             _gmData = GMData.Load();
         }
+
+        Timer.eventOnTimer += _gmData.date.Increase;
 
         _uiGMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
         _uiEmperorName = GameObject.Find("Canvas/PanelEmperor/emperorName/value").GetComponent<Text>();
@@ -101,7 +105,7 @@ public class MainScene : MonoBehaviour
         }
     }
 
-    private GMData _gmData;
+
 
     private Text _uiGMTime;
     private Text _uiEmperorName;
