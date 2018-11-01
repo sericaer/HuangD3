@@ -16,6 +16,7 @@ public class GMData
 
         emperor = new Emperor(emperorName, Probability.GetRandomNum(18, 35), Probability.GetRandomNum(6, 10));
         date = new Date();
+        stability = new Stability();
     }
 
     public void Save()
@@ -52,6 +53,9 @@ public class GMData
 
     [JsonProperty]
     public Date date;
+
+    [JsonProperty]
+    public Stability stability;
 
     public delegate void EventGMTimeChange(string gmTime);
 

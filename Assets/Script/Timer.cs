@@ -8,6 +8,16 @@ public class Timer : MonoBehaviour
 {
     public static event Action eventOnTimer;
 
+    public static void Pause()
+    {
+        isPause = true;
+    }
+
+    public static void unPause()
+    {
+        isPause = false;
+    }
+
     void Awake()
     {
         m_fWaitTime = 1.0F;
@@ -30,10 +40,14 @@ public class Timer : MonoBehaviour
     {
         yield return new WaitForSeconds(m_fWaitTime);
 
-        eventOnTimer();
+        if(!isPause)
+        {
+            eventOnTimer();
+        }
 
         StartCoroutine(OnTimer());
     }
 
-    float m_fWaitTime;
+    private static bool isPause = false;
+    private float m_fWaitTime;
 }

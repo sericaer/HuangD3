@@ -20,9 +20,14 @@ public class MainScene : MonoBehaviour
             _gmData = GMData.Load();
         }
 
+        _eventManager = new EventManager();
+
         Timer.eventOnTimer += _gmData.date.Increase;
+        Timer.eventOnTimer += _eventManager.OnTimer;
 
         _uiGMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
+        _uiStability = GameObject.Find("Canvas/PanelTop/Stability/value").GetComponent<Text>();
+
         _uiEmperorName = GameObject.Find("Canvas/PanelEmperor/emperorName/value").GetComponent<Text>();
         _uiEmperorAge = GameObject.Find("Canvas/PanelEmperor/emperorDetail/age/value").GetComponent<Text>();
         _uiEmperorHeath = GameObject.Find("Canvas/PanelEmperor/emperorDetail/heath/slider").GetComponent<Slider>();
@@ -88,6 +93,7 @@ public class MainScene : MonoBehaviour
 	void Update ()
     {
         _uiGMTime.text = _gmData.dynastyName + _gmData.yearName + _gmData.date;
+        _uiStability.text = _gmData.stability.current.ToString();
 
         _uiEmperorName.text = _gmData.emperor.name;
         _uiEmperorAge.text  = _gmData.emperor.age.ToString();
@@ -108,9 +114,13 @@ public class MainScene : MonoBehaviour
 
 
     private Text _uiGMTime;
+    private Text _uiStability;
+
     private Text _uiEmperorName;
     private Text _uiEmperorAge;
     private Slider _uiEmperorHeath;
 
     private GameObject _uiPanelCenter;
+
+    private EventManager _eventManager;
 }
