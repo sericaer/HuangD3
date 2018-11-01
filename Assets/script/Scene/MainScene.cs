@@ -9,22 +9,38 @@ public class MainScene : MonoBehaviour
 {
     void Awake()
     {
-
-        _gmData = new GMData(InitScene.dynastyName, InitScene.yearName, InitScene.emperorName);
+        if (InitScene.isNew)
+        {
+            _gmData = new GMData(InitScene.dynastyName, InitScene.yearName, InitScene.emperorName);
+        }
+        else
+        {
+            _gmData = GMData.Load();
+        }
 
         _uiGMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
         _uiEmperorName = GameObject.Find("Canvas/PanelEmperor/emperorName/value").GetComponent<Text>();
         _uiEmperorAge = GameObject.Find("Canvas/PanelEmperor/emperorDetail/age/value").GetComponent<Text>();
         _uiEmperorHeath = GameObject.Find("Canvas/PanelEmperor/emperorDetail/heath/slider").GetComponent<Slider>();
+        _uiPanelCenter = GameObject.Find("Canvas/PanelCenter");
+
+        var BtnSave = GameObject.Find("Canvas/PanelCenter/BtnSave").GetComponent<Button>();
+        {
+            BtnSave.onClick.AddListener(() =>
+            {
+                _gmData.Save();
+            });
+        }
 
         var PanelEmperor = GameObject.Find("Canvas/PanelEmperor/");
+        var PanelEmperorDetail = PanelEmperor.transform.Find("emperorDetail").gameObject;
         {
             PanelEmperor.GetComponent<Button>().onClick.AddListener(() =>
             {
-                var PanelEmperorDetail = PanelEmperor.transform.Find("emperorDetail").gameObject;
                 PanelEmperorDetail.SetActive(!PanelEmperorDetail.activeSelf);
             });
         }
+
 
         var Toggles = GameObject.Find("Canvas/PanelRight/").GetComponentsInChildren<Toggle>();
         foreach (var toggle in Toggles)
@@ -52,6 +68,9 @@ public class MainScene : MonoBehaviour
                 SceneManager.LoadSceneAsync(toggle.name, LoadSceneMode.Additive);
                 });
         }
+
+        _uiPanelCenter.SetActive(false);
+        PanelEmperorDetail.SetActive(false);
     }
 
 
@@ -68,7 +87,17 @@ public class MainScene : MonoBehaviour
         _uiEmperorAge.text  = _gmData.emperor.age.ToString();
         _uiEmperorHeath.value = _gmData.emperor.heath;
         _uiEmperorHeath.maxValue = _gmData.emperor.heathMax;
+
+        OnKeyBoard();
 	}
+
+    private void OnKeyBoard()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            _uiPanelCenter.SetActive(!_uiPanelCenter.activeSelf);
+        }
+    }
 
     private GMData _gmData;
 
@@ -76,4 +105,6 @@ public class MainScene : MonoBehaviour
     private Text _uiEmperorName;
     private Text _uiEmperorAge;
     private Slider _uiEmperorHeath;
+
+    private GameObject _uiPanelCenter;
 }

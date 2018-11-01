@@ -9,6 +9,7 @@ public class InitScene : MonoBehaviour
     public static string dynastyName;
     public static string yearName;
     public static string emperorName;
+    public static bool isNew = false;
 
     void Awake()
     {
@@ -25,6 +26,7 @@ public class InitScene : MonoBehaviour
             dynastyName = inputDynastyName.text;
             yearName = inputYearName.text;
             emperorName = inputEmperorName.text;
+            isNew = true;
 
             SceneManager.LoadSceneAsync("MainScene");
         });
@@ -38,7 +40,7 @@ public class InitScene : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-
+        
     }
 	
 	// Update is called once per frame

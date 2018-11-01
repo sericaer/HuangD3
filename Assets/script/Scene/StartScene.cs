@@ -12,6 +12,11 @@ public class StartScene : MonoBehaviour
             SceneManager.LoadSceneAsync("InitScene");
         });
 
+        GameObject.Find("Canvas/Panel/LoadButton").GetComponent<Button>().onClick.AddListener(() =>
+        {
+            SceneManager.LoadSceneAsync("MainScene");
+        });
+
         GameObject.Find("Canvas/Panel/QuitButton").GetComponent<Button>().onClick.AddListener(() => {
             Application.Quit();
         });

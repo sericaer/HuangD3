@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
+[JsonObject(MemberSerialization.OptIn)]
 public class Emperor
 {
     public string name
@@ -45,9 +47,12 @@ public class Emperor
 
     }
 
+    [JsonProperty]
     private string _name;
 
+    [JsonProperty]
     private int _age;
 
+    [JsonProperty]
     private int _heath;
 }
