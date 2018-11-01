@@ -2,7 +2,8 @@
 using Newtonsoft.Json;
 using UnityEngine;
 
-class Date
+[JsonObject(MemberSerialization.OptIn)]
+public class Date
 {
     public Date()
     {
@@ -61,7 +62,12 @@ class Date
         return _year.ToString() + "年" + _month + "月" + _day + "日";
     }
 
+    [JsonProperty]
     private int _year;
+
+    [JsonProperty]
     private int _month;
+
+    [JsonProperty]
     private int _day;
 }

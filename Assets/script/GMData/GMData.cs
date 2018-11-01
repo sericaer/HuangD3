@@ -11,8 +11,11 @@ public class GMData
 {
     public GMData(string dynastyName, string yearName, string emperorName )
     {
+        this.dynastyName = dynastyName;
+        this.yearName = yearName;
+
         emperor = new Emperor(emperorName, Probability.GetRandomNum(18, 35), Probability.GetRandomNum(6, 10));
-        //date = new Date();
+        date = new Date();
     }
 
     public void Save()
@@ -46,7 +49,9 @@ public class GMData
 
     [JsonProperty]
     public string yearName;
-    //public Date date;
+
+    [JsonProperty]
+    public Date date;
 
     public delegate void EventGMTimeChange(string gmTime);
 

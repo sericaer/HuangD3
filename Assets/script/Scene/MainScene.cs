@@ -83,6 +83,8 @@ public class MainScene : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        _uiGMTime.text = _gmData.dynastyName + _gmData.yearName + _gmData.date;
+
         _uiEmperorName.text = _gmData.emperor.name;
         _uiEmperorAge.text  = _gmData.emperor.age.ToString();
         _uiEmperorHeath.value = _gmData.emperor.heath;
