@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -20,13 +17,12 @@ public class MainScene : MonoBehaviour
             _gmData = GMData.Load();
         }
 
-        _eventManager = new EventManager();
-
         Timer.evtOnTimer += _gmData.date.Increase;
-        Timer.evtOnTimer += _eventManager.OnTimer;
+        Timer.evtOnTimer += StreamManager.EventManager.OnTimer;
 
-        _eventManager.evtNewGMEvent += (GMEvent evt)=>{ Timer.Pause(); }
-        _eventManager.evtNewGMEvent += this.OnNewGMEvent;
+        StreamManager.EventManager.evtNewGMEvent += (EventDef evt) => { Timer.Pause(); };
+        StreamManager.EventManager.evtNewGMEvent += this.OnNewGMEvent;
+        DialogLogic.evntDestory += Timer.unPause;
 
         _uiGMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
         _uiStability = GameObject.Find("Canvas/PanelTop/Stability/value").GetComponent<Text>();
@@ -114,7 +110,7 @@ public class MainScene : MonoBehaviour
         }
     }
 
-    void OnNewGMEvent(GMEvent gmevent)
+    void OnNewGMEvent(EventDef gmevent)
     {
         _uiDialog = DialogLogic.newDialogInstace(gmevent.title, gmevent.content, gmevent.options);
     }
@@ -128,7 +124,5 @@ public class MainScene : MonoBehaviour
 
     private GameObject _uiPanelCenter;
     private GameObject _uiDialog;
-
-    private EventManager _eventManager;
 
 }
