@@ -31,29 +31,41 @@ public class DialogLogic : MonoBehaviour
     public static GameObject newDialogInstace(string title, string content, string[] options)
 	{
 		GameObject UIRoot = GameObject.Find("Canvas").gameObject;
-        GameObject dialog = Instantiate(Resources.Load(string.Format("Prefabs/Dialog_{0}Btn", options.Length)), UIRoot.transform) as GameObject;
+        GameObject dialog = Instantiate(Resources.Load(string.Format("Prefabs/DialogEvent")), UIRoot.transform) as GameObject;
 
         Text txTitle = dialog.transform.Find("title").GetComponent<Text>();
         Text txContent = dialog.transform.Find("content").GetComponent<Text>();
 
         txTitle.text = title;
         txContent.text = content;
+
+        foreach (var optname in options)
+        {
+            var opt = CreateOption(optname);
+            opt.transform.parent = dialog.transform.Find("Panel");
+        }
   
         dialog.transform.SetAsLastSibling();
-
-        for (int i = 0; i < options.Length; i++)
-        {
-            Transform tran = dialog.transform.Find(string.Format("option{0}", i + 1));
-            if (tran == null)
-            {
-                tran = dialog.transform.Find(string.Format("Content/option{0}", i + 1));
-            }
-
-            Button optionTran = tran.GetComponent<Button>();
-            Text txop = optionTran.transform.Find("Text").GetComponent<Text>();
-            txop.text = options[i];
-        }
-
         return dialog;
 	}
+
+    public static GameObject CreateOption(string optname)
+    {
+        GameObject button = new GameObject("button", typeof(RectTransform));
+        button.AddComponent<Button>();
+        button.AddComponent<CanvasRenderer>();
+        button.AddComponent<Image>();
+        button.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 30);
+
+        GameObject Text = new GameObject("Text", typeof(RectTransform));
+        Text.AddComponent<CanvasRenderer>();
+        var text = Text.AddComponent<Text>();
+        text.text = optname;
+        text.font = Resources.FindObjectsOfTypeAll<Font>()[0];
+        text.color = Color.black;
+        text.alignment = TextAnchor.MiddleCenter;
+        Text.transform.parent = button.transform;
+
+        return button;
+    }
 }
