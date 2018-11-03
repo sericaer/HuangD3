@@ -42,7 +42,7 @@ public class DialogLogic : MonoBehaviour
         foreach (var optname in options)
         {
             var opt = CreateOption(optname);
-            opt.transform.parent = dialog.transform.Find("Panel");
+            opt.transform.SetParent(dialog.transform.Find("Panel"));
         }
   
         dialog.transform.SetAsLastSibling();
@@ -64,7 +64,7 @@ public class DialogLogic : MonoBehaviour
         text.font = Resources.FindObjectsOfTypeAll<Font>()[0];
         text.color = Color.black;
         text.alignment = TextAnchor.MiddleCenter;
-        Text.transform.parent = button.transform;
+        Text.transform.SetParent(button.transform);
 
         return button;
     }
