@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using HuangDAPI;
 
 public class MainScene : MonoBehaviour
 {
@@ -112,7 +113,7 @@ public class MainScene : MonoBehaviour
 
     void OnNewGMEvent(EventDef gmevent)
     {
-        _uiDialog = DialogLogic.newDialogInstace(gmevent.title, gmevent.content, gmevent.options);
+        _uiDialog = DialogLogic.newDialogInstace(gmevent._funcTitle(), gmevent._funcContent(), gmevent.listOptions);
     }
 
     private Text _uiGMTime;

@@ -28,7 +28,7 @@ public class DialogLogic : MonoBehaviour
 		
 	}
 
-    public static GameObject newDialogInstace(string title, string content, string[] options)
+    public static GameObject newDialogInstace(string title, string content, List<Tuple<string, Action>> options)
 	{
 		GameObject UIRoot = GameObject.Find("Canvas").gameObject;
         GameObject dialog = Instantiate(Resources.Load(string.Format("Prefabs/DialogEvent")), UIRoot.transform) as GameObject;
@@ -39,10 +39,16 @@ public class DialogLogic : MonoBehaviour
         txTitle.text = title;
         txContent.text = content;
 
-        foreach (var optname in options)
+        foreach (var opt in options)
         {
-            var opt = CreateOption(optname);
-            opt.transform.SetParent(dialog.transform.Find("Panel"));
+            var uiOption = CreateOption(opt.Item1);
+            uiOption.transform.SetParent(dialog.transform.Find("Panel"));
+
+            uiOption.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                opt.Item2();
+            });
+
         }
   
         dialog.transform.SetAsLastSibling();
@@ -56,7 +62,7 @@ public class DialogLogic : MonoBehaviour
         button.AddComponent<CanvasRenderer>();
         button.AddComponent<Image>();
         button.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 30);
-
+        
         GameObject Text = new GameObject("Text", typeof(RectTransform));
         Text.AddComponent<CanvasRenderer>();
         var text = Text.AddComponent<Text>();

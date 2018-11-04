@@ -3,18 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
-public class EventDef
-{ 
-    public string title = "title";
-    public string content = "content";
-    public string[] options = { "opt1"};
-
-    public bool funcPrecondition()
-    {
-        return true;
-    }
-}
+using HuangDAPI;
 
 public partial class StreamManager
 {
@@ -31,7 +20,6 @@ public partial class StreamManager
 
                 _eventDict.Add(type.Name, ie);
             }
-            _eventDict.Add("EventDef", new EventDef());
             Debug.Log("Load event count:" + _eventDict.Count);
         }
 
@@ -45,7 +33,7 @@ public partial class StreamManager
                 }
 
                 EventDef eventDef = _eventDict.ElementAt(_index).Value;
-                if (eventDef.funcPrecondition())
+                if (eventDef._funcPrecondition())
                 {
                     evtNewGMEvent(eventDef);
                     return;
