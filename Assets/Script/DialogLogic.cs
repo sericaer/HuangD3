@@ -65,6 +65,7 @@ public class DialogLogic : MonoBehaviour
         
         GameObject Text = new GameObject("Text", typeof(RectTransform));
         Text.AddComponent<CanvasRenderer>();
+        Text.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 30);
         var text = Text.AddComponent<Text>();
         text.text = optname;
         text.font = Resources.FindObjectsOfTypeAll<Font>()[0];
