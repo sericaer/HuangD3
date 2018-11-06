@@ -15,8 +15,9 @@ public class GMData
         this.yearName = yearName;
 
         emperor = new Emperor(emperorName, Probability.GetRandomNum(18, 35), Probability.GetRandomNum(6, 10));
-        date = new Date();
+        date    = new Date();
         stability = new Stability();
+        countryFlag = new CountryFlag();
     }
 
     public void Save()
@@ -56,6 +57,9 @@ public class GMData
 
     [JsonProperty]
     public Stability stability;
+
+    [JsonProperty]
+    public CountryFlag countryFlag;
 
     public delegate void EventGMTimeChange(string gmTime);
 

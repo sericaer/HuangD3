@@ -18,13 +18,6 @@ public class MainScene : MonoBehaviour
             _gmData = GMData.Load();
         }
 
-        Timer.evtOnTimer += _gmData.date.Increase;
-        Timer.evtOnTimer += StreamManager.EventManager.OnTimer;
-
-        StreamManager.EventManager.evtNewGMEvent += (EventDef evt) => { Timer.Pause(); };
-        StreamManager.EventManager.evtNewGMEvent += this.OnNewGMEvent;
-        DialogLogic.evntDestory += Timer.unPause;
-
         _uiGMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
         _uiStability = GameObject.Find("Canvas/PanelTop/Stability/value").GetComponent<Text>();
 
@@ -41,12 +34,15 @@ public class MainScene : MonoBehaviour
             });
         }
 
+        var PanelCountry    = GameObject.Find("Canvas/PanelCountry").gameObject;
+        var PanelCountryStatus = GameObject.Find("Canvas/PanelCountry/Status").gameObject;
         var PanelEmperor = GameObject.Find("Canvas/PanelEmperor/");
         var PanelEmperorDetail = PanelEmperor.transform.Find("emperorDetail").gameObject;
         {
             PanelEmperor.GetComponent<Button>().onClick.AddListener(() =>
             {
                 PanelEmperorDetail.SetActive(!PanelEmperorDetail.activeSelf);
+                PanelCountryStatus.SetActive(!PanelCountryStatus.activeSelf);
             });
         }
 
@@ -80,13 +76,23 @@ public class MainScene : MonoBehaviour
 
         _uiPanelCenter.SetActive(false);
         PanelEmperorDetail.SetActive(false);
+
+
+        Timer.evtOnTimer += _gmData.date.Increase;
+        Timer.evtOnTimer += StreamManager.EventManager.OnTimer;
+
+        StreamManager.EventManager.evtNewGMEvent += (EventDef evt) => { Timer.Pause(); };
+        StreamManager.EventManager.evtNewGMEvent += this.OnNewGMEvent;
+        DialogLogic.evntDestory += Timer.unPause;
+        _gmData.countryFlag.evtAddFlag += CountryStatusLogic.OnAddFlag;
+        _gmData.countryFlag.evtDelFlag += CountryStatusLogic.OnDelFlag;
     }
 
 
     // Use this for initialization
     void Start ()
     {
-
+        _gmData.countryFlag.Add("TEST");
     }
 	
 	// Update is called once per frame
