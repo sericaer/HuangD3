@@ -35,14 +35,13 @@ public class MainScene : MonoBehaviour
         }
 
         var PanelCountry    = GameObject.Find("Canvas/PanelCountry").gameObject;
-        var PanelCountryStatus = GameObject.Find("Canvas/PanelCountry/Status").gameObject;
         var PanelEmperor = GameObject.Find("Canvas/PanelEmperor/");
         var PanelEmperorDetail = PanelEmperor.transform.Find("emperorDetail").gameObject;
         {
             PanelEmperor.GetComponent<Button>().onClick.AddListener(() =>
             {
                 PanelEmperorDetail.SetActive(!PanelEmperorDetail.activeSelf);
-                PanelCountryStatus.SetActive(!PanelCountryStatus.activeSelf);
+                PanelCountry.SetActive(!PanelCountry.activeSelf);
             });
         }
 
@@ -76,7 +75,7 @@ public class MainScene : MonoBehaviour
 
         _uiPanelCenter.SetActive(false);
         PanelEmperorDetail.SetActive(false);
-
+        PanelCountry.SetActive(false);
 
         Timer.evtOnTimer += _gmData.date.Increase;
         Timer.evtOnTimer += StreamManager.EventManager.OnTimer;
@@ -92,7 +91,7 @@ public class MainScene : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        _gmData.countryFlag.Add("TEST");
+        
     }
 	
 	// Update is called once per frame
@@ -114,7 +113,9 @@ public class MainScene : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             _uiPanelCenter.SetActive(!_uiPanelCenter.activeSelf);
+            _gmData.countryFlag.Add("TEST");
         }
+        
     }
 
     void OnNewGMEvent(EventDef gmevent)

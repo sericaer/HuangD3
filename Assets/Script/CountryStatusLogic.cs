@@ -44,7 +44,7 @@ public class CountryStatusLogic : MonoBehaviour
         text.font = Resources.FindObjectsOfTypeAll<Font>()[0];
         text.color = Color.black;
         text.alignment = TextAnchor.MiddleCenter;
-        Text.transform.SetParent(this.transform);
+        Text.transform.SetParent(this.transform.Find("Status").transform);
     }
 
     void DelFlag(string name)
