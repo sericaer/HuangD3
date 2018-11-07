@@ -19,6 +19,7 @@ public class CountryStatusLogic : MonoBehaviour
 
     void Awake()
     {
+        Debug.Log("CountryStatusLogic Awake");
         inst = this;
     }
 

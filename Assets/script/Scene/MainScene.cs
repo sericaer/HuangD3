@@ -83,6 +83,9 @@ public class MainScene : MonoBehaviour
         StreamManager.EventManager.evtNewGMEvent += (EventDef evt) => { Timer.Pause(); };
         StreamManager.EventManager.evtNewGMEvent += this.OnNewGMEvent;
         DialogLogic.evntDestory += Timer.unPause;
+        HuangDAPI.DefCountryFlag.evtEnable += _gmData.countryFlag.Add;
+        HuangDAPI.DefCountryFlag.evtDisable += _gmData.countryFlag.Del;
+
         _gmData.countryFlag.evtAddFlag += CountryStatusLogic.OnAddFlag;
         _gmData.countryFlag.evtDelFlag += CountryStatusLogic.OnDelFlag;
     }
