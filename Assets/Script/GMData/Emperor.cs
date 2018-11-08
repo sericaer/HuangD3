@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 [JsonObject(MemberSerialization.OptIn)]
 public class Emperor
 {
+    public Func<string[]> CurrentCountyFlags;
+
     public string name
     {
         get
@@ -27,7 +29,33 @@ public class Emperor
     {
         get
         {
-            return _heath;
+            int rslt = 0;
+            foreach(var elem in heathdetail)
+            {
+                rslt += elem.Item2;
+            }
+
+            return rslt;
+        }
+    }
+
+    public Tuple<string, int>[] heathdetail
+    {
+        get
+        {
+            var rslt = new List<Tuple<string, int>>();
+            rslt.Add(new Tuple<string, int>("BASE_VALUE", _heath));
+
+            foreach (var flagname in CurrentCountyFlags())
+            {
+                var flag = HuangDAPI.DefCountryFlag.Find(flagname);
+                if (flag.affect.EmperorHeath != null)
+                {
+                    rslt.Add(new Tuple<string, int>(flagname, flag.affect.EmperorHeath(_heath)));
+                }
+            }
+
+            return rslt.ToArray();
         }
     }
 

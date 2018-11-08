@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using HuangDAPI;
+using GMDATA;
+using System;
+using System.Collections.Generic;
 
 public class MainScene : MonoBehaviour
 {
@@ -80,14 +82,39 @@ public class MainScene : MonoBehaviour
         Timer.evtOnTimer += _gmData.date.Increase;
         Timer.evtOnTimer += StreamManager.EventManager.OnTimer;
 
-        StreamManager.EventManager.evtNewGMEvent += (EventDef evt) => { Timer.Pause(); };
+        StreamManager.EventManager.evtNewGMEvent += (string v1, string v2, List<Tuple<string, Action>> v3) => { Timer.Pause(); };
         StreamManager.EventManager.evtNewGMEvent += this.OnNewGMEvent;
         DialogLogic.evntDestory += Timer.unPause;
         HuangDAPI.DefCountryFlag.evtEnable += _gmData.countryFlag.Add;
         HuangDAPI.DefCountryFlag.evtDisable += _gmData.countryFlag.Del;
 
-        _gmData.countryFlag.evtAddFlag += CountryStatusLogic.OnAddFlag;
+        _gmData.countryFlag.evtAddFlag += (string flagname)=>{
+            PanelEmperorDetail.SetActive(true);
+            PanelCountry.SetActive(true);
+            CountryStatusLogic.OnAddFlag(flagname);
+        };
+
         _gmData.countryFlag.evtDelFlag += CountryStatusLogic.OnDelFlag;
+
+        _gmData.emperor.CurrentCountyFlags = _gmData.countryFlag.current;
+        _gmData.stability.evtChange += (int value) =>{
+            
+            var opts = new List<Tuple<string, Action>>();
+            opts.Add(new Tuple<string, Action>("CONFIRM", ()=>{}));
+
+            if(value > 0)
+            {
+                StreamManager.EventManager.AddEvent("TITLE_STABILITY_INCREASE", "CONTENT_STABILITY_INCREASE" + value.ToString(), opts); 
+            }
+            if(value < 0)
+            {
+                StreamManager.EventManager.AddEvent("TITLE_STABILITY_DECREASE", "CONTENT_STABILITY_DECREASE" + value.ToString(), opts);
+            }
+        };
+            
+        HuangDAPI.Stability.stability = _gmData.stability;
+
+
     }
 
 
@@ -121,9 +148,9 @@ public class MainScene : MonoBehaviour
         
     }
 
-    void OnNewGMEvent(EventDef gmevent)
+    void OnNewGMEvent(string titile, string content, List<Tuple<string, Action>> listOptions)
     {
-        _uiDialog = DialogLogic.newDialogInstace(gmevent._funcTitle(), gmevent._funcContent(), gmevent.listOptions);
+        _uiDialog = DialogLogic.newDialogInstace(titile, content, listOptions);
     }
 
     private Text _uiGMTime;

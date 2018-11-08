@@ -1,33 +1,43 @@
 ﻿using UnityEngine;
 using Tools;
 using Newtonsoft.Json;
+using System;
 
-public class Stability
+namespace GMDATA
 {
-    public int current
+    public class Stability
     {
-        get
-        {
-            return _current;
-        }
-        set
-        {
+        public event Action<int> evtChange;
 
-            _current = value;
-            if (_current > Max)
+        public int current
+        {
+            get
             {
-                _current = Max;
+                return _current;
             }
-            if (_current < Min)
+            set
             {
-                _current = Min;
+                int changed = value - _current;
+                evtChange(changed);
+
+                _current = value;
+                if (_current > Max)
+                {
+                    _current = Max;
+                }
+                if (_current < Min)
+                {
+                    _current = Min;
+                }
+
+
             }
         }
+
+        [JsonProperty]
+        private int _current = Probability.GetRandomNum(0, 3);
+
+        private const int Max = 5;
+        private const int Min = 0;
     }
-
-    [JsonProperty]
-    private int _current = Probability.GetRandomNum(0, 3);
-
-    private const int Max = 5;
-    private const int Min = 0;
 }

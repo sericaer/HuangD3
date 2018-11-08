@@ -9,7 +9,7 @@ public partial class StreamManager
 {
     public class EventManager
     {
-        public static event Action<EventDef> evtNewGMEvent;
+        public static event Action<string, string, List<Tuple<string, Action>>> evtNewGMEvent;
 
         public static void Load(Type[] types)
         {
@@ -35,11 +35,18 @@ public partial class StreamManager
                 EventDef eventDef = _eventDict.ElementAt(_index).Value;
                 if (eventDef._funcPrecondition())
                 {
-                    evtNewGMEvent(eventDef);
+                    evtNewGMEvent(eventDef._funcTitle(), eventDef._funcContent(), eventDef.listOptions);
                     return;
                 }
             }
         }
+
+        public static void AddEvent(string title, string content, List<Tuple<string, Action>> opts)
+        {
+            evtNewGMEvent(title, content, opts);
+        }
+
+
 
         private static int _index = 0;
         private static Dictionary<string, EventDef> _eventDict = new Dictionary<string, EventDef>();

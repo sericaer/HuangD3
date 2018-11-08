@@ -16,6 +16,8 @@ namespace native
             void OnSelect()
             {
                 CountryFlags.YHSX.Enable();
+                Stability.current--;
+
                 Debug.Log("OPTION1");
             }
         }
