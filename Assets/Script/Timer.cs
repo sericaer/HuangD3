@@ -10,12 +10,12 @@ public class Timer : MonoBehaviour
 
     public static void Pause()
     {
-        isPause = true;
+        _pauseCount++;
     }
 
     public static void unPause()
     {
-        isPause = false;
+        _pauseCount--;
     }
 
     void Awake()
@@ -40,7 +40,7 @@ public class Timer : MonoBehaviour
     {
         yield return new WaitForSeconds(m_fWaitTime);
 
-        if(!isPause)
+        if(_pauseCount == 0)
         {
             evtOnTimer();
         }
@@ -48,6 +48,7 @@ public class Timer : MonoBehaviour
         StartCoroutine(OnTimer());
     }
 
-    private static bool isPause = false;
+    private static int _pauseCount = 0;
     private float m_fWaitTime;
+
 }
