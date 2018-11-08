@@ -97,7 +97,7 @@ public class MainScene : MonoBehaviour
         _gmData.countryFlag.evtDelFlag += CountryStatusLogic.OnDelFlag;
 
         _gmData.emperor.CurrentCountyFlags = _gmData.countryFlag.current;
-        _gmData.stability.evtChange += (int value) =>{
+        Stability.evtChange += (int value) =>{
             
             var opts = new List<Tuple<string, Action>>();
             opts.Add(new Tuple<string, Action>("CONFIRM", ()=>{}));
@@ -143,7 +143,6 @@ public class MainScene : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             _uiPanelCenter.SetActive(!_uiPanelCenter.activeSelf);
-            _gmData.countryFlag.Add("TEST");
         }
         
     }

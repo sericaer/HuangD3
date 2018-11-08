@@ -13,8 +13,6 @@ public class InitScene : MonoBehaviour
 
     void Awake()
     {
-        StreamManager.Load();
-
         inputDynastyName = GameObject.Find("Canvas/Panel/DynastyName/InputField").GetComponent<InputField>();
         inputYearName = GameObject.Find("Canvas/Panel/YearName/InputField").GetComponent<InputField>();
         inputEmperorName = GameObject.Find("Canvas/Panel/EmperorName/InputField").GetComponent<InputField>();

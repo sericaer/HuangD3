@@ -46,7 +46,8 @@ public class Emperor
             var rslt = new List<Tuple<string, int>>();
             rslt.Add(new Tuple<string, int>("BASE_VALUE", _heath));
 
-            foreach (var flagname in CurrentCountyFlags())
+            string[] flags = CurrentCountyFlags();
+            foreach (var flagname in flags)
             {
                 var flag = HuangDAPI.DefCountryFlag.Find(flagname);
                 if (flag.affect.EmperorHeath != null)

@@ -5,9 +5,10 @@ using System;
 
 namespace GMDATA
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Stability
     {
-        public event Action<int> evtChange;
+        public static event Action<int> evtChange;
 
         public int current
         {

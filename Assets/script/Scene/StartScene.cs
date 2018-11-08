@@ -8,6 +8,8 @@ public class StartScene : MonoBehaviour
 {
     void Awake()
     {
+        StreamManager.Load();
+
         GameObject.Find("Canvas/Panel/NewButton").GetComponent<Button>().onClick.AddListener(() => {
             SceneManager.LoadSceneAsync("InitScene");
         });

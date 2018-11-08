@@ -20,6 +20,7 @@ namespace HuangDAPI
 
         public DefCountryFlag()
         {
+            Debug.Log(this.GetType().Name);
             affect = new Affect(this);
 
             _dict.Add(this.GetType().Name, this);

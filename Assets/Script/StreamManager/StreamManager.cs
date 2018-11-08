@@ -59,7 +59,12 @@ public partial class StreamManager
         YearName.Load(Types);
         PersonName.Load(Types);
         EventManager.Load(Types);
-    
+
+        var qurey = (from x in Types
+                     where x.Name == "CountryFlags"
+                     select x).Single();
+        System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(qurey.TypeHandle);
+
         Debug.Log(string.Format("******************End Load mod {0}********************", path));
     }
 
