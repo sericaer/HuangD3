@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 
 using Tools;
 using System.IO;
+using System.Runtime.Serialization;
 
 namespace GMDATA
 {
@@ -45,6 +46,7 @@ namespace GMDATA
             return serializer.Deserialize(new JsonTextReader(sr), typeof(GMData)) as GMData;
         }
 
+
         [JsonProperty]
         public Emperor emperor;
 
@@ -62,6 +64,7 @@ namespace GMDATA
 
         [JsonProperty]
         public CountryFlag countryFlag;
+
 
         public delegate void EventGMTimeChange(string gmTime);
 

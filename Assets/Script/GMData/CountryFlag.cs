@@ -3,14 +3,15 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace GMDATA
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class CountryFlag
     {
-        public event Action<string> evtAddFlag;
-        public event Action<string> evtDelFlag;
+        public static event Action<string> evtAddFlag;
+        public static event Action<string> evtDelFlag;
 
         public List<string> names
         {
@@ -39,6 +40,15 @@ namespace GMDATA
 
         [JsonProperty]
         private List<string> _names = new List<string>();
+
+        [OnDeserialized]
+        internal void OnDeserializedMethod(StreamingContext context)
+        {
+            foreach(var name in _names)
+            {
+                evtAddFlag(name);
+            }
+        }
     }
 
 }
