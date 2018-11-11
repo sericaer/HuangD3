@@ -34,6 +34,7 @@ public class MainScene : MonoBehaviour
         {
             PanelEmperor.GetComponent<Button>().onClick.AddListener(() =>
             {
+                PanelEmperorDetail.SetActive(!PanelEmperorDetail.activeSelf);
                 PanelCountry.SetActive(!PanelCountry.activeSelf);
             });
         }
