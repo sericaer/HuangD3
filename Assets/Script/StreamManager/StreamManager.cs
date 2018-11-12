@@ -60,6 +60,8 @@ public partial class StreamManager
         PersonName.Load(Types);
         EventManager.Load(Types);
 
+        ProvinceCSV.Load(path + "/prov");
+
         var qurey = (from x in Types
                      where x.Name == "CountryFlags"
                      select x).Single();

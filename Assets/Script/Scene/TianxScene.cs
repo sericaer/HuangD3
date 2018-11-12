@@ -57,20 +57,24 @@ public class TianxScene : MonoBehaviour
         static GameObject CreateUI(Transform parent)
         {
             GameObject button = new GameObject("button", typeof(RectTransform));
-            button.AddComponent<Button>();
+            button.transform.SetParent(parent);
             button.AddComponent<CanvasRenderer>();
+            button.AddComponent<Button>();
             button.AddComponent<Image>();
             button.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 30);
-            button.GetComponent<RectTransform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            button.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
 
             GameObject Text = new GameObject("Text", typeof(RectTransform));
+            Text.transform.SetParent(button.transform);
             Text.AddComponent<CanvasRenderer>();
             Text.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 30);
+            Text.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
+
             var text = Text.AddComponent<Text>();
             text.font = Resources.FindObjectsOfTypeAll<Font>()[0];
             text.color = Color.black;
             text.alignment = TextAnchor.MiddleCenter;
-            Text.transform.SetParent(button.transform);
+            
             button.transform.SetParent(parent);
             return button;
         }
