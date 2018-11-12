@@ -21,6 +21,7 @@ namespace GMDATA
             date = new Date();
             stability = new Stability();
             countryFlag = new CountryFlag();
+            provinces = new Provinces();
         }
 
         public void Save()
@@ -65,6 +66,8 @@ namespace GMDATA
         [JsonProperty]
         public CountryFlag countryFlag;
 
+        [JsonProperty]
+        public Provinces provinces;
 
         public delegate void EventGMTimeChange(string gmTime);
 

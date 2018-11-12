@@ -146,6 +146,7 @@ public class MainScene : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             _uiPanelCenter.SetActive(!_uiPanelCenter.activeSelf);
+            _gmData.provinces.Add(new Province("TEST", 100));
         }
         
     }
