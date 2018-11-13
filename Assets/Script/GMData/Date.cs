@@ -66,7 +66,38 @@ namespace GMDATA
 
         public bool Match(string value)
         {
-            throw new NotImplementedException();
+            string[] arr = value.Split('/');
+
+            if (arr.Length < 3)
+            {
+                throw new Exception();
+            }
+
+            if (arr[0] != "*")
+            {
+                if (Convert.ToInt16(arr[0]) != _year)
+                {
+                    return false;
+                }
+            }
+
+            if (arr[1] != "*")
+            {
+                if (Convert.ToInt16(arr[1]) != _month)
+                {
+                    return false;
+                }
+            }
+
+            if (arr[2] != "*")
+            {
+                if (Convert.ToInt16(arr[2]) != _day)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         [JsonProperty]

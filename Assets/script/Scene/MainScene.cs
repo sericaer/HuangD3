@@ -95,7 +95,7 @@ public class MainScene : MonoBehaviour
 
         Timer.evtOnTimer += _gmData.date.Increase;
         Timer.evtOnTimer += StreamManager.EventManager.OnTimer;
-        Timer.Register("DATE:*/9/1", () =>{
+        Timer.Register("DATE:*/1/2", () =>{
             string desc = "";
             int value = 0;
             foreach(var prov in _gmData.provinces.All)
@@ -106,7 +106,8 @@ public class MainScene : MonoBehaviour
                     desc += detail.Item1 + ": " + detail.Item2.ToString() + ", ";
                     value += detail.Item2;
                 }
-                desc.TrimEnd(", ");
+                desc.TrimEnd(' ');
+                desc.TrimEnd(',');
                 desc += "\n";
             }
 
@@ -125,10 +126,10 @@ public class MainScene : MonoBehaviour
         HuangDAPI.DefCountryFlag.evtDisable += _gmData.countryFlag.Del;
 
         _gmData.emperor.CurrentCountyFlags = _gmData.countryFlag.current;
-        Stability.evtChange += (int value) => {
+        HuangDAPI.Stability.evtChange += (int value) => {
 
             var opts = new List<Tuple<string, Action>>();
-            opts.Add(new Tuple<string, Action>("CONFIRM", () => { }));
+            opts.Add(new Tuple<string, Action>("CONFIRM", () => { _gmData.stability.current += value; }));
 
             if (value > 0)
             {
@@ -167,7 +168,6 @@ public class MainScene : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             _uiPanelCenter.SetActive(!_uiPanelCenter.activeSelf);
-            _gmData.provinces.Add(new Province("TEST", 100));
         }
         
     }

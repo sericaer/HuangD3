@@ -58,11 +58,11 @@ public class Timer : MonoBehaviour
 
     public static void Register(string date, Action act)
     {
-
+        _list.Add(new Tuple<string, Action>(date.Replace("DATE:", ""), act));
     }
 
     private static int _pauseCount = 0;
     private float m_fWaitTime;
 
-    private List<Tuple<string, Action>> _list = new List<Tuple<string, Action>>();
+    private static List<Tuple<string, Action>> _list = new List<Tuple<string, Action>>();
 }

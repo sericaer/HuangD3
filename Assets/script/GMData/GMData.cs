@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Tools;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
 
 namespace GMDATA
 {
@@ -60,7 +61,7 @@ namespace GMDATA
 
             foreach (var elem in StreamManager.ProvinceCSV.Defs)
             {
-                provinces.Add(new Province(elem.name, Int32.Parse(elem.pop)));
+                provinces.Add(new Province((IDictionary<string, object>)elem));
             }
 
         }

@@ -8,8 +8,6 @@ namespace GMDATA
     [JsonObject(MemberSerialization.OptIn)]
     public class Economy
     {
-        public static event Action<int> evtChange;
-
         public int current
         {
             get
@@ -19,8 +17,6 @@ namespace GMDATA
             set
             {
                 int changed = value - _current;
-                evtChange(changed);
-
                 _current = value;
             }
         }

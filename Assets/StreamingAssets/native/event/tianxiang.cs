@@ -8,7 +8,7 @@ namespace native
     {
         bool Precondition()
         {
-            return true;
+            return false;
         }
 
         class OPTION1 : Option

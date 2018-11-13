@@ -56,6 +56,15 @@ namespace GMDATA
             _taxbase = Int32.Parse((string)param["taxbase"]);
         }
 
+        public string name
+        {
+            get
+            {
+                return _name;
+            }
+        }
+
+
         public ProvInfo GetInfo()
         {
             return new ProvInfo { name = _name, pop = _taxbase};
