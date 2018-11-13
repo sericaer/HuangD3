@@ -12,6 +12,8 @@ public class TianxScene : MonoBehaviour
 
     void Awake()
     {
+        Debug.Log("TianxAwake");
+
         _Panel = GameObject.Find("Canvas/Panel");
 
         Provinces.evtAddProv += AddProv;

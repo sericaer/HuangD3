@@ -12,13 +12,6 @@ public class MainScene : MonoBehaviour
     void Awake()
     {
         Debug.Log("AWAKE");
-    }
-
-
-    // Use this for initialization
-    void Start ()
-    {
-        Debug.Log("START");
 
         _uiGMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
         _uiStability = GameObject.Find("Canvas/PanelTop/Stability/value").GetComponent<Text>();
@@ -26,43 +19,17 @@ public class MainScene : MonoBehaviour
         _uiEmperorName = GameObject.Find("Canvas/PanelEmperor/emperorName/value").GetComponent<Text>();
         _uiEmperorAge = GameObject.Find("Canvas/PanelEmperor/emperorDetail/age/value").GetComponent<Text>();
         _uiEmperorHeath = GameObject.Find("Canvas/PanelEmperor/emperorDetail/heath/slider").GetComponent<Slider>();
+
         _uiPanelCenter = GameObject.Find("Canvas/PanelCenter");
 
-        var PanelCountry = GameObject.Find("Canvas/PanelCountry").gameObject;
-        var PanelEmperor = GameObject.Find("Canvas/PanelEmperor/");
-        var PanelEmperorDetail = PanelEmperor.transform.Find("emperorDetail").gameObject;
+        _PanelCountry = GameObject.Find("Canvas/PanelCountry").gameObject;
+        _PanelEmperor = GameObject.Find("Canvas/PanelEmperor/");
+        _PanelEmperorDetail = _PanelEmperor.transform.Find("emperorDetail").gameObject;
         {
-            PanelEmperor.GetComponent<Button>().onClick.AddListener(() =>
+            _PanelEmperor.GetComponent<Button>().onClick.AddListener(() =>
             {
-                PanelEmperorDetail.SetActive(!PanelEmperorDetail.activeSelf);
-                PanelCountry.SetActive(!PanelCountry.activeSelf);
-            });
-        }
-
-        CountryFlag.evtAddFlag += (string flagname) => {
-            PanelEmperorDetail.SetActive(true);
-            PanelCountry.SetActive(true);
-            CountryStatusLogic.OnAddFlag(flagname);
-        };
-
-        CountryFlag.evtDelFlag += CountryStatusLogic.OnDelFlag;
-
-        if (InitScene.isNew)
-        {
-            _gmData = new GMData(InitScene.dynastyName, InitScene.yearName, InitScene.emperorName);
-        }
-        else
-        {
-            _gmData = GMData.Load();
-        }
-
-
-
-        var BtnSave = GameObject.Find("Canvas/PanelCenter/BtnSave").GetComponent<Button>();
-        {
-            BtnSave.onClick.AddListener(() =>
-            {
-                _gmData.Save();
+                _PanelEmperorDetail.SetActive(!_PanelEmperorDetail.activeSelf);
+                _PanelCountry.SetActive(!_PanelCountry.activeSelf);
             });
         }
 
@@ -71,7 +38,7 @@ public class MainScene : MonoBehaviour
         {
             if (toggle.isOn)
             {
-                SceneManager.LoadSceneAsync(toggle.name, LoadSceneMode.Additive);
+                SceneManager.LoadScene(toggle.name, LoadSceneMode.Additive);
             }
 
             toggle.onValueChanged.AddListener((bool isOn) => {
@@ -89,13 +56,41 @@ public class MainScene : MonoBehaviour
                     }
                 }
 
-                SceneManager.LoadSceneAsync(toggle.name, LoadSceneMode.Additive);
+                SceneManager.LoadScene(toggle.name, LoadSceneMode.Additive);
             });
         }
+    }
 
-        _uiPanelCenter.SetActive(false);
-        PanelEmperorDetail.SetActive(false);
-        PanelCountry.SetActive(false);
+
+    // Use this for initialization
+    void Start ()
+    {
+        Debug.Log("START");
+
+        CountryFlag.evtAddFlag += (string flagname) => {
+            _PanelEmperorDetail.SetActive(true);
+            _PanelCountry.SetActive(true);
+            CountryStatusLogic.OnAddFlag(flagname);
+        };
+
+        CountryFlag.evtDelFlag += CountryStatusLogic.OnDelFlag;
+
+        if (InitScene.isNew)
+        {
+            _gmData = GMData.NewGMData(InitScene.dynastyName, InitScene.yearName, InitScene.emperorName);
+        }
+        else
+        {
+            _gmData = GMData.Load();
+        }
+
+        var BtnSave = GameObject.Find("Canvas/PanelCenter/BtnSave").GetComponent<Button>();
+        {
+            BtnSave.onClick.AddListener(() =>
+            {
+                _gmData.Save();
+            });
+        }
 
         Timer.evtOnTimer += _gmData.date.Increase;
         Timer.evtOnTimer += StreamManager.EventManager.OnTimer;
@@ -105,7 +100,6 @@ public class MainScene : MonoBehaviour
         DialogLogic.evntDestory += Timer.unPause;
         HuangDAPI.DefCountryFlag.evtEnable += _gmData.countryFlag.Add;
         HuangDAPI.DefCountryFlag.evtDisable += _gmData.countryFlag.Del;
-
 
 
         _gmData.emperor.CurrentCountyFlags = _gmData.countryFlag.current;
@@ -125,6 +119,10 @@ public class MainScene : MonoBehaviour
         };
 
         HuangDAPI.Stability.stability = _gmData.stability;
+
+        _uiPanelCenter.SetActive(false);
+        _PanelEmperorDetail.SetActive(false);
+        _PanelCountry.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -165,5 +163,8 @@ public class MainScene : MonoBehaviour
 
     private GameObject _uiPanelCenter;
     private GameObject _uiDialog;
+    private GameObject _PanelCountry;
+    private GameObject _PanelEmperor;
+    private GameObject _PanelEmperorDetail;
 
 }

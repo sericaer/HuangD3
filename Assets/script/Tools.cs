@@ -3,6 +3,8 @@ using System.IO;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.Text;
 
 #if NET_4_6
 #else
@@ -261,92 +263,46 @@ namespace Tools
 		}
 	}
 
-    public class CSV
+    class CSVReader
     {
-		public static Dictionary<Tuple<string, string>, string> Anaylze(string filename)
-		{
-			Dictionary<Tuple<string, string>, string> result = new Dictionary<Tuple<string, string>, string>();
-                     
-			string[] lineArray = System.IO.File.ReadAllLines(filename);
-			string[] colum = lineArray[0].Split(',');
+        public CSVReader(string path)
+        {
+            if (!File.Exists(path))
+            {
+                throw new ArgumentException("can not find file:" + path);
+            }
 
-			for (int i = 1; i < lineArray.Length; i++)
-			{
-				string[] raw = lineArray[i].Split(',');
-                
-				for (int j = 1; j < raw.Length; j++)
-				{
-					if(raw[j].Length == 0)
-					{
-						continue;
-					}
+            string[] lineArray = File.ReadAllLines(path, Encoding.UTF8);
+            if (lineArray.Length < 2)
+            {
+                throw new ArgumentException("csv lines length < 2, file:" + path);
+            }
 
-					result.Add(new Tuple<string, string>(raw[0], colum[j]), raw[j]);
-				}            
-			}
+            string[] key = lineArray[0].Split(',');
+            for (int i = 1; i < lineArray.Length; i++)
+            {
+                string[] value = lineArray[i].Split(',');
 
-			return result;
-		}
+                dynamic data = new ExpandoObject();
+                var dict = (IDictionary<string, object>)data;
+                for (int j = 0; j < key.Length; j++)
+                {
+                    dict.Add(key[j], value[j]);
+                }
 
-        //public Cvs(string filename)
-        //{
-        //    /this.filename = filename;
+                _csv.Add(data);
+            }
+        }
 
-        //    //读取csv二进制文件  
-        //    TextAsset binAsset = Resources.Load(filename, typeof(TextAsset)) as TextAsset;
+        public dynamic[] rows
+        {
+            get
+            {
+                return _csv.ToArray();
+            }
+        }
 
-        //    //读取每一行的内容  
-        //    string[] lineArray = binAsset.text.Split('\r');
-
-        //    m_colIndex = lineArray[0].Replace("ID,", "").Split(',');
-
-        //    m_rowIndex = new string[lineArray.Length - 1];
-        //    m_ArrayData = new string[lineArray.Length - 1][];
-
-        //    for (int i = 0; i < lineArray.Length - 1; i++)
-        //    {
-        //        string[] raw = lineArray[i + 1].Split(',');
-        //        m_rowIndex[i] = raw[0];
-
-        //        m_ArrayData[i] = new string[raw.Length - 1];
-        //        Array.Copy(raw, 1, m_ArrayData[i], 0, raw.Length - 1);
-        //    }
-        //}
-
-//        public string Get(string row, string column)
-//        {
-//            try
-//            {
-//#if NITY_EDITOR_OSX
-//			    return row+"_"+column;
-//#else
-//                int iRow = Array.FindIndex(m_rowIndex, s => s == row);
-//                int iCol = Array.FindIndex(m_colIndex, s => s == column);
-
-//                return m_ArrayData[iRow][iCol];
-//#endif
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Debug.Log(filename + ":" + row + "," + column);
-        //        throw;
-        //    }
-        //}
-
-        //public string Get(string row)
-        //{
-        //    return Get(row, "CHI");
-        //}
-
-        //public int RowLength()
-        //{
-        //    return m_rowIndex.Length;
-        //}
-
-        //private string[] m_rowIndex;
-        //private string[] m_colIndex;
-        //private string[][] m_ArrayData;
-        //private string filename;
+        List<dynamic> _csv = new List<dynamic>();
     }
 
     [Serializable]  

@@ -11,12 +11,13 @@ public class StartScene : MonoBehaviour
         StreamManager.Load();
 
         GameObject.Find("Canvas/Panel/NewButton").GetComponent<Button>().onClick.AddListener(() => {
-            SceneManager.LoadSceneAsync("InitScene");
+            SceneManager.LoadScene("InitScene");
         });
 
         GameObject.Find("Canvas/Panel/LoadButton").GetComponent<Button>().onClick.AddListener(() =>
         {
-            SceneManager.LoadSceneAsync("MainScene");
+            SceneManager.LoadScene("MainScene");
+
         });
 
         GameObject.Find("Canvas/Panel/QuitButton").GetComponent<Button>().onClick.AddListener(() => {

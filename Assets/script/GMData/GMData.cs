@@ -12,16 +12,9 @@ namespace GMDATA
     [JsonObject(MemberSerialization.OptIn)]
     public class GMData
     {
-        public GMData(string dynastyName, string yearName, string emperorName)
+        public static GMData NewGMData(string dynastyName, string yearName, string emperorName)
         {
-            this.dynastyName = dynastyName;
-            this.yearName = yearName;
-
-            emperor = new Emperor(emperorName, Probability.GetRandomNum(18, 35), Probability.GetRandomNum(6, 10));
-            date = new Date();
-            stability = new Stability();
-            countryFlag = new CountryFlag();
-            provinces = new Provinces();
+            return new GMData(dynastyName, yearName, emperorName);
         }
 
         public void Save()
@@ -45,6 +38,29 @@ namespace GMDATA
             JsonSerializer serializer = new JsonSerializer();
             StringReader sr = new StringReader(json);
             return serializer.Deserialize(new JsonTextReader(sr), typeof(GMData)) as GMData;
+        }
+
+        private GMData()
+        {
+
+        }
+
+        private GMData(string dynastyName, string yearName, string emperorName)
+        {
+            this.dynastyName = dynastyName;
+            this.yearName = yearName;
+
+            emperor = new Emperor(emperorName, Probability.GetRandomNum(18, 35), Probability.GetRandomNum(6, 10));
+            date = new Date();
+            stability = new Stability();
+            countryFlag = new CountryFlag();
+            provinces = new Provinces();
+
+            foreach (var elem in StreamManager.ProvinceCSV.Defs)
+            {
+                provinces.Add(new Province(elem.name, Int32.Parse(elem.pop)));
+            }
+
         }
 
 

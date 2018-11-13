@@ -26,7 +26,8 @@ public class InitScene : MonoBehaviour
             emperorName = inputEmperorName.text;
             isNew = true;
 
-            SceneManager.LoadSceneAsync("MainScene");
+            SceneManager.LoadScene("MainScene");
+            SceneManager.LoadScene("TianXScene", LoadSceneMode.Additive);
         });
 
         GameObject.Find("Canvas/Panel/BtnRandom").GetComponent<Button>().onClick.AddListener(() => {
