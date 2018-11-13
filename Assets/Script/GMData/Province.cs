@@ -50,6 +50,10 @@ namespace GMDATA
     [JsonObject(MemberSerialization.OptIn)]
     public class Province
     {
+        public Province()
+        {
+        }
+
         public Province(IDictionary<string, object> param)
         {
             _name = param["name"] as string;
