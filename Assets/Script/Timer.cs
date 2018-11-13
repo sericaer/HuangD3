@@ -43,12 +43,26 @@ public class Timer : MonoBehaviour
         if(_pauseCount == 0)
         {
             evtOnTimer();
+
+            foreach(var elem in _list)
+            {
+                if(MainScene._gmData.date.Match(elem.Item1))
+                {
+                    elem.Item2();
+                }
+            }
         }
 
         StartCoroutine(OnTimer());
     }
 
+    public static void Register(string date, Action act)
+    {
+
+    }
+
     private static int _pauseCount = 0;
     private float m_fWaitTime;
 
+    private List<Tuple<string, Action>> _list = new List<Tuple<string, Action>>();
 }

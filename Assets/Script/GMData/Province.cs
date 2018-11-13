@@ -13,8 +13,6 @@ namespace GMDATA
         public static event Action<Func<ProvInfo>> evtAddProv;
         public static event Action<string> evtDelProv;
 
-
-
         public void Add(Province prov)
         {
             _list.Add(prov);
@@ -25,6 +23,14 @@ namespace GMDATA
         {
             _list.Remove(prov);
             evtDelProv(prov._name);
+        }
+
+        public Province[] All
+        {
+            get
+            {
+                return _list.ToArray();
+            }
         }
 
 
@@ -44,22 +50,32 @@ namespace GMDATA
     [JsonObject(MemberSerialization.OptIn)]
     public class Province
     {
-        public Province(string name, int pop)
+        public Province(IDictionary<string, object> param)
         {
-            _name = name;
-            _pop = pop;
+            _name = param["name"] as string;
+            _taxbase = Int32.Parse((string)param["taxbase"]);
         }
 
         public ProvInfo GetInfo()
         {
-            return new ProvInfo { name = _name, pop = _pop};
+            return new ProvInfo { name = _name, pop = _taxbase};
+        }
+
+        public Tuple<string,int>[] taxdetail
+        {
+            get
+            {
+                var rslt = new List<Tuple<string, int>>();
+                rslt.Add(new Tuple<string, int>("BASE", _taxbase));
+                return rslt.ToArray();
+            }
         }
 
         [JsonProperty]
         public string _name;
 
         [JsonProperty]
-        int _pop;
+        int _taxbase;
     }
 
     public class ProvInfo

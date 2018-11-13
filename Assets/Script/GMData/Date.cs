@@ -64,6 +64,11 @@ namespace GMDATA
             return _year.ToString() + "年" + _month + "月" + _day + "日";
         }
 
+        public bool Match(string value)
+        {
+            throw new NotImplementedException();
+        }
+
         [JsonProperty]
         private int _year;
 

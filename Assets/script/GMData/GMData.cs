@@ -53,6 +53,8 @@ namespace GMDATA
             emperor = new Emperor(emperorName, Probability.GetRandomNum(18, 35), Probability.GetRandomNum(6, 10));
             date = new Date();
             stability = new Stability();
+            economy = new Economy();
+
             countryFlag = new CountryFlag();
             provinces = new Provinces();
 
@@ -78,6 +80,9 @@ namespace GMDATA
 
         [JsonProperty]
         public Stability stability;
+
+        [JsonProperty]
+        public Economy economy;
 
         [JsonProperty]
         public CountryFlag countryFlag;
