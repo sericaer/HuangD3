@@ -52,18 +52,24 @@ namespace GMDATA
             this.yearName = yearName;
 
             emperor = new Emperor(emperorName, Probability.GetRandomNum(18, 35), Probability.GetRandomNum(6, 10));
+
             date = new Date();
             stability = new Stability();
             economy = new Economy();
+            military = new Military();
 
             countryFlag = new CountryFlag();
             provinces = new Provinces();
+            offices = new Offices();
 
-            foreach (var elem in StreamManager.ProvinceCSV.Defs)
+            foreach (var elem in StreamManager.CSVManager.Province)
             {
                 provinces.Add(new Province((IDictionary<string, object>)elem));
             }
-
+            foreach (var elem in StreamManager.CSVManager.Office)
+            {
+                offices.Add(new Office((IDictionary<string, object>)elem));
+            }
         }
 
 
@@ -86,10 +92,16 @@ namespace GMDATA
         public Economy economy;
 
         [JsonProperty]
+        public Military military;
+
+        [JsonProperty]
         public CountryFlag countryFlag;
 
         [JsonProperty]
         public Provinces provinces;
+
+        [JsonProperty]
+        public Offices offices;
 
         public delegate void EventGMTimeChange(string gmTime);
 

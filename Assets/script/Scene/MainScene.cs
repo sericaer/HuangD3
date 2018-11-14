@@ -119,6 +119,10 @@ public class MainScene : MonoBehaviour
             StreamManager.EventManager.AddEvent("TITLE_YEAR_INCOME_REPORT", desc, opts);
         });
 
+        Timer.Register("DATE:*/*/1", () => {
+            _gmData.economy.current -= _gmData.military.current;
+        });
+
         StreamManager.EventManager.evtNewGMEvent += (string v1, string v2, List<Tuple<string, Action>> v3) => { Timer.Pause(); };
         StreamManager.EventManager.evtNewGMEvent += this.OnNewGMEvent;
         DialogLogic.evntDestory += Timer.unPause;

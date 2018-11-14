@@ -59,8 +59,7 @@ public partial class StreamManager
         YearName.Load(Types);
         PersonName.Load(Types);
         EventManager.Load(Types);
-
-        ProvinceCSV.Load(path + "/prov.csv");
+        CSVManager.Load(path);
 
         var qurey = (from x in Types
                      where x.Name == "CountryFlags"
