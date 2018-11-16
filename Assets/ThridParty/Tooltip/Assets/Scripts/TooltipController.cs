@@ -15,6 +15,7 @@ public class TooltipController : MonoBehaviour
     { 
         Instance = this;
         _panelRect = TooltipPanel.GetComponent<RectTransform>();
+        TooltipText = TooltipPanel.GetComponentInChildren<Text>();
     }
 
     void Start()

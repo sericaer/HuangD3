@@ -13,15 +13,7 @@ public class MainScene : MonoBehaviour
     {
         Debug.Log("AWAKE");
 
-        var uiGMDate = GameObject.Find("Canvas/PanelTop/Time").GetComponent<TopInfo>();
-        uiGMDate.funcValue = () => { return _gmData.dynastyName + _gmData.yearName + _gmData.date; };
 
-        var uiStability = GameObject.Find("Canvas/PanelTop/Stability").GetComponent<TopInfo>();
-        uiStability.funcValue = () => { return _gmData.stability.current.ToString(); };
-
-        var uiEconomy = GameObject.Find("Canvas/PanelTop/Economy").GetComponent<TopInfo>();
-        uiEconomy.funcValue = () => { return _gmData.economy.current.ToString(); };
-        uiEconomy.funcDetail = () => { };
 
         _uiGMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
         _uiStability = GameObject.Find("Canvas/PanelTop/Stability/value").GetComponent<Text>();
@@ -94,6 +86,27 @@ public class MainScene : MonoBehaviour
         {
             _gmData = GMData.Load();
         }
+
+        var uiGMDate = GameObject.Find("Canvas/PanelTop/Time").GetComponent<TopInfo>();
+        uiGMDate.funcValue = () => { return _gmData.dynastyName + _gmData.yearName + _gmData.date; };
+
+        var uiStability = GameObject.Find("Canvas/PanelTop/Stability").GetComponent<TopInfo>();
+        uiStability.funcValue = () => { return _gmData.stability.current.ToString(); };
+
+        var uiEconomy = GameObject.Find("Canvas/PanelTop/Economy").GetComponent<TopInfo>();
+        uiEconomy.funcValue = () => { return _gmData.economy.current.ToString(); };
+        uiEconomy.funcDetail = () => {
+            string rslt = "";
+            rslt += "INCOME:\n";
+            int income = 0;
+            foreach (var elem in _gmData.economy.funcIncomeDetail())
+            {
+                rslt += "\t" + elem.Item1 + ": " + elem.Item2.ToString()+"\n";
+                income += elem.Item2;
+            }
+            rslt += "INCOMETOTAL: " + income.ToString();
+            return rslt;
+        };
 
         var BtnSave = GameObject.Find("Canvas/PanelCenter/BtnSave").GetComponent<Button>();
         {

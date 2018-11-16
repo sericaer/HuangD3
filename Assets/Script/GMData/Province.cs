@@ -74,6 +74,20 @@ namespace GMDATA
             return new ProvInfo { name = _name, pop = _taxbase};
         }
 
+        public int tax
+        {
+            get
+            {
+                int rslt = 0;
+                foreach(var elem in taxdetail)
+                {
+                    rslt += elem.Item2;
+                }
+
+                return rslt;
+            }
+        }
+
         public Tuple<string,int>[] taxdetail
         {
             get

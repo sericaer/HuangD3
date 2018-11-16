@@ -1,7 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+
+using UnityEngine;
+
 using Tools;
 using Newtonsoft.Json;
-using System;
+
 
 namespace GMDATA
 {
@@ -20,6 +25,9 @@ namespace GMDATA
                 _current = value;
             }
         }
+
+        public Func<Tuple<string, int>[]> funcIncomeDetail;
+        public Func<Tuple<string, int>[]> funcPayoutDetail;
 
         [JsonProperty]
         private int _current = Probability.GetRandomNum(50, 100);

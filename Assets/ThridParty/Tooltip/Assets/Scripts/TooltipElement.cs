@@ -14,7 +14,8 @@ public class TooltipElement : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         GameObject UIRoot = GameObject.Find("Canvas").gameObject;
         tooltip = Instantiate(Resources.Load(string.Format("Prefabs/TooltipCanvas")), UIRoot.transform) as GameObject;
-        tooltip.GetComponent<TooltipController>().TooltipText.text = TooltipText;
+        var rrr = tooltip.GetComponent<TooltipController>();
+        rrr.TooltipText.text = TooltipText;
     }
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)

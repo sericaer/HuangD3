@@ -70,6 +70,21 @@ namespace GMDATA
             {
                 offices.Add(new Office((IDictionary<string, object>)elem));
             }
+
+            economy.funcIncomeDetail = () =>{
+                var rlst = new List<Tuple<string, int>>();
+                foreach (var prov in provinces.All)
+                {
+                    rlst.Add(new Tuple<string, int>(prov.name, prov.tax));
+                }
+
+                return rlst.ToArray();
+            };
+
+            economy.funcPayoutDetail = () => {
+                var rlst = new List<Tuple<string, int>>();
+                return rlst.ToArray();
+            };
         }
 
 

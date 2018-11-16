@@ -12,15 +12,18 @@ public class TopInfo : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        _uiValue = GetComponentInChildren<Text>();
+        _uiValue = this.transform.Find("value").GetComponent<Text>();
         _uiToolTip = GetComponent<TooltipElement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        _uiValue.text = funcValue();
-
+        if(funcValue != null)
+        {
+            _uiValue.text = funcValue();
+        }
+        
         if (funcDetail != null)
         {
             _uiToolTip.TooltipText = funcDetail();

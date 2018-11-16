@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -377,9 +377,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df2bae913a24ef418c4b867d98e5ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TooltipText: Tooltips on the right side of the screen will need to be repositioned
-    if they are too large
-  tooltip: {fileID: 0}
 --- !u!114 &363796852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -503,8 +500,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df2bae913a24ef418c4b867d98e5ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TooltipText: A tooltip that is both on the right side and the bottom of the screen
-  tooltip: {fileID: 0}
 --- !u!114 &569836529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,8 +623,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df2bae913a24ef418c4b867d98e5ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TooltipText: Small Tooltip
-  tooltip: {fileID: 0}
 --- !u!114 &622556761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -901,9 +894,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df2bae913a24ef418c4b867d98e5ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TooltipText: The location and size of the text in this tooltip would cause it to
-    expand offscreen
-  tooltip: {fileID: 0}
 --- !u!114 &873275119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1113,10 +1103,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1131287411}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8df2bae913a24ef418c4b867d98e5ad9, type: 3}
+  m_Script: {fileID: 11500000, guid: d54be4bee4d050549abc92fca7c04b8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TooltipText: A tooltip
+  TooltipText: 
   tooltip: {fileID: 0}
 --- !u!114 &1131287414
 MonoBehaviour:
@@ -1617,9 +1607,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df2bae913a24ef418c4b867d98e5ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TooltipText: This button has a different tooltip, that is also longer and will affect
-    the scaling
-  tooltip: {fileID: 0}
 --- !u!114 &1869484509
 MonoBehaviour:
   m_ObjectHideFlags: 0
