@@ -13,6 +13,16 @@ public class MainScene : MonoBehaviour
     {
         Debug.Log("AWAKE");
 
+        var uiGMDate = GameObject.Find("Canvas/PanelTop/Time").GetComponent<TopInfo>();
+        uiGMDate.funcValue = () => { return _gmData.dynastyName + _gmData.yearName + _gmData.date; };
+
+        var uiStability = GameObject.Find("Canvas/PanelTop/Stability").GetComponent<TopInfo>();
+        uiStability.funcValue = () => { return _gmData.stability.current.ToString(); };
+
+        var uiEconomy = GameObject.Find("Canvas/PanelTop/Economy").GetComponent<TopInfo>();
+        uiEconomy.funcValue = () => { return _gmData.economy.current.ToString(); };
+        uiEconomy.funcDetail = () => { };
+
         _uiGMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
         _uiStability = GameObject.Find("Canvas/PanelTop/Stability/value").GetComponent<Text>();
         _uiEconomy  = GameObject.Find("Canvas/PanelTop/Economy/value").GetComponent<Text>();
