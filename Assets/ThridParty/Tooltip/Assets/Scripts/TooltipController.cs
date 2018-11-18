@@ -20,6 +20,12 @@ public class TooltipController : MonoBehaviour
 
     void Start()
     {
+        if (TooltipText.text.Length == 0)
+        {
+            this.gameObject.SetActive(false);
+            return;
+        }
+
         transform.position = RefreshPosition();
     }
 

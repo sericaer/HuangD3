@@ -13,7 +13,14 @@ public class MainScene : MonoBehaviour
     {
         Debug.Log("AWAKE");
 
-
+        if (InitScene.isNew)
+        {
+            _gmData = GMData.NewGMData(InitScene.dynastyName, InitScene.yearName, InitScene.emperorName);
+        }
+        else
+        {
+            _gmData = GMData.Load();
+        }
 
         _uiGMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
         _uiStability = GameObject.Find("Canvas/PanelTop/Stability/value").GetComponent<Text>();
@@ -26,15 +33,6 @@ public class MainScene : MonoBehaviour
         _uiPanelCenter = GameObject.Find("Canvas/PanelCenter");
 
         _PanelCountry = GameObject.Find("Canvas/PanelCountry").gameObject;
-        _PanelEmperor = GameObject.Find("Canvas/PanelEmperor/");
-        _PanelEmperorDetail = _PanelEmperor.transform.Find("emperorDetail").gameObject;
-        {
-            _PanelEmperor.GetComponent<Button>().onClick.AddListener(() =>
-            {
-                _PanelEmperorDetail.SetActive(!_PanelEmperorDetail.activeSelf);
-                _PanelCountry.SetActive(!_PanelCountry.activeSelf);
-            });
-        }
 
         var Toggles = GameObject.Find("Canvas/PanelRight/").GetComponentsInChildren<Toggle>();
         foreach (var toggle in Toggles)
@@ -77,15 +75,6 @@ public class MainScene : MonoBehaviour
         };
 
         CountryFlag.evtDelFlag += CountryStatusLogic.OnDelFlag;
-
-        if (InitScene.isNew)
-        {
-            _gmData = GMData.NewGMData(InitScene.dynastyName, InitScene.yearName, InitScene.emperorName);
-        }
-        else
-        {
-            _gmData = GMData.Load();
-        }
 
         var uiGMDate = GameObject.Find("Canvas/PanelTop/Time").GetComponent<TopInfo>();
         uiGMDate.funcValue = () => { return _gmData.dynastyName + _gmData.yearName + _gmData.date; };
@@ -171,8 +160,6 @@ public class MainScene : MonoBehaviour
         HuangDAPI.Stability.stability = _gmData.stability;
 
         _uiPanelCenter.SetActive(false);
-        _PanelEmperorDetail.SetActive(false);
-        _PanelCountry.SetActive(false);
     }
 	
 	// Update is called once per frame

@@ -1041,6 +1041,7 @@ GameObject:
   - component: {fileID: 358495465}
   - component: {fileID: 358495464}
   - component: {fileID: 358495463}
+  - component: {fileID: 358495466}
   m_Layer: 5
   m_Name: heath
   m_TagString: Untagged
@@ -1123,6 +1124,19 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 358495461}
+--- !u!114 &358495466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 358495461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d54be4bee4d050549abc92fca7c04b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TooltipText: 
+  tooltip: {fileID: 0}
 --- !u!1 &374774730
 GameObject:
   m_ObjectHideFlags: 0
@@ -2882,6 +2896,7 @@ GameObject:
   - component: {fileID: 1188675693}
   - component: {fileID: 1188675695}
   - component: {fileID: 1188675696}
+  - component: {fileID: 1188675697}
   m_Layer: 5
   m_Name: PanelEmperor
   m_TagString: Untagged
@@ -2996,6 +3011,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 1
   m_VerticalFit: 1
+--- !u!114 &1188675697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1188675691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88e92ed3c10edd64ab8538eada71a965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1197949540
 GameObject:
   m_ObjectHideFlags: 0

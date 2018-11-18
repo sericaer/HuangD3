@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class CountryStatusLogic : MonoBehaviour
 {
+    public static CountryStatusLogic inst = null;
+
     public static void OnAddFlag(string name)
     {
         inst.AddFlag(name);
@@ -20,6 +22,7 @@ public class CountryStatusLogic : MonoBehaviour
     void Awake()
     {
         Debug.Log("CountryStatusLogic Awake");
+        this.gameObject.SetActive(false);
         inst = this;
     }
 
@@ -57,5 +60,5 @@ public class CountryStatusLogic : MonoBehaviour
         }
     }
 
-    private static CountryStatusLogic inst = null;
+    
 }
