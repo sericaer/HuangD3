@@ -22,6 +22,8 @@ public class MainScene : MonoBehaviour
             _gmData = GMData.Load();
         }
 
+        _gmData.emperor.CurrentCountyFlags = _gmData.countryFlag.current;
+
         _uiGMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
         _uiStability = GameObject.Find("Canvas/PanelTop/Stability/value").GetComponent<Text>();
         _uiEconomy  = GameObject.Find("Canvas/PanelTop/Economy/value").GetComponent<Text>();
@@ -141,7 +143,7 @@ public class MainScene : MonoBehaviour
         HuangDAPI.DefCountryFlag.evtEnable += _gmData.countryFlag.Add;
         HuangDAPI.DefCountryFlag.evtDisable += _gmData.countryFlag.Del;
 
-        _gmData.emperor.CurrentCountyFlags = _gmData.countryFlag.current;
+
         HuangDAPI.Stability.evtChange += (int value) => {
 
             var opts = new List<Tuple<string, Action>>();

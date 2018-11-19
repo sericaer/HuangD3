@@ -16,7 +16,11 @@ namespace GMDATA
         public void Add(Province prov)
         {
             _list.Add(prov);
-            evtAddProv(prov.GetInfo);
+            if(evtAddProv != null)
+            {
+                evtAddProv(prov.GetInfo);
+            }
+
         }
 
         public void Del(Province prov)
