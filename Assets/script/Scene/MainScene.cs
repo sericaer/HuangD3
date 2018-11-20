@@ -24,17 +24,8 @@ public class MainScene : MonoBehaviour
 
         _gmData.emperor.CurrentCountyFlags = _gmData.countryFlag.current;
 
-        _uiGMTime = GameObject.Find("Canvas/PanelTop/Time/value").GetComponent<Text>();
-        _uiStability = GameObject.Find("Canvas/PanelTop/Stability/value").GetComponent<Text>();
-        _uiEconomy  = GameObject.Find("Canvas/PanelTop/Economy/value").GetComponent<Text>();
-
-        _uiEmperorName = GameObject.Find("Canvas/PanelEmperor/emperorName/value").GetComponent<Text>();
-        _uiEmperorAge = GameObject.Find("Canvas/PanelEmperor/emperorDetail/age/value").GetComponent<Text>();
-        _uiEmperorHeath = GameObject.Find("Canvas/PanelEmperor/emperorDetail/heath/slider").GetComponent<Slider>();
 
         _uiPanelCenter = GameObject.Find("Canvas/PanelCenter");
-
-        _PanelCountry = GameObject.Find("Canvas/PanelCountry").gameObject;
 
         var Toggles = GameObject.Find("Canvas/PanelRight/").GetComponentsInChildren<Toggle>();
         foreach (var toggle in Toggles)
@@ -70,33 +61,9 @@ public class MainScene : MonoBehaviour
     {
         Debug.Log("START");
 
-        CountryFlag.evtAddFlag += (string flagname) => {
-            _PanelEmperorDetail.SetActive(true);
-            _PanelCountry.SetActive(true);
+        CountryFlag.evtAddFlag += (string flagname) =>{
+            //CountryStatusLogic.inst.gameObject.SetActive(true)
             CountryStatusLogic.OnAddFlag(flagname);
-        };
-
-        CountryFlag.evtDelFlag += CountryStatusLogic.OnDelFlag;
-
-        var uiGMDate = GameObject.Find("Canvas/PanelTop/Time").GetComponent<TopInfo>();
-        uiGMDate.funcValue = () => { return _gmData.dynastyName + _gmData.yearName + _gmData.date; };
-
-        var uiStability = GameObject.Find("Canvas/PanelTop/Stability").GetComponent<TopInfo>();
-        uiStability.funcValue = () => { return _gmData.stability.current.ToString(); };
-
-        var uiEconomy = GameObject.Find("Canvas/PanelTop/Economy").GetComponent<TopInfo>();
-        uiEconomy.funcValue = () => { return _gmData.economy.current.ToString(); };
-        uiEconomy.funcDetail = () => {
-            string rslt = "";
-            rslt += "INCOME:\n";
-            int income = 0;
-            foreach (var elem in _gmData.economy.funcIncomeDetail())
-            {
-                rslt += "\t" + elem.Item1 + ": " + elem.Item2.ToString()+"\n";
-                income += elem.Item2;
-            }
-            rslt += "INCOMETOTAL: " + income.ToString();
-            return rslt;
         };
 
         var BtnSave = GameObject.Find("Canvas/PanelCenter/BtnSave").GetComponent<Button>();
@@ -137,8 +104,8 @@ public class MainScene : MonoBehaviour
             _gmData.economy.current -= _gmData.military.current;
         });
 
-        StreamManager.EventManager.evtNewGMEvent += (string v1, string v2, List<Tuple<string, Action>> v3) => { Timer.Pause(); };
         StreamManager.EventManager.evtNewGMEvent += this.OnNewGMEvent;
+        DialogLogic.evntCreate += Timer.Pause;
         DialogLogic.evntDestory += Timer.unPause;
         HuangDAPI.DefCountryFlag.evtEnable += _gmData.countryFlag.Add;
         HuangDAPI.DefCountryFlag.evtDisable += _gmData.countryFlag.Del;
@@ -167,15 +134,6 @@ public class MainScene : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        _uiGMTime.text = _gmData.dynastyName + _gmData.yearName + _gmData.date;
-        _uiStability.text = _gmData.stability.current.ToString();
-        _uiEconomy.text = _gmData.economy.current.ToString();
-
-        _uiEmperorName.text = _gmData.emperor.name;
-        _uiEmperorAge.text  = _gmData.emperor.age.ToString();
-        _uiEmperorHeath.value = _gmData.emperor.heath;
-        _uiEmperorHeath.maxValue = _gmData.emperor.heathMax;
-
         OnKeyBoard();
     }
 
@@ -193,19 +151,8 @@ public class MainScene : MonoBehaviour
         _uiDialog = DialogLogic.newDialogInstace(titile, content, listOptions);
     }
 
-    private Text _uiGMTime;
-    private Text _uiStability;
-    private Text _uiEconomy;
-
-    private Text _uiEmperorName;
-    private Text _uiEmperorAge;
-    private Slider _uiEmperorHeath;
-
     private GameObject _uiPanelCenter;
     private GameObject _uiDialog;
-    private GameObject _PanelCountry;
-    private GameObject _PanelEmperor;
-    private GameObject _PanelEmperorDetail;
 
 
 }

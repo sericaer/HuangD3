@@ -22,19 +22,19 @@ namespace HuangDAPI
             title = StreamManager.UIDesc.Get(this.GetType().Name + "_TITLE");
             content = StreamManager.UIDesc.Get(this.GetType().Name + "_CONTENT");
 
-            _funcPrecondition = GetDelegateInSubEvent<Func<bool>>("Precondition",
+            _funcPrecondition = GetDelegate<Func<bool>>("Precondition",
                                                           () =>
                                                           {
                                                               return false;
                                                           });
-            _funcTitle = GetDelegateInSubEvent<Func<string>>("Title",
+            _funcTitle = GetDelegate<Func<string>>("Title",
                                                 () =>
                                                 {
                                                     FieldInfo field = _subFields.Where(x => x.Name == "title").First();
                                                     return (string)field.GetValue(this);
                                                 });
 
-            _funcContent = GetDelegateInSubEvent<Func<string>>("Content",
+            _funcContent = GetDelegate<Func<string>>("Content",
                                                             () =>
                                                             {
                                                                 FieldInfo field = _subFields.Where(x => x.Name == "content").First();
@@ -79,14 +79,14 @@ namespace HuangDAPI
                 //                                                   {
                 //                                                       return true;
                 //                                                   });
-                _funcDesc = GetDelegateInSubEvent<Func<string>>("Desc",
+                _funcDesc = GetDelegate<Func<string>>("Desc",
                                                                  () =>
                                                                  {
                                                                      FieldInfo field = _subFields.Where(x => x.Name == "desc").First();
                                                                      string Desc = (string)field.GetValue(this);
                                                                      return Desc;
                                                                  });
-                _funcOnSelect = GetDelegateInSubEvent<Action>("OnSelect",
+                _funcOnSelect = GetDelegate<Action>("OnSelect",
                                                                         () =>
                                                                         {
                                                                         });
@@ -122,32 +122,5 @@ namespace HuangDAPI
 
         protected string title;
         protected string content;
-    }
-
-    public class ReflectBase
-    {
-        public ReflectBase()
-        {
-            Type type = this.GetType();
-
-            _subFields = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static).ToList();
-
-            _subMethods = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static).ToList();
-        }
-
-
-        protected T GetDelegateInSubEvent<T>(string delegateName, T defaultValue)
-        {
-            IEnumerable<MethodInfo> methodIEnum = _subMethods.Where(x => x.Name == delegateName);
-            if (methodIEnum.Count() == 0)
-            {
-                return defaultValue;
-
-            }
-            return (T)(object)Delegate.CreateDelegate(typeof(T), this, methodIEnum.First());
-        }
-
-        protected List<FieldInfo> _subFields;
-        protected List<MethodInfo> _subMethods;
     }
 }

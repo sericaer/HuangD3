@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace HuangDAPI
 {
-    public class DefCountryFlag
+    public class DefCountryFlag : ReflectBase
     {
         public static DefCountryFlag Find(string name)
         {
@@ -17,11 +17,16 @@ namespace HuangDAPI
         public static event Action<string> evtEnable;
         public static event Action<string> evtDisable;
         public readonly Affect affect;
+        public readonly Func<string> describe;
 
         public DefCountryFlag()
         {
             Debug.Log(this.GetType().Name);
             affect = new Affect(this);
+            describe = GetDelegate<Func<string>>("Describe",
+                                                 () => {
+                                                     return string.Format("FLAG_{0}_DESC", this.GetType().Name);
+                                                 });
 
             _dict.Add(this.GetType().Name, this);
         }
@@ -39,31 +44,17 @@ namespace HuangDAPI
         private static Dictionary<string, DefCountryFlag> _dict = new Dictionary<string, DefCountryFlag>();
     }
 
-    public class Affect
+    public class Affect : ReflectBase
     {
         public Func<int, int> EmperorHeath = null;
         public Func<double, double> CountryTax = null;
         public Func<double, double> CountryReb = null;
 
-        public Affect(object outter)
+        public Affect(object outter) : base(outter)
         {
-            _outter = outter;
-            EmperorHeath = AssocAffect<int, int>("affectEmperorHeath");
-            CountryTax = AssocAffect<double, double>("affectCountryTax");
-            CountryReb = AssocAffect<double, double>("affectCountryReb");
+            EmperorHeath = GetDelegate<Func<int, int>>("affectEmperorHeath");
+            CountryTax = GetDelegate <Func<double, double>>("affectCountryTax");
+            CountryReb = GetDelegate <Func<double, double>>("affectCountryReb");
         }
-
-        private Func<T, TResult> AssocAffect<T, TResult>(string methodName)
-        {
-            MethodInfo method = _outter.GetType().GetMethod(methodName);
-            if (method != null)
-            {
-                return (Func<T, TResult>)(object)Delegate.CreateDelegate(typeof(Func<T, TResult>), _outter, method);
-            }
-
-            return null;
-        }
-
-        object _outter;
     }
 }

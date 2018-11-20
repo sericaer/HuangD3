@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 114902325894158144}
   - component: {fileID: 114180369725079026}
   - component: {fileID: 114622633207045968}
-  - component: {fileID: 114773543522788224}
+  - component: {fileID: 114645517471027082}
   m_Layer: 5
   m_Name: TooltipCanvas
   m_TagString: Untagged
@@ -98,6 +98,20 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
+--- !u!114 &114645517471027082
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1938474424864278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96c35baf1d619ae4f93811d48824f213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TooltipPanel: {fileID: 1869442060535710}
+  TooltipText: {fileID: 0}
+  PaddingFromMouse: 0
 --- !u!114 &114739553993997552
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -131,20 +145,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: New Text
---- !u!114 &114773543522788224
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1938474424864278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02b1e2870e06e25499a68ef96048cced, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TooltipPanel: {fileID: 1869442060535710}
-  TooltipText: {fileID: 0}
-  PaddingFromMouse: 15
 --- !u!114 &114898700876209094
 MonoBehaviour:
   m_ObjectHideFlags: 1

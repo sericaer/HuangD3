@@ -43,11 +43,21 @@ public class CountryStatusLogic : MonoBehaviour
         GameObject Text = new GameObject("Text", typeof(RectTransform));
         Text.AddComponent<CanvasRenderer>();
         Text.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 30);
+
         var text = Text.AddComponent<Text>();
         text.text = name;
         text.font = Resources.FindObjectsOfTypeAll<Font>()[0];
         text.color = Color.black;
         text.alignment = TextAnchor.MiddleCenter;
+
+
+        var desc = HuangDAPI.DefCountryFlag.Find(name).describe;
+        if(desc != null)
+        {
+            var tooltip = Text.AddComponent<TooltipElement>();
+            tooltip.TooltipText = desc();
+        }
+
         Text.transform.SetParent(this.transform.Find("Status").transform);
     }
 

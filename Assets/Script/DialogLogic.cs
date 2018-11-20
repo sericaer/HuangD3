@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class DialogLogic : MonoBehaviour
 {
     public static event Action evntDestory;
+    public static event Action evntCreate;
 
 	// Use this for initialization
 	void Start ()
@@ -30,6 +31,8 @@ public class DialogLogic : MonoBehaviour
 
     public static GameObject newDialogInstace(string title, string content, List<Tuple<string, Action>> options)
 	{
+        evntCreate();
+
 		GameObject UIRoot = GameObject.Find("Canvas").gameObject;
         GameObject dialog = Instantiate(Resources.Load(string.Format("Prefabs/DialogEvent")), UIRoot.transform) as GameObject;
 
