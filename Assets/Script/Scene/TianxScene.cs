@@ -22,7 +22,10 @@ public class TianxScene : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-
+        foreach(var prov in MainScene._gmData.provinces.All)
+        {
+            AddProv(prov.GetInfo);
+        }
     }
 	
 	// Update is called once per frame

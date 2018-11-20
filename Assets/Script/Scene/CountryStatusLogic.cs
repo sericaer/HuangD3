@@ -29,7 +29,10 @@ public class CountryStatusLogic : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-
+        foreach(var name in MainScene._gmData.countryFlag.names)
+        {
+            AddFlag(name);
+        }
     }
 	
 	// Update is called once per frame

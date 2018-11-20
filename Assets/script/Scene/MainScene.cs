@@ -76,17 +76,10 @@ public class MainScene : MonoBehaviour
         Timer.Register("DATE:*/1/2", () =>{
             string desc = "";
             int value = 0;
-            foreach(var prov in _gmData.provinces.All)
+            foreach(var elem in _gmData.economy.funcIncomeDetail())
             {
-                desc += prov.name;
-                foreach(var detail in prov.taxdetail)
-                {
-                    desc += detail.Item1 + ": " + detail.Item2.ToString() + ", ";
-                    value += detail.Item2;
-                }
-                desc.TrimEnd(' ');
-                desc.TrimEnd(',');
-                desc += "\n";
+                desc += elem.Item1 + ": " + elem.Item2.ToString() + "\n";
+                value += elem.Item2;
             }
 
             desc += "TOTAL: " + value.ToString();

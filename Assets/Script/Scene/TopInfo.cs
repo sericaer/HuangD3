@@ -30,15 +30,25 @@ public class TopInfo : MonoBehaviour
                     funcValue = () => { return MainScene._gmData.economy.current.ToString(); };
 
                     funcDetail = () => {
-                        string rslt = "";
-                        rslt += "INCOME:\n";
+                        
+                        string rslt = "INCOME:\n";
                         int income = 0;
                         foreach (var elem in MainScene._gmData.economy.funcIncomeDetail())
                         {
                             rslt += "\t" + elem.Item1 + ": " + elem.Item2.ToString() + "\n";
                             income += elem.Item2;
                         }
-                        rslt += "INCOMETOTAL: " + income.ToString();
+                        rslt += "INCOME_TOTAL: " + income.ToString() + "\n";
+
+                        rslt += "PAYOUT:\n";
+                        int payout = 0;
+                        foreach (var elem in MainScene._gmData.economy.funcPayoutDetail())
+                        {
+                            rslt += "\t" + elem.Item1 + ": " + elem.Item2.ToString() + "\n";
+                            payout += elem.Item2;
+                        }
+                        rslt += "PAYOUT_TOTAL: " + income.ToString() + "\n";
+                        rslt += "BALANCE: " + (income - payout).ToString();
                         return rslt;
                     };
                 }

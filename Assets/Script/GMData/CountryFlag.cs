@@ -44,6 +44,11 @@ namespace GMDATA
         [OnDeserialized]
         internal void OnDeserializedMethod(StreamingContext context)
         {
+            if (evtAddFlag == null)
+            {
+                return;
+            }
+
             foreach(var name in _names)
             {
                 evtAddFlag(name);

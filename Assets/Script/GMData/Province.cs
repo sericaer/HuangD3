@@ -44,6 +44,11 @@ namespace GMDATA
         [OnDeserialized]
         internal void OnDeserializedMethod(StreamingContext context)
         {
+            if(evtAddProv == null)
+            {
+                return;
+            }
+
             foreach(var prov in _list)
             {
                 evtAddProv(prov.GetInfo);
