@@ -71,8 +71,6 @@ public partial class StreamManager
 
     private string GenerateFlags(string path)
     {
-        List<string> defineSourceCodes = new List<string>();
-
         string[] fileNames = Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories);
         CSharpCompiler.ScriptBundleLoader.IScriptBundle bd = csharpLoader.LoadAndWatchScriptsBundle(fileNames);
 

@@ -21,7 +21,6 @@ namespace GMDATA
             }
             set
             {
-                int changed = value - _current;
                 _current = value;
             }
         }

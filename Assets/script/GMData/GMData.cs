@@ -38,7 +38,32 @@ namespace GMDATA
 
             JsonSerializer serializer = new JsonSerializer();
             StringReader sr = new StringReader(json);
-            return serializer.Deserialize(new JsonTextReader(sr), typeof(GMData)) as GMData;
+
+            GMData rslt = serializer.Deserialize(new JsonTextReader(sr), typeof(GMData)) as GMData;
+            rslt.Initializer();
+
+            return rslt;
+        }
+
+        private void Initializer()
+        {
+            economy.funcIncomeDetail = () => {
+                var rlst = new List<Tuple<string, int>>();
+                foreach (var prov in provinces.All)
+                {
+                    rlst.Add(new Tuple<string, int>(prov.name, prov.tax));
+                }
+
+                return rlst.ToArray();
+            };
+
+            economy.funcPayoutDetail = () => {
+                var rlst = new List<Tuple<string, int>>();
+                rlst.Add(new Tuple<string, int>("Military", military.current));
+                return rlst.ToArray();
+            };
+
+            emperor.CurrentCountyFlags = countryFlag.current;
         }
 
         private GMData()
@@ -71,20 +96,7 @@ namespace GMDATA
                 offices.Add(new Office((IDictionary<string, object>)elem));
             }
 
-            economy.funcIncomeDetail = () =>{
-                var rlst = new List<Tuple<string, int>>();
-                foreach (var prov in provinces.All)
-                {
-                    rlst.Add(new Tuple<string, int>(prov.name, prov.tax));
-                }
-
-                return rlst.ToArray();
-            };
-
-            economy.funcPayoutDetail = () => {
-                var rlst = new List<Tuple<string, int>>();
-                return rlst.ToArray();
-            };
+            Initializer();
         }
 
 
@@ -117,10 +129,6 @@ namespace GMDATA
 
         [JsonProperty]
         public Offices offices;
-
-        public delegate void EventGMTimeChange(string gmTime);
-
-        public event EventGMTimeChange eventGMTimeChange;
 
         private static string savePath = Application.persistentDataPath + "/save";
     }

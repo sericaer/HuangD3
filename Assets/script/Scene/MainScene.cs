@@ -22,9 +22,6 @@ public class MainScene : MonoBehaviour
             _gmData = GMData.Load();
         }
 
-        _gmData.emperor.CurrentCountyFlags = _gmData.countryFlag.current;
-
-
         _uiPanelCenter = GameObject.Find("Canvas/PanelCenter");
 
         var Toggles = GameObject.Find("Canvas/PanelRight/").GetComponentsInChildren<Toggle>();
@@ -148,11 +145,11 @@ public class MainScene : MonoBehaviour
 
     void OnNewGMEvent(string titile, string content, List<Tuple<string, Action>> listOptions)
     {
-        _uiDialog = DialogLogic.newDialogInstace(titile, content, listOptions);
+        DialogLogic.newDialogInstace(titile, content, listOptions);
     }
 
     private GameObject _uiPanelCenter;
-    private GameObject _uiDialog;
+    //private GameObject _uiDialog;
 
 
 }
