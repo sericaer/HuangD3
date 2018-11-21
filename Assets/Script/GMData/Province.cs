@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
+using System.Dynamic;
 
 namespace GMDATA
 {
@@ -77,7 +78,17 @@ namespace GMDATA
             }
         }
 
-
+        public dynamic info
+        {
+            get
+            {
+                dynamic rslt = new ExpandoObject();
+                var dict = (IDictionary<string, object>)rslt;
+                dict.Add("name", name);
+                dict.Add("tax", tax);
+                return rslt;
+            }
+        }
         public ProvInfo GetInfo()
         {
             return new ProvInfo { name = _name, pop = _taxbase};
