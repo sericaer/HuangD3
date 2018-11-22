@@ -32,10 +32,10 @@ namespace Tools
                 return true;
             }
 
-            int prb = (int)(prob * 1000);
+            int prb = (int)(prob * 10000);
 
             System.Random ra = new System.Random(GetRandomSeed());
-            int result = ra.Next(1, 1000);
+            int result = ra.Next(1, 10000);
             if (result <= prb)
             {
                 return true;
