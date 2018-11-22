@@ -156,9 +156,12 @@ namespace native
 
         //    name = eventname;
         //}
+
         public int affectEmperorHeath(int baseValue)
         {
-            return -5;
+            return emperorHeathAffect;
         }
+
+        public int emperorHeathAffect = -1;
     }
 }
