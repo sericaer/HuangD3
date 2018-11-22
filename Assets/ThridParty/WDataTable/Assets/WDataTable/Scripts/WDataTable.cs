@@ -186,6 +186,11 @@ namespace WDT
             for (int i = 0; i < m_datas.Count; i++)
                 m_rowInfos.Add(new RowElementInfo {rowIndex = i, bindDataTable = this, columnsDefs = m_columnDefs});
 
+            if(tableHeight >= (m_datas.Count+1)*itemHeight)
+            {
+                m_scrollbarRectTransform.gameObject.SetActive(false);
+            }
+
             UpdateColumnWidths();
             m_head.SetColumnInfo(m_columnDefs, this);
             m_scrollRect.prefabSource.prefabName = rowPrefab;
