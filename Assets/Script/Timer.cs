@@ -65,4 +65,9 @@ public class Timer : MonoBehaviour
     private float m_fWaitTime;
 
     private static List<Tuple<string, Action>> _list = new List<Tuple<string, Action>>();
+
+    internal static void Clear()
+    {
+        _list.Clear();
+    }
 }

@@ -162,6 +162,6 @@ namespace native
             return emperorHeathAffect;
         }
 
-        public int emperorHeathAffect = -1;
+        public int emperorHeathAffect = -10;
     }
 }

@@ -25,7 +25,6 @@ public class InitScene : MonoBehaviour
             yearName = inputYearName.text;
             emperorName = inputEmperorName.text;
             isNew = true;
-
             SceneManager.LoadScene("MainScene");
         });
 

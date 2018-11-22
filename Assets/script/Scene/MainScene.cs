@@ -59,7 +59,6 @@ public class MainScene : MonoBehaviour
         Debug.Log("START");
 
         CountryFlag.evtAddFlag += (string flagname) =>{
-            //CountryStatusLogic.inst.gameObject.SetActive(true)
             CountryStatusLogic.OnAddFlag(flagname);
         };
         CountryFlag.evtDelFlag += (string flagname) => {
@@ -95,6 +94,22 @@ public class MainScene : MonoBehaviour
 
         Timer.Register("DATE:*/*/1", () => {
             _gmData.economy.current -= _gmData.military.current;
+        });
+
+        Timer.Register("DATE:*/*/*", () =>{
+            if (_gmData.emperor.heath <= 0)
+            {
+                var opts = new List<Tuple<string, Action>>();
+                opts.Add(new Tuple<string, Action>("CONFIRM", () => {
+                    _gmData = null;
+                    Timer.Clear();
+
+                    SceneManager.LoadSceneAsync("EndScene");
+                }));
+
+                StreamManager.EventManager.AddEvent("TITLE_EMPEROR_DIE", "CONTENT_TITLE_EMPEROR_DIE", opts);
+
+            }
         });
 
         StreamManager.EventManager.evtNewGMEvent += this.OnNewGMEvent;

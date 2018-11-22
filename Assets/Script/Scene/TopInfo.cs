@@ -22,15 +22,25 @@ public class TopInfo : MonoBehaviour
         {
             case "Stability":
                 {
-                    funcValue = () => { return MainScene._gmData.stability.current.ToString(); };
+                    funcValue = () => {
+                        if (MainScene._gmData == null)
+                            return "";
+                         return MainScene._gmData.stability.current.ToString(); 
+                    };
                 }
                 break;
             case "Economy":
                 {
-                    funcValue = () => { return MainScene._gmData.economy.current.ToString(); };
+                    funcValue = () => { 
+                        if (MainScene._gmData == null)
+                            return "";
+                         return MainScene._gmData.economy.current.ToString(); 
+                    };
 
                     funcDetail = () => {
-                        
+
+                        if (MainScene._gmData == null)
+                            return "";
                         string rslt = "INCOME:\n";
                         int income = 0;
                         foreach (var elem in MainScene._gmData.economy.funcIncomeDetail())
@@ -55,19 +65,33 @@ public class TopInfo : MonoBehaviour
                 break;
             case "Military":
                 {
-                    funcValue = () => { return MainScene._gmData.military.current.ToString(); };
+                    funcValue = () => { 
+                        if (MainScene._gmData == null)
+                            return "";
+                        return MainScene._gmData.military.current.ToString(); 
+                    };
                 }
                 break;
             case "Time":
                 {
-                    funcValue = () => { return MainScene._gmData.dynastyName + MainScene._gmData.yearName + MainScene._gmData.date; };
+                    funcValue = () => { 
+                        if (MainScene._gmData == null)
+                            return "";
+                        return MainScene._gmData.dynastyName + MainScene._gmData.yearName + MainScene._gmData.date; 
+                    };
                 }
                 break;
             case "heath":
                 {
-                    funcValue = () => { return MainScene._gmData.emperor.heath.ToString(); };
+                    funcValue = () => { 
+                        if (MainScene._gmData == null)
+                            return "";
+                        return MainScene._gmData.emperor.heath.ToString(); 
+                    };
 
                     funcDetail = () =>{
+                        if (MainScene._gmData == null)
+                            return "";
                         string rslt = "";
                         foreach (var elem in MainScene._gmData.emperor.heathdetail)
                         {
