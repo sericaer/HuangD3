@@ -24,15 +24,20 @@ public class CountryStatusLogic : MonoBehaviour
         Debug.Log("CountryStatusLogic Awake");
         this.gameObject.SetActive(false);
         inst = this;
+
+        foreach(var name in MainScene._gmData.countryFlag.names)
+        {
+            AddFlag(name);
+        }
     }
 
 	// Use this for initialization
 	void Start ()
     {
-        foreach(var name in MainScene._gmData.countryFlag.names)
-        {
-            AddFlag(name);
-        }
+        //foreach(var name in MainScene._gmData.countryFlag.names)
+        //{
+        //    AddFlag(name);
+        //}
     }
 	
 	// Update is called once per frame
@@ -43,7 +48,7 @@ public class CountryStatusLogic : MonoBehaviour
 
     void AddFlag(string name)
     {
-        GameObject Text = new GameObject("Text", typeof(RectTransform));
+        GameObject Text = new GameObject(name, typeof(RectTransform));
         Text.AddComponent<CanvasRenderer>();
         Text.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 30);
 
@@ -66,10 +71,10 @@ public class CountryStatusLogic : MonoBehaviour
 
     void DelFlag(string name)
     {
-        var currFlag = this.transform.Find(name);
+        var currFlag = this.transform.Find("Status/" + name);
         if (currFlag != null)
         {
-            Destroy(currFlag);
+            Destroy(currFlag.gameObject);
         }
     }
 

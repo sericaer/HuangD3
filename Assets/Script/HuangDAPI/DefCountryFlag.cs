@@ -31,17 +31,38 @@ namespace HuangDAPI
             _dict.Add(this.GetType().Name, this);
         }
 
+        public bool isEnabled
+        {
+            get
+            {
+                return _isEnable;
+            }
+        }
+
         public void Enable()
         {
-            evtEnable(this.GetType().Name);
+            _isEnable = true;
+
+            if(evtEnable != null)
+            {
+                evtEnable(this.GetType().Name);
+            }
+
         }
 
         public void Disable()
         {
-            evtDisable(this.GetType().Name);
+            _isEnable = false;
+
+            if(evtDisable != null)
+            {
+                evtDisable(this.GetType().Name);
+            }
+
         }
 
         private static Dictionary<string, DefCountryFlag> _dict = new Dictionary<string, DefCountryFlag>();
+        private bool _isEnable = false;
     }
 
     public class Affect : ReflectBase

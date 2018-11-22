@@ -62,6 +62,9 @@ public class MainScene : MonoBehaviour
             //CountryStatusLogic.inst.gameObject.SetActive(true)
             CountryStatusLogic.OnAddFlag(flagname);
         };
+        CountryFlag.evtDelFlag += (string flagname) => {
+            CountryStatusLogic.OnDelFlag(flagname);
+        };
 
         var BtnSave = GameObject.Find("Canvas/PanelCenter/BtnSave").GetComponent<Button>();
         {

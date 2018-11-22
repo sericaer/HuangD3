@@ -59,7 +59,7 @@ public class TianxScene : MonoBehaviour
         dataTable.rowPrefab = "RowCotainter";
         dataTable.itemHeight = 20;
         dataTable.tableWidth = 600;
-        dataTable.tableHeight = Math.Min(300, datas.Count*dataTable.itemHeight);
+        dataTable.tableHeight = Math.Min(300, (datas.Count+1)*dataTable.itemHeight);
         dataTable.isUseSort = true;
         dataTable.isUseSelect = true;
         dataTable.InitDataTable(datas, columnDefs);

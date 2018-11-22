@@ -24,13 +24,22 @@ namespace GMDATA
         public void Add(string name)
         {
             _names.Add(name);
-            evtAddFlag(name);
+
+            if(evtAddFlag != null)
+            {
+                evtAddFlag(name);
+            }
+
         }
 
         public void Del(string name)
         {
             _names.Remove(name);
-            evtDelFlag(name);
+
+            if(evtDelFlag != null)
+            {
+                evtDelFlag(name);
+            }
         }
 
         public string[] current()
@@ -44,14 +53,9 @@ namespace GMDATA
         [OnDeserialized]
         internal void OnDeserializedMethod(StreamingContext context)
         {
-            if (evtAddFlag == null)
-            {
-                return;
-            }
-
             foreach(var name in _names)
             {
-                evtAddFlag(name);
+                HuangDAPI.DefCountryFlag.Find(name).Enable();
             }
         }
     }
