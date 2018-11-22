@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using GMDATA;
 
 public class InitScene : MonoBehaviour
 {
@@ -25,7 +26,12 @@ public class InitScene : MonoBehaviour
             yearName = inputYearName.text;
             emperorName = inputEmperorName.text;
             isNew = true;
+
+            GMData.NewGMData(InitScene.dynastyName, InitScene.yearName, InitScene.emperorName);
+
             SceneManager.LoadScene("MainScene");
+
+
         });
 
         GameObject.Find("Canvas/Panel/BtnRandom").GetComponent<Button>().onClick.AddListener(() => {

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using GMDATA;
+
 public class EmperorLogic : MonoBehaviour
 {
     private void Awake()
@@ -25,9 +27,9 @@ public class EmperorLogic : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        _uiEmperorName.text = MainScene._gmData.emperor.name;
-        _uiEmperorAge.text = MainScene._gmData.emperor.age.ToString();
-        _uiEmperorHeath.value = MainScene._gmData.emperor.heath;
+        _uiEmperorName.text = GMData.Inist.emperor.name;
+        _uiEmperorAge.text = GMData.Inist.emperor.age.ToString();
+        _uiEmperorHeath.value = GMData.Inist.emperor.heath;
 
     }
 	

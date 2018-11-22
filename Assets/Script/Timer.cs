@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
+using GMDATA;
 
 public class Timer : MonoBehaviour
 {
@@ -46,7 +47,7 @@ public class Timer : MonoBehaviour
 
             foreach(var elem in _list)
             {
-                if(MainScene._gmData.date.Match(elem.Item1))
+                if(GMData.Inist.date.Match(elem.Item1))
                 {
                     elem.Item2();
                 }

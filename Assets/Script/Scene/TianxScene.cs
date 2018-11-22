@@ -19,9 +19,11 @@ public class TianxScene : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Debug.Log("TianxStart");
+
         IList<WColumnDef> columnDefs = null;
         IList<IList<object>> datas = new List<IList<object>>();
-        foreach (var prov in MainScene._gmData.provinces.All)
+        foreach (var prov in GMData.Inist.provinces.All)
         {
             IDictionary<string, object> dict = (IDictionary<string, object>)prov.info;
             if (columnDefs == null)
@@ -82,7 +84,7 @@ public class TianxScene : MonoBehaviour
     //   // Use this for initialization
     //   void Start ()
     //   {
-    //       foreach(var prov in MainScene._gmData.provinces.All)
+    //       foreach(var prov in GMData.Inist.provinces.All)
     //       {
     //           AddProv(prov.GetInfo);
     //       }

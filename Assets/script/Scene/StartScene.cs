@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using GMDATA;
 
 public class StartScene : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class StartScene : MonoBehaviour
         GameObject.Find("Canvas/Panel/LoadButton").GetComponent<Button>().onClick.AddListener(() =>
         {
             SceneManager.LoadScene("MainScene");
+            GMData.Load();
 
         });
 

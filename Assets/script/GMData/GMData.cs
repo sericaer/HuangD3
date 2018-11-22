@@ -13,12 +13,14 @@ namespace GMDATA
     [JsonObject(MemberSerialization.OptIn)]
     public class GMData
     {
-        public static GMData NewGMData(string dynastyName, string yearName, string emperorName)
+        public static GMData Inist;
+
+        public static void NewGMData(string dynastyName, string yearName, string emperorName)
         {
-            return new GMData(dynastyName, yearName, emperorName);
+            Inist = new GMData(dynastyName, yearName, emperorName);
         }
 
-        public void Save()
+        public static void Save()
         {
             Debug.Log("Save:" + savePath);
             if (!Directory.Exists(savePath))
@@ -26,11 +28,11 @@ namespace GMDATA
                 Directory.CreateDirectory(savePath);
             }
 
-            string json = JsonConvert.SerializeObject(this);
+            string json = JsonConvert.SerializeObject(Inist);
             File.WriteAllText(savePath + "/game.save", json);
         }
 
-        public static GMData Load()
+        public static void Load()
         {
             Debug.Log("Load:" + savePath);
 
@@ -39,10 +41,10 @@ namespace GMDATA
             JsonSerializer serializer = new JsonSerializer();
             StringReader sr = new StringReader(json);
 
-            GMData rslt = serializer.Deserialize(new JsonTextReader(sr), typeof(GMData)) as GMData;
-            rslt.Initializer();
+            Inist = serializer.Deserialize(new JsonTextReader(sr), typeof(GMData)) as GMData;
+            Inist.Initializer();
 
-            return rslt;
+            Debug.Log("GMData Load");
         }
 
         private void Initializer()
@@ -97,6 +99,8 @@ namespace GMDATA
             }
 
             Initializer();
+
+            Debug.Log("GMData New");
         }
 
 

@@ -12,7 +12,7 @@ public class ChaoTScene : MonoBehaviour
 {
     private void Awake()
     {
-        foreach(var elem in MainScene._gmData.offices.All)
+        foreach(var elem in GMData.Inist.offices.All)
         {
             if (elem.group != Office.GROUP.Center) 
             {

@@ -5,17 +5,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using GMDATA;
+
 public class CountryStatusLogic : MonoBehaviour
 {
     public static CountryStatusLogic inst = null;
 
     public static void OnAddFlag(string name)
     {
+        if (inst == null)
+            return;
+        
         inst.AddFlag(name);
     }
 
     public static void OnDelFlag(string name)
     {
+        if (inst == null)
+            return;
+        
         inst.DelFlag(name);
     }
 
@@ -25,7 +33,8 @@ public class CountryStatusLogic : MonoBehaviour
         this.gameObject.SetActive(false);
         inst = this;
 
-        foreach(var name in MainScene._gmData.countryFlag.names)
+        Debug.Log("flagcout:" + GMData.Inist.countryFlag.names.Count);
+        foreach (var name in GMData.Inist.countryFlag.names)
         {
             AddFlag(name);
         }
@@ -34,10 +43,8 @@ public class CountryStatusLogic : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        //foreach(var name in MainScene._gmData.countryFlag.names)
-        //{
-        //    AddFlag(name);
-        //}
+        Debug.Log("CountryStatusLogic Start");
+
     }
 	
 	// Update is called once per frame
@@ -47,7 +54,7 @@ public class CountryStatusLogic : MonoBehaviour
 	}
 
     void AddFlag(string name)
-    {
+    {        
         GameObject Text = new GameObject(name, typeof(RectTransform));
         Text.AddComponent<CanvasRenderer>();
         Text.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 30);
@@ -78,5 +85,5 @@ public class CountryStatusLogic : MonoBehaviour
         }
     }
 
-    
+
 }

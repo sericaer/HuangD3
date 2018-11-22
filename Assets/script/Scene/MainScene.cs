@@ -7,20 +7,9 @@ using System.Collections.Generic;
 
 public class MainScene : MonoBehaviour
 {
-    public static GMData _gmData = null;
-
     void Awake()
     {
         Debug.Log("AWAKE");
-
-        if (InitScene.isNew)
-        {
-            _gmData = GMData.NewGMData(InitScene.dynastyName, InitScene.yearName, InitScene.emperorName);
-        }
-        else
-        {
-            _gmData = GMData.Load();
-        }
 
         _uiPanelCenter = GameObject.Find("Canvas/PanelCenter");
 
@@ -69,16 +58,16 @@ public class MainScene : MonoBehaviour
         {
             BtnSave.onClick.AddListener(() =>
             {
-                _gmData.Save();
+                GMData.Save();
             });
         }
 
-        Timer.evtOnTimer += _gmData.date.Increase;
+        Timer.evtOnTimer += GMData.Inist.date.Increase;
         Timer.evtOnTimer += StreamManager.EventManager.OnTimer;
         Timer.Register("DATE:*/1/2", () =>{
             string desc = "";
             int value = 0;
-            foreach(var elem in _gmData.economy.funcIncomeDetail())
+            foreach(var elem in GMData.Inist.economy.funcIncomeDetail())
             {
                 desc += elem.Item1 + ": " + elem.Item2.ToString() + "\n";
                 value += elem.Item2;
@@ -87,21 +76,20 @@ public class MainScene : MonoBehaviour
             desc += "TOTAL: " + value.ToString();
 
             var opts = new List<Tuple<string, Action>>();
-            opts.Add(new Tuple<string, Action>("CONFIRM", () => { _gmData.economy.current += value; }));
+            opts.Add(new Tuple<string, Action>("CONFIRM", () => { GMData.Inist.economy.current += value; }));
 
             StreamManager.EventManager.AddEvent("TITLE_YEAR_INCOME_REPORT", desc, opts);
         });
 
         Timer.Register("DATE:*/*/1", () => {
-            _gmData.economy.current -= _gmData.military.current;
+            GMData.Inist.economy.current -= GMData.Inist.military.current;
         });
 
         Timer.Register("DATE:*/*/*", () =>{
-            if (_gmData.emperor.heath <= 0)
+            if (GMData.Inist.emperor.heath <= 0)
             {
                 var opts = new List<Tuple<string, Action>>();
                 opts.Add(new Tuple<string, Action>("CONFIRM", () => {
-                    _gmData = null;
                     Timer.Clear();
 
                     SceneManager.LoadSceneAsync("EndScene");
@@ -115,14 +103,14 @@ public class MainScene : MonoBehaviour
         StreamManager.EventManager.evtNewGMEvent += this.OnNewGMEvent;
         DialogLogic.evntCreate += Timer.Pause;
         DialogLogic.evntDestory += Timer.unPause;
-        HuangDAPI.DefCountryFlag.evtEnable += _gmData.countryFlag.Add;
-        HuangDAPI.DefCountryFlag.evtDisable += _gmData.countryFlag.Del;
+        HuangDAPI.DefCountryFlag.evtEnable += GMData.Inist.countryFlag.Add;
+        HuangDAPI.DefCountryFlag.evtDisable += GMData.Inist.countryFlag.Del;
 
 
         HuangDAPI.Stability.evtChange += (int value) => {
 
             var opts = new List<Tuple<string, Action>>();
-            opts.Add(new Tuple<string, Action>("CONFIRM", () => { _gmData.stability.current += value; }));
+            opts.Add(new Tuple<string, Action>("CONFIRM", () => { GMData.Inist.stability.current += value; }));
 
             if (value > 0)
             {
@@ -134,7 +122,7 @@ public class MainScene : MonoBehaviour
             }
         };
 
-        HuangDAPI.Stability.stability = _gmData.stability;
+        HuangDAPI.Stability.stability = GMData.Inist.stability;
 
         _uiPanelCenter.SetActive(false);
     }
