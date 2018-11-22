@@ -13,6 +13,7 @@ namespace GMDATA
     {
         public static event Action<Func<ProvInfo>> evtAddProv;
         public static event Action<string> evtDelProv;
+        
 
         public void Add(Province prov)
         {
@@ -60,6 +61,8 @@ namespace GMDATA
     [JsonObject(MemberSerialization.OptIn)]
     public class Province
     {
+        public static Func<string[]> CurrentCountyFlags;
+
         public Province()
         {
         }
@@ -94,11 +97,11 @@ namespace GMDATA
             return new ProvInfo { name = _name, pop = _taxbase};
         }
 
-        public int tax
+        public double tax
         {
             get
             {
-                int rslt = 0;
+                double rslt = 0;
                 foreach(var elem in taxdetail)
                 {
                     rslt += elem.Item2;
@@ -108,12 +111,23 @@ namespace GMDATA
             }
         }
 
-        public Tuple<string,int>[] taxdetail
+        public Tuple<string, double>[] taxdetail
         {
             get
             {
-                var rslt = new List<Tuple<string, int>>();
-                rslt.Add(new Tuple<string, int>("BASE", _taxbase));
+                var rslt = new List<Tuple<string, double>>();
+                rslt.Add(new Tuple<string, double>("BASE", _taxbase));
+
+                string[] flags = CurrentCountyFlags();
+                foreach (var flagname in flags)
+                {
+                    var flag = HuangDAPI.DefCountryFlag.Find(flagname);
+                    if (flag.affect.ProvinceTax != null)
+                    {
+                        rslt.Add(new Tuple<string, double>(flagname, flag.affect.ProvinceTax((double)_taxbase)));
+                    }
+                }
+
                 return rslt.ToArray();
             }
         }

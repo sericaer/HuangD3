@@ -66,7 +66,7 @@ public class MainScene : MonoBehaviour
         Timer.evtOnTimer += StreamManager.EventManager.OnTimer;
         Timer.Register("DATE:*/1/2", () =>{
             string desc = "";
-            int value = 0;
+            double value = 0;
             foreach(var elem in GMData.Inist.economy.funcIncomeDetail())
             {
                 desc += elem.Item1 + ": " + elem.Item2.ToString() + "\n";
@@ -76,7 +76,7 @@ public class MainScene : MonoBehaviour
             desc += "TOTAL: " + value.ToString();
 
             var opts = new List<Tuple<string, Action>>();
-            opts.Add(new Tuple<string, Action>("CONFIRM", () => { GMData.Inist.economy.current += value; }));
+            opts.Add(new Tuple<string, Action>("CONFIRM", () => { GMData.Inist.economy.current += (int)value; }));
 
             StreamManager.EventManager.AddEvent("TITLE_YEAR_INCOME_REPORT", desc, opts);
         });

@@ -50,22 +50,23 @@ namespace GMDATA
         private void Initializer()
         {
             economy.funcIncomeDetail = () => {
-                var rlst = new List<Tuple<string, int>>();
+                var rlst = new List<Tuple<string, double>>();
                 foreach (var prov in provinces.All)
                 {
-                    rlst.Add(new Tuple<string, int>(prov.name, prov.tax));
+                    rlst.Add(new Tuple<string, double>(prov.name, prov.tax));
                 }
 
                 return rlst.ToArray();
             };
 
             economy.funcPayoutDetail = () => {
-                var rlst = new List<Tuple<string, int>>();
-                rlst.Add(new Tuple<string, int>("Military", military.current));
+                var rlst = new List<Tuple<string, double>>();
+                rlst.Add(new Tuple<string, double>("Military", military.current));
                 return rlst.ToArray();
             };
 
             emperor.CurrentCountyFlags = countryFlag.current;
+            Province.CurrentCountyFlags = countryFlag.current;
         }
 
         private GMData()

@@ -4,24 +4,24 @@ using UnityEngine;
 
 namespace native
 {
-    //class EVENT_YHSX_START : EventDef
-    //{
-    //    bool Precondition()
-    //    {
-    //        return Probability.IsProbOccur(0.001);
-    //    }
+    class EVENT_SSYD_START : EventDef
+    {
+        bool Precondition()
+        {
+            return true;
+        }
 
-    //    class OPTION1 : Option
-    //    {
-    //        void OnSelect()
-    //        {
-    //            CountryFlags.YHSX.Enable();
-    //            Stability.current--;
+        class OPTION1 : Option
+        {
+            void OnSelect()
+            {
+                CountryFlags.SSYD.Enable();
+                Stability.current++;
 
-    //            Debug.Log("OPTION1");
-    //        }
-    //    }
-    //}
+                Debug.Log("OPTION1");
+            }
+        }
+    }
 
     //class EVENT_YHSX_END : EVENT_HD
     //{

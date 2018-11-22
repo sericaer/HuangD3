@@ -44,7 +44,7 @@ public class TopInfo : MonoBehaviour
                         if (GMData.Inist == null)
                             return "";
                         string rslt = "INCOME:\n";
-                        int income = 0;
+                        double income = 0;
                         foreach (var elem in GMData.Inist.economy.funcIncomeDetail())
                         {
                             rslt += "\t" + elem.Item1 + ": " + elem.Item2.ToString() + "\n";
@@ -53,7 +53,7 @@ public class TopInfo : MonoBehaviour
                         rslt += "INCOME_TOTAL: " + income.ToString() + "\n";
 
                         rslt += "PAYOUT:\n";
-                        int payout = 0;
+                        double payout = 0;
                         foreach (var elem in GMData.Inist.economy.funcPayoutDetail())
                         {
                             rslt += "\t" + elem.Item1 + ": " + elem.Item2.ToString() + "\n";

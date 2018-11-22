@@ -25,8 +25,8 @@ namespace GMDATA
             }
         }
 
-        public Func<Tuple<string, int>[]> funcIncomeDetail;
-        public Func<Tuple<string, int>[]> funcPayoutDetail;
+        public Func<Tuple<string, double>[]> funcIncomeDetail;
+        public Func<Tuple<string, double>[]> funcPayoutDetail;
 
         [JsonProperty]
         private int _current = Probability.GetRandomNum(50, 100);

@@ -6,13 +6,15 @@ using UnityEngine;
 
 namespace native
 {
-    //public class SSYD1 : COUNTRY_FLAG
-    //{
-    //    public double affectCountryTax(double baseValue)
-    //    {
-    //        return -baseValue * 0.1;
-    //    }
-    //}
+    public class SSYD : DefCountryFlag
+    {
+        public double affectProvinceTax(double baseValue)
+        {
+            return baseValue * provinceTaxAffect;
+        }
+
+        public double provinceTaxAffect = -0.1;
+    }
 
     //public class SSYD : COUNTRY_FLAG
     //{

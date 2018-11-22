@@ -68,13 +68,13 @@ namespace HuangDAPI
     public class Affect : ReflectBase
     {
         public Func<int, int> EmperorHeath = null;
-        public Func<double, double> CountryTax = null;
+        public Func<double, double> ProvinceTax = null;
         public Func<double, double> CountryReb = null;
 
         public Affect(object outter) : base(outter)
         {
             EmperorHeath = GetDelegate<Func<int, int>>("affectEmperorHeath");
-            CountryTax = GetDelegate <Func<double, double>>("affectCountryTax");
+            ProvinceTax = GetDelegate <Func<double, double>>("affectProvinceTax");
             CountryReb = GetDelegate <Func<double, double>>("affectCountryReb");
         }
     }
