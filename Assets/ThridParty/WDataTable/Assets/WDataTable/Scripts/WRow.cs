@@ -12,32 +12,26 @@ namespace WDT
         private LayoutElement m_layoutElement;
         private Button m_button;
 
-        public void changeData(IDictionary<string, object> data)
-        {
-            
-        }
-
-        public IDictionary<string, object> Getdata()
-        {
-            return null;
-        }
-
-        protected override string GetElemType(int i)
-        {
-            return bindDataTable.GetColumnType(i);
-        }
-
         protected override void InitContainter()
         {
-            base.InitContainter();
             m_rectTransform = GetComponent<RectTransform>();
             m_layoutElement = GetComponent<LayoutElement>();
             m_button = GetComponent<Button>();
             Assert.IsNotNull(m_rectTransform);
             Assert.IsNotNull(m_button);
             Assert.IsNotNull(m_layoutElement);
+        }
 
-            bindDataTable.listRow.Add(this);
+        protected override string GetObjectName(int columnIndex)
+        {
+            if (bindDataTable == null || columnsDefs.Count <= 0)
+                return "";
+
+            if (columnIndex < 0 || columnIndex >= columnsDefs.Count)
+                return "";
+
+            string objectName = columnsDefs[columnIndex].elementPrefabName;
+            return string.IsNullOrEmpty(objectName) ? bindDataTable.defaultElementPrefabName : objectName;
         }
 
         private void ScrollCellContent(object info)
@@ -45,15 +39,12 @@ namespace WDT
             WDataTable.RowElementInfo rei = (WDataTable.RowElementInfo) info;
             bindDataTable = rei.bindDataTable;
             IList<object> infos = bindDataTable.GetInfosByRowIndex(rei.rowIndex);
+            columnsDefs = rei.columnsDefs;
 
             if (!init)
                 InitContainter();
-            
-            if (columnSize != infos.Count)
-            {
-                columnSize = infos.Count;
-                BuildChild();
-            }
+
+            BuildChild();
 
             m_rectTransform.sizeDelta = new Vector2(bindDataTable.tableWidth, bindDataTable.itemHeight);
             m_layoutElement.preferredHeight = bindDataTable.itemHeight;

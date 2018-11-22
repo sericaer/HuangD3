@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -17,18 +16,13 @@ namespace WDT
         EVENT_COUNT,
     }
 
-    public enum WElemType
-    {
-        BUTTON,
-        TEXT
-    }
-
     public class WColumnDef
     {
         public string name;
-        public string width = "";
-        public bool isSort = true;
-        public WElemType elemType = WElemType.TEXT;
+        public string headPrefabName;
+        public string elementPrefabName;
+        public string width;
+        public bool disableSort;
     }
 
     public delegate void WMsgHandle(WEventType messageType, params object[] args);
@@ -39,6 +33,7 @@ namespace WDT
         {
             public int rowIndex;
             public WDataTable bindDataTable;
+            public IList<WColumnDef> columnsDefs;
         }
 
         private class SortItem
@@ -56,21 +51,19 @@ namespace WDT
         [HideInInspector] public event WMsgHandle MsgHandle;
 
         public string rowPrefab;
+        public string defaultHeadPrefabName;
+        public string defaultElementPrefabName;
         public int itemHeight;
         public int tableWidth;
         public int tableHeight;
         public bool isUseSort = true;
         public bool isUseSelect = true;
-        public List<WRow> listRow = new List<WRow>();
-
         private bool m_init;
         private WHead m_head;
         private LoopVerticalScrollRect m_scrollRect;
         private RectTransform m_scrollRectTransform;
         private RectTransform m_scrollbarRectTransform;
-
         private IList<IList<object>> m_datas = new List<IList<object>>();
-        private IList<string> m_columns = new List<string>();
         private IList<WColumnDef> m_columnDefs = new List<WColumnDef>();
         private readonly IList<RowElementInfo> m_rowInfos = new List<RowElementInfo>();
         private readonly IList<int> m_columnWidths = new List<int>();
@@ -78,13 +71,41 @@ namespace WDT
 
         #region public
 
+        public LoopVerticalScrollRect GetLoopScrollRect()
+        {
+            return m_scrollRect;
+        }
+
+        public float GetPositionByNewSize(float oldPosition, int oldCount, int newCount)
+        {
+            float offset = oldPosition * (itemHeight * oldCount - tableHeight);
+            float newPosition = offset / (itemHeight * newCount - tableHeight);
+            return newPosition;
+        }
+
+        public float GetPosition()
+        {
+            if (m_scrollRect == null)
+                return 0;
+
+            return m_scrollRect.verticalNormalizedPosition;
+        }
+
+        public void SetPosition(float position)
+        {
+            if (m_scrollRect == null)
+                return;
+
+            m_scrollRect.verticalNormalizedPosition = position;
+        }
+
         /// <summary>
         /// Sorts the index of the by.
         /// </summary>
         /// <param name="columnIndex">The index.</param>
         public void SortByIndex(int columnIndex)
         {
-            if (columnIndex < 0 || columnIndex >= m_columns.Count)
+            if (columnIndex < 0 || columnIndex >= m_columnDefs.Count)
                 return;
 
             if (m_rowInfos.Count == 0 || !(m_datas[0][columnIndex] is IComparable))
@@ -113,12 +134,41 @@ namespace WDT
         }
 
         /// <summary>
+        /// update data of the data table. need ensure right data
+        /// </summary>
+        /// <param name="datas">The datas.</param>
+        public void UpdateData(IList<IList<object>> datas)
+        {
+            if (datas == null)
+                return;
+
+            if (!m_init)
+            {
+                Debug.LogError("not init data table");
+                return;
+            }
+
+            IList<IList<object>> tDatas = datas;
+            if (!CheckInputData(tDatas, m_columnDefs))
+                return;
+
+            if (!CheckConfig())
+                return;
+
+            m_datas = datas;
+            m_rowInfos.Clear();
+            for (int i = 0; i < m_datas.Count; i++)
+                m_rowInfos.Add(new RowElementInfo {rowIndex = i, bindDataTable = this, columnsDefs = m_columnDefs});
+
+            UpdateByRowInfo();
+        }
+
+        /// <summary>
         /// Initializes the data table. need ensure right data
         /// </summary>
         /// <param name="datas">The datas.</param>
-        /// <param name="columns">The columns.</param>
         /// <param name="columnDefs"></param>
-        public void InitDataTable(IList<IList<object>> datas, IList<WColumnDef> columnDefs = null)
+        public void InitDataTable(IList<IList<object>> datas, IList<WColumnDef> columnDefs)
         {
             if (!CheckInputData(datas, columnDefs))
                 return;
@@ -134,13 +184,10 @@ namespace WDT
             m_columnDefs = columnDefs;
             m_rowInfos.Clear();
             for (int i = 0; i < m_datas.Count; i++)
-                m_rowInfos.Add(new RowElementInfo {rowIndex = i, bindDataTable = this});
-             
-            m_columns = (from x in columnDefs
-                         select x.name).ToList();
+                m_rowInfos.Add(new RowElementInfo {rowIndex = i, bindDataTable = this, columnsDefs = m_columnDefs});
 
             UpdateColumnWidths();
-            m_head.SetColumnInfo(m_columns, this);
+            m_head.SetColumnInfo(m_columnDefs, this);
             m_scrollRect.prefabSource.prefabName = rowPrefab;
             UpdateScrollRectSize();
             UpdateByRowInfo();
@@ -208,13 +255,13 @@ namespace WDT
             if (m_columnDefs == null)
                 return true;
 
-            if (columnIndex < 0 || columnIndex >= m_columns.Count)
+            if (columnIndex < 0 || columnIndex >= m_columnDefs.Count)
                 return false;
 
             if (m_columnDefs[columnIndex] == null)
                 return true;
 
-            return m_columnDefs[columnIndex].isSort;
+            return !m_columnDefs[columnIndex].disableSort;
         }
 
         #endregion
@@ -229,31 +276,30 @@ namespace WDT
             m_scrollbarRectTransform = m_scrollRect.verticalScrollbar.GetComponent<RectTransform>();
             Assert.IsNotNull(m_scrollRectTransform);
             Assert.IsNotNull(m_scrollbarRectTransform);
-
-            SG.ResourceManager.Instance.InitPool("ButtonElement", 0);
-            SG.ResourceManager.Instance.InitPool("TextElement", 0);
-
             m_init = true;
         }
 
         private void UpdateColumnWidths()
         {
+            if (m_columnDefs == null)
+                return;
+
             m_columnWidths.Clear();
             if (m_columnDefs == null || m_columnDefs.Count == 0)
             {
-                for (int i = 0; i < m_columns.Count; i++)
+                for (int i = 0; i < m_columnDefs.Count; i++)
                 {
-                    m_columnWidths.Add(tableWidth / m_columns.Count);
+                    m_columnWidths.Add(tableWidth / m_columnDefs.Count);
                 }
             }
             else
             {
                 int totalWidth = 0;
                 int totalCount = 0;
-                for (int i = 0; i < m_columns.Count; i++)
+                for (int i = 0; i < m_columnDefs.Count; i++)
                 {
                     int width = 0;
-                    if (m_columnDefs[i] != null)
+                    if (m_columnDefs[i] != null && !string.IsNullOrEmpty(m_columnDefs[i].width))
                     {
                         if (m_columnDefs[i].width.Contains('%'))
                         {
@@ -276,9 +322,9 @@ namespace WDT
                     }
                 }
 
-                if (totalCount < m_columns.Count)
+                if (totalCount < m_columnDefs.Count)
                 {
-                    int otherWidth = (tableWidth - totalWidth) / (m_columns.Count - totalCount);
+                    int otherWidth = (tableWidth - totalWidth) / (m_columnDefs.Count - totalCount);
                     if (otherWidth <= 0)
                         Debug.LogError("Error columnDef for calculate column width");
 
@@ -328,8 +374,14 @@ namespace WDT
             return true;
         }
 
-        private static bool CheckInputData(IList<IList<object>> datas, ICollection<WColumnDef> columnDefs)
+        private bool CheckInputData(IList<IList<object>> datas, ICollection<WColumnDef> columnDefs)
         {
+            if (datas == null || columnDefs == null)
+            {
+                Debug.LogError("datas columnDefs not be null");
+                return false;
+            }
+
             if (datas.Count == 0)
             {
                 Debug.LogError("empty data");
@@ -341,6 +393,27 @@ namespace WDT
                 if (datas[i].Count != columnDefs.Count)
                 {
                     Debug.LogError("row data length not equal columns length:" + i);
+                    return false;
+                }
+            }
+
+            foreach (var column in columnDefs)
+            {
+                if (string.IsNullOrEmpty(column.name))
+                {
+                    Debug.LogError("columnDefs need contain column name");
+                    return false;
+                }
+
+                if (string.IsNullOrEmpty(defaultHeadPrefabName) && string.IsNullOrEmpty(column.headPrefabName))
+                {
+                    Debug.LogError("if defaultHeadPrefabName is empty, columnDefs need contain headPrefabName");
+                    return false;
+                }
+
+                if (string.IsNullOrEmpty(defaultElementPrefabName) && string.IsNullOrEmpty(column.elementPrefabName))
+                {
+                    Debug.LogError("if defaultElementPrefabName is empty, columnDefs need contain elementPrefabName");
                     return false;
                 }
             }
@@ -367,19 +440,6 @@ namespace WDT
             }
 
             return true;
-        }
-
-        internal string GetColumnType(int i)
-        {
-            switch(m_columnDefs[i].elemType)
-            {
-                case WElemType.BUTTON:
-                    return "ButtonElement";
-                case WElemType.TEXT:
-                    return "TextElement";
-                default:
-                    throw new ArgumentException();
-            }
         }
     }
 }

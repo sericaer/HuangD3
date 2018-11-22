@@ -6,6 +6,7 @@ namespace WDT
 {
     public class WText : WElement
     {
+        private Text m_text;
         private RectTransform m_rectTransform;
 
         protected override void InitElement()

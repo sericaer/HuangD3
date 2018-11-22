@@ -7,7 +7,6 @@ namespace WDT
     public abstract class WElement : MonoBehaviour
     {
         protected WDataTable bindDataTable;
-        protected Text m_text;
         private bool m_init;
 
         protected virtual void InitElement()

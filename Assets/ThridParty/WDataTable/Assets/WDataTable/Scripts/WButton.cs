@@ -7,6 +7,7 @@ namespace WDT
     public class WButton : WElement
     {
         private Button m_button;
+        private Text m_text;
         private LayoutElement m_layoutElement;
         private RectTransform m_rectTransform;
 
