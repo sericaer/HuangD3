@@ -38,7 +38,7 @@ namespace WDT
         {
             WDataTable.RowElementInfo rei = (WDataTable.RowElementInfo) info;
             bindDataTable = rei.bindDataTable;
-            IList<object> infos = bindDataTable.GetInfosByRowIndex(rei.rowIndex);
+            IList<object> infos = new List<object>(bindDataTable.GetInfosByRowIndex(rei.rowIndex).Values);
             columnsDefs = rei.columnsDefs;
 
             if (!init)

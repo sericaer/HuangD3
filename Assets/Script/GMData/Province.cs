@@ -88,6 +88,7 @@ namespace GMDATA
                 dynamic rslt = new ExpandoObject();
                 var dict = (IDictionary<string, object>)rslt;
                 dict.Add("name", name);
+                dict.Add("taxbase", _taxbase);
                 dict.Add("tax", tax);
                 return rslt;
             }

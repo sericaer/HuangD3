@@ -198,12 +198,17 @@ namespace WDT
             UpdateByRowInfo();
         }
 
-        public IList<object> GetInfosByRowIndex(int rowIndex)
+        public IDictionary<string, object> GetInfosByRowIndex(int rowIndex)
         {
             if (rowIndex < 0 || rowIndex >= m_datas.Count)
                 return null;
 
-            return m_datas[rowIndex];
+            var rslt = new Dictionary<string, object>();
+            for (int i = 0; i < m_columnDefs.Count; i++)
+            {
+                rslt.Add(m_columnDefs[i].name, m_datas[rowIndex][i]);
+            }
+            return rslt;
         }
 
         public void OnClickRow(int rowIndex)

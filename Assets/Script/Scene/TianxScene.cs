@@ -44,6 +44,7 @@ public class TianxScene : MonoBehaviour
         dataTable.isUseSort = true;
         dataTable.isUseSelect = true;
         dataTable.InitDataTable(datas, columnDefs);
+        dataTable.MsgHandle += HandleTableEvent;
     }
 
     // Update is called once per frame
@@ -57,6 +58,17 @@ public class TianxScene : MonoBehaviour
         }
 
         dataTable.UpdateData(datas);
+    }
+
+    public void HandleTableEvent(WEventType messageType, params object[] args)
+    {
+        if (messageType == WEventType.SELECT_ROW)
+        {
+            int rowIndex = (int)args[0];
+            var infos = dataTable.GetInfosByRowIndex(rowIndex);
+
+            var provUI = ProvUI.NewInstance(infos);
+        }
     }
 
     //   void Awake()
