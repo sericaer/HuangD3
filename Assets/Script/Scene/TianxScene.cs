@@ -35,27 +35,6 @@ public class TianxScene : MonoBehaviour
             datas.Add(dict.Values.ToList());
         }
 
-        //IList<IList<object>> datas = new List<IList<object>>();
-        //IList<WColumnDef> columnDefs = new List<WColumnDef>();
-        //columnDefs.Add(new WColumnDef() { name = "ID", width = "40" });
-        //columnDefs.Add(new WColumnDef() { name = "A", elemType = WElemType.BUTTON });
-        //columnDefs.Add(new WColumnDef() { name = "B" });
-        //columnDefs.Add(new WColumnDef() { name = "C" });
-        //columnDefs.Add(new WColumnDef() { name = "D", isSort = false });
-
-        //for (int i = 0; i < 120; i++)
-        //{
-        //    var tdatas = new List<object>
-        //    {
-        //        i + 1,
-        //        "dsada" + i,
-        //        20.1 + i,
-        //        UnityEngine.Random.Range(0.0f, 1.0f),
-        //        new Vector3(1, i, 2)
-        //    };
-        //    datas.Add(tdatas);
-        //}
-
         GameObject obj = Instantiate(Resources.Load("Prefabs/DataTable"), GameObject.Find("Canvas/Panel").transform) as GameObject;
         dataTable = obj.GetComponent<WDataTable>();
         dataTable.rowPrefab = "RowCotainter";
@@ -70,6 +49,14 @@ public class TianxScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var datas = new List<IList<object>>();
+        foreach (var prov in GMData.Inist.provinces.All)
+        {
+            IDictionary<string, object> dict = (IDictionary<string, object>)prov.info;
+            datas.Add(dict.Values.ToList());
+        }
+
+        dataTable.UpdateData(datas);
     }
 
     //   void Awake()
