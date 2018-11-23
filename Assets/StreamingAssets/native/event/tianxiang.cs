@@ -28,27 +28,6 @@ namespace native
         }
     }
 
-    class EVENT_YHSX_AFFECT_EMPHEATH : EventDef
-    {
-        bool Precondition()
-        {
-            if (!CountryFlags.YHSX.isEnabled)
-            {
-                return false;
-            }
-
-            return Probability.OccurPerDays(30);
-        }
-
-        class OPTION1 : Option
-        {
-            void OnSelect()
-            {
-                CountryFlags.YHSX.emperorHeathAffect--;
-            }
-        }
-    }
-
     class EVENT_YHSX_END : EventDef
     {
         bool Precondition()

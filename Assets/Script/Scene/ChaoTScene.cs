@@ -25,6 +25,12 @@ public class ChaoTScene : MonoBehaviour
 
             _listOfficeUI.Add(officeUI);
         }
+
+        foreach (var elem in GMData.Inist.decisions.All)
+        {
+            var parent = GameObject.Find("Canvas/Panel/PanelDecision").transform;
+            var ui = DecisionLogic.newInstance(elem, parent);
+        }
     }
 
     private void Start()

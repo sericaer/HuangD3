@@ -90,6 +90,10 @@ namespace GMDATA
             provinces = new Provinces();
             offices = new Offices();
 
+            decisions = new Decisions();
+
+            decisions.Add(new Decision(){_name = "TEST"});
+
             foreach (var elem in StreamManager.CSVManager.Province)
             {
                 provinces.Add(new Province((IDictionary<string, object>)elem));
@@ -134,6 +138,9 @@ namespace GMDATA
 
         [JsonProperty]
         public Offices offices;
+
+        [JsonProperty]
+        public Decisions decisions;
 
         private static string savePath = Application.persistentDataPath + "/save";
     }

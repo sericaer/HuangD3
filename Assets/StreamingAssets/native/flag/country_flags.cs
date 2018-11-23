@@ -161,9 +161,7 @@ namespace native
 
         public int affectEmperorHeath(int baseValue)
         {
-            return emperorHeathAffect;
+            return -3;
         }
-
-        public int emperorHeathAffect = -2;
     }
 }
