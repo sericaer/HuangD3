@@ -25,14 +25,13 @@ public class TianxScene : MonoBehaviour
         IList<IList<object>> datas = new List<IList<object>>();
         foreach (var prov in GMData.Inist.provinces.All)
         {
-            IDictionary<string, object> dict = (IDictionary<string, object>)prov.info;
             if (columnDefs == null)
             {
-                columnDefs = (from x in dict.Keys
-                              select new WColumnDef() { name = x }).ToList();
+                columnDefs = (from x in prov.info.Keys
+                              select new WColumnDef() { name = x, elementPrefabName = (x == "name" ? "ButtonElement": "TextElement")}).ToList();
             }
 
-            datas.Add(dict.Values.ToList());
+            datas.Add(prov.info.Values.ToList());
         }
 
         GameObject obj = Instantiate(Resources.Load("Prefabs/DataTable"), GameObject.Find("Canvas/Panel").transform) as GameObject;
@@ -44,6 +43,7 @@ public class TianxScene : MonoBehaviour
         dataTable.isUseSort = true;
         dataTable.isUseSelect = true;
         dataTable.InitDataTable(datas, columnDefs);
+
         dataTable.MsgHandle += HandleTableEvent;
     }
 
@@ -62,12 +62,22 @@ public class TianxScene : MonoBehaviour
 
     public void HandleTableEvent(WEventType messageType, params object[] args)
     {
-        if (messageType == WEventType.SELECT_ROW)
+        if (messageType == WEventType.CLICK_BUTTON)
         {
             int rowIndex = (int)args[0];
             var infos = dataTable.GetInfosByRowIndex(rowIndex);
 
+            var prov = GMData.Inist.provinces.Find(infos["name"] as string);
             var provUI = ProvUI.NewInstance(infos);
+            provUI.funcTaxBase = () =>
+            {
+                return (double)prov.info["taxbase"];
+            };
+
+            provUI.funcTaxCurr = () =>
+            {
+                return (double)prov.info["tax"];
+            };
         }
     }
 

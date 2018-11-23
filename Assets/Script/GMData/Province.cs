@@ -14,13 +14,19 @@ namespace GMDATA
         public static event Action<Func<ProvInfo>> evtAddProv;
         public static event Action<string> evtDelProv;
         
+        public  Province Find(string name)
+        {
+            return (from x in _list
+                    where x.name == name
+                    select x).Single();
+        }
 
         public void Add(Province prov)
         {
             _list.Add(prov);
             if(evtAddProv != null)
             {
-                evtAddProv(prov.GetInfo);
+                //evtAddProv(prov.GetInfo);
             }
 
         }
@@ -53,7 +59,7 @@ namespace GMDATA
 
             foreach(var prov in _list)
             {
-                evtAddProv(prov.GetInfo);
+                //evtAddProv(prov.GetInfo);
             }
         }
     }
@@ -70,7 +76,7 @@ namespace GMDATA
         public Province(IDictionary<string, object> param)
         {
             _name = param["name"] as string;
-            _taxbase = Int32.Parse((string)param["taxbase"]);
+            _taxbase = (double)Int32.Parse((string)param["taxbase"]);
         }
 
         public string name
@@ -81,21 +87,17 @@ namespace GMDATA
             }
         }
 
-        public dynamic info
+        public IDictionary<string, object> info
         {
             get
             {
-                dynamic rslt = new ExpandoObject();
+                Dictionary<string, object> rslt = new Dictionary<string, object>();
                 var dict = (IDictionary<string, object>)rslt;
                 dict.Add("name", name);
                 dict.Add("taxbase", _taxbase);
                 dict.Add("tax", tax);
                 return rslt;
             }
-        }
-        public ProvInfo GetInfo()
-        {
-            return new ProvInfo { name = _name, pop = _taxbase};
         }
 
         public double tax
@@ -137,7 +139,7 @@ namespace GMDATA
         public string _name;
 
         [JsonProperty]
-        int _taxbase;
+        double _taxbase;
     }
 
     public class ProvInfo

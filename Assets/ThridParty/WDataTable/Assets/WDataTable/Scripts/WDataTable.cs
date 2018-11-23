@@ -11,6 +11,7 @@ namespace WDT
     {
         SELECT_ROW,
         SELECT_COLUMN,
+        CLICK_BUTTON,
         SORT_BY_COLUMN,
         INIT_ELEMENT,
         EVENT_COUNT,
@@ -231,8 +232,8 @@ namespace WDT
         public void OnClickButton(int rowIndex, int columnIndex)
         {
             Debug.Log("clicked button row " + rowIndex + " columnIndex " + columnIndex);
-            if (rowIndex == -1)
-                OnClickColumn(columnIndex);
+            if (MsgHandle != null)
+                MsgHandle(WEventType.CLICK_BUTTON, rowIndex, columnIndex);
         }
 
         public void OnInitElement(int rowIndex, int columnIndex, WElement element)
