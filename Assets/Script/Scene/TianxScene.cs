@@ -78,6 +78,16 @@ public class TianxScene : MonoBehaviour
             {
                 return (double)prov.info["tax"];
             };
+
+            provUI.funcTaxDetail = () =>
+            {
+                string rslt = "";
+                foreach (var elem in prov.taxdetail)
+                {
+                    rslt += elem.Item1 + ": " + elem.Item2.ToString() + "\n";
+                }
+                return rslt;
+            };
         }
     }
 

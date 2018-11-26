@@ -26,6 +26,7 @@ public class ProvUI : MonoBehaviour
 
     public Func<double> funcTaxBase;
     public Func<double> funcTaxCurr;
+    public Func<string> funcTaxDetail;
 
     void Awake()
     {
@@ -55,5 +56,6 @@ public class ProvUI : MonoBehaviour
     {
         this.transform.Find("detail/taxbase/value").GetComponent<Text>().text = funcTaxBase().ToString();
         this.transform.Find("detail/taxcurr/value").GetComponent<Text>().text = funcTaxCurr().ToString();
+        this.transform.Find("detail/taxcurr/value").GetComponent<TooltipElement>().TooltipText = funcTaxDetail();
     }
 }
