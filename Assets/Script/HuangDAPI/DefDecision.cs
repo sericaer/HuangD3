@@ -14,6 +14,9 @@ namespace HuangDAPI
             return _dict[name];
         }
 
+        public static event Action<string> evtEnablePublish;
+        public static event Action<string> evtEnableCancel;
+
         public readonly Affect affect;
         public readonly Func<string> _funcTitle;
         public readonly Func<string> _funcDescribe;
@@ -44,5 +47,20 @@ namespace HuangDAPI
         }
 
         private static Dictionary<string, DefDecision> _dict = new Dictionary<string, DefDecision>();
+
+        internal static void OnTimer()
+        {
+            foreach(var elem in _dict)
+            {
+                if (elem.Value._funcEnablePublish())
+                {
+                    evtEnablePublish(elem.Key);
+                }
+                else if(elem.Value._funcEnableCancel())
+                {
+                    evtEnableCancel(elem.Key);
+                }
+            }
+        }
     }
 }

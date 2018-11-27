@@ -92,7 +92,7 @@ namespace GMDATA
 
             decisions = new Decisions();
 
-            decisions.Add(new Decision(){_name = "TEST"});
+            //decisions.Add(new Decision(){_name = "TEST"});
 
             foreach (var elem in StreamManager.CSVManager.Province)
             {

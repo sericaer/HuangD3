@@ -64,6 +64,8 @@ public class MainScene : MonoBehaviour
 
         Timer.evtOnTimer += GMData.Inist.date.Increase;
         Timer.evtOnTimer += StreamManager.EventManager.OnTimer;
+        Timer.evtOnTimer += HuangDAPI.DefDecision.OnTimer;
+
         Timer.Register("DATE:*/1/2", () =>{
             string desc = "";
             double value = 0;
@@ -106,6 +108,8 @@ public class MainScene : MonoBehaviour
         HuangDAPI.DefCountryFlag.evtEnable += GMData.Inist.countryFlag.Add;
         HuangDAPI.DefCountryFlag.evtDisable += GMData.Inist.countryFlag.Del;
 
+        HuangDAPI.DefDecision.evtEnablePublish += GMData.Inist.decisions.EnablePublish;
+        HuangDAPI.DefDecision.evtEnableCancel  += GMData.Inist.decisions.EnableCancel;
 
         HuangDAPI.Stability.evtChange += (int value) => {
 
