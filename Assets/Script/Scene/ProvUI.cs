@@ -56,6 +56,6 @@ public class ProvUI : MonoBehaviour
     {
         this.transform.Find("detail/taxbase/value").GetComponent<Text>().text = funcTaxBase().ToString();
         this.transform.Find("detail/taxcurr/value").GetComponent<Text>().text = funcTaxCurr().ToString();
-        this.transform.Find("detail/taxcurr/value").GetComponent<TooltipElement>().TooltipText = funcTaxDetail();
+        this.transform.Find("detail/taxcurr").GetComponent<TooltipElement>().TooltipText = funcTaxDetail();
     }
 }
