@@ -8,19 +8,18 @@ namespace HuangDAPI
     public class Stability
     {
         public static event Action<int> evtChange;
+        public static Func<GMDATA.Stability> stability;
 
         public static int current
         {
             get
             {
-                return stability.current;
+                return stability().current;
             }
             set
             {
-                evtChange(value - stability.current);
+                evtChange(value - stability().current);
             }
         }
-
-        internal static GMDATA.Stability stability;
     }
 }

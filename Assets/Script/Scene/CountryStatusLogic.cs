@@ -9,7 +9,18 @@ using GMDATA;
 
 public class CountryStatusLogic : MonoBehaviour
 {
+    
     public static CountryStatusLogic inst = null;
+
+    public static void Task(Action action)
+    {
+        if (inst != null)
+        {
+            action();
+        }
+
+        aWakeTask += action;
+    }
 
     public static void OnAddFlag(string name)
     {
@@ -33,10 +44,9 @@ public class CountryStatusLogic : MonoBehaviour
         this.gameObject.SetActive(false);
         inst = this;
 
-        Debug.Log("flagcout:" + GMData.Inist.countryFlag.names.Count);
-        foreach (var name in GMData.Inist.countryFlag.names)
+        if(aWakeTask != null)
         {
-            AddFlag(name);
+            aWakeTask();
         }
     }
 
@@ -53,7 +63,7 @@ public class CountryStatusLogic : MonoBehaviour
 		
 	}
 
-    void AddFlag(string name)
+    public void AddFlag(string name)
     {        
         GameObject Text = new GameObject(name, typeof(RectTransform));
         Text.AddComponent<CanvasRenderer>();
@@ -85,5 +95,5 @@ public class CountryStatusLogic : MonoBehaviour
         }
     }
 
-
+    private static event Action aWakeTask;
 }

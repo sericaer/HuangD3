@@ -9,6 +9,8 @@ namespace HuangDAPI
 {
     public class DefCountryFlag : ReflectBase
     {
+        public static Func<string, bool> IsEnabled;
+
         public static DefCountryFlag Find(string name)
         {
             return _dict[name];
@@ -31,18 +33,9 @@ namespace HuangDAPI
             _dict.Add(this.GetType().Name, this);
         }
 
-        public bool isEnabled
-        {
-            get
-            {
-                return _isEnable;
-            }
-        }
 
         public void Enable()
         {
-            _isEnable = true;
-
             if(evtEnable != null)
             {
                 evtEnable(this.GetType().Name);
@@ -52,8 +45,6 @@ namespace HuangDAPI
 
         public void Disable()
         {
-            _isEnable = false;
-
             if(evtDisable != null)
             {
                 evtDisable(this.GetType().Name);
@@ -61,8 +52,16 @@ namespace HuangDAPI
 
         }
 
+        public bool isEnabled
+        {
+            get
+            {
+                return IsEnabled(this.GetType().Name);
+            }
+
+        }
+
         private static Dictionary<string, DefCountryFlag> _dict = new Dictionary<string, DefCountryFlag>();
-        private bool _isEnable = false;
     }
 
     public class Affect : ReflectBase

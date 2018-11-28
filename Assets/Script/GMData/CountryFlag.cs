@@ -55,7 +55,7 @@ namespace GMDATA
         {
             foreach(var name in _names)
             {
-                HuangDAPI.DefCountryFlag.Find(name).Enable();
+                evtAddFlag(name);
             }
         }
     }
