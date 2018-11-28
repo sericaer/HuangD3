@@ -7,32 +7,25 @@ using UnityEngine.UI;
 
 public class DecisionLogic : MonoBehaviour
 {
-    public static List<DecisionLogic> list = new List<DecisionLogic>();
     public static Action<string> evtPublish;
     public static Action<string> evtCancel;
 
-    public static void OnStateChange(string name, Decision.State currState)
+    public void OnStateChange(Decision.State currState)
     {
-        var Inst = list.Find(x => x.name == name);
-        if(Inst == null)
-        {
-            return;
-        }
-
         switch (currState)
         {
             case Decision.State.PUBLISH_ED:
                 {
-                    Inst.btnPublish.gameObject.SetActive(false);
-                    Inst.btnCancel.gameObject.SetActive(true);
-                    Inst.btnCancel.interactable = false;
+                    this.btnPublish.gameObject.SetActive(false);
+                    this.btnCancel.gameObject.SetActive(true);
+                    this.btnCancel.interactable = false;
                 }
                 break;
             case Decision.State.CANCEL_ENABLE:
                 {
-                    Inst.btnPublish.gameObject.SetActive(false);
-                    Inst.btnCancel.gameObject.SetActive(true);
-                    Inst.btnCancel.interactable = true;
+                    this.btnPublish.gameObject.SetActive(false);
+                    this.btnCancel.gameObject.SetActive(true);
+                    this.btnCancel.interactable = true;
                 }
                 break;
             default:
@@ -55,8 +48,8 @@ public class DecisionLogic : MonoBehaviour
         btnCancel.onClick.AddListener(OnBtnCancelClick);
 
         btnCancel.gameObject.SetActive(false);
+        slider.gameObject.SetActive(false);
 
-        list.Add(this);
     }
 
 	// Use this for initialization
@@ -108,30 +101,13 @@ public class DecisionLogic : MonoBehaviour
         //btnDo.interactable = decplan.IsEnable() && !GameFrame.eventManager.isEventDialogExit;
 	}
 
-    void OnDestroy()
-    {
-        Debug.Log("DecisionLogic Destroy ");
-        list.Remove(this);
-    }
-
-    internal static object newInstance(Decision decision, Transform parent)
+    internal static GameObject newInstance(Decision decision, Transform parent)
     {
         var decisionUI = Instantiate(Resources.Load("Prefabs/decision"), parent) as GameObject;
         decisionUI.name = decision.name;
         decisionUI.GetComponent<DecisionLogic>().title.text = decision.name;
 
         return decisionUI;
-    }
-
-    internal static void DestroyInstance(string name)
-    {
-        var Inst = list.Find(x => x.name == name);
-        if (Inst == null)
-        {
-            return;
-        }
-        list.Remove(Inst);
-        Destroy(Inst.gameObject);
     }
 
     public void onBtnPublishClick()

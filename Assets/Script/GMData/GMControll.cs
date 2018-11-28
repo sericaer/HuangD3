@@ -18,22 +18,30 @@ namespace GMDATA
                 GMData.Inist.decisions.OnCancel(name);
             };
 
-            Decisions.evtDel += DecisionLogic.DestroyInstance;
+            Decisions.evtDel += (string name)=>{
+                DecisionGroup.Inst.DeleteElem(name);
+            };
+
             Decisions.evtAdd += (Decision decision) =>{
-                ChaoTScene.Task (()=>{
-                    DecisionLogic.newInstance(decision, ChaoTScene.Inst.panelDecision.transform);
+                DecisionGroup.Task (()=>{
+                    DecisionGroup.Inst.NewDecisionUI(decision);
                 });
             };
 
-            Decision.evtStateChange += DecisionLogic.OnStateChange;
+            Decision.evtStateChange += (string name, Decision.State currState)=>{
+                DecisionGroup.Task(() => {
+                    DecisionGroup.Inst.StateChange(name, currState);
+                });
+            };
 
 
             CountryFlag.evtAddFlag += (string flagname) => {
-                CountryStatusLogic.Task(() => {
+                CountryStatusLogic.Task(() =>
+                {
                     CountryStatusLogic.inst.AddFlag(flagname);
                 });
-                CountryStatusLogic.OnAddFlag(flagname);
             };
+
             CountryFlag.evtDelFlag += (string flagname) => {
                 CountryStatusLogic.OnDelFlag(flagname);
             };

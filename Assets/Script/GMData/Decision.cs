@@ -99,6 +99,11 @@ namespace GMDATA
 
         [JsonProperty]
         public bool _isEnableCancel = false;
+
+        internal void OnDeserialized()
+        {
+            evtStateChange(name, _currState);
+        }
     }
 
 
@@ -200,9 +205,10 @@ namespace GMDATA
                 return;
             }
 
-            foreach (var prov in _list)
+            foreach (var decision in _list)
             {
-                evtAdd(prov);
+                evtAdd(decision);
+                decision.OnDeserialized();
             }
         }
 
