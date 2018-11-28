@@ -10,8 +10,24 @@ using GMDATA;
 
 public class ChaoTScene : MonoBehaviour 
 {
+    public static ChaoTScene Inst;
+    public GameObject panelDecision;
+
+    public static void Task(Action action)
+    {
+        if (Inst != null)
+        {
+            action();
+        }
+
+        aWakeTask += action;
+    }
+
     private void Awake()
     {
+        Inst = this;
+        panelDecision = GameObject.Find("Canvas/Panel/PanelDecision");
+
         foreach(var elem in GMData.Inist.offices.All)
         {
             if (elem.group != Office.GROUP.Center) 
@@ -26,10 +42,9 @@ public class ChaoTScene : MonoBehaviour
             _listOfficeUI.Add(officeUI);
         }
 
-        foreach (var elem in GMData.Inist.decisions.All)
+        if(aWakeTask != null)
         {
-            var parent = GameObject.Find("Canvas/Panel/PanelDecision").transform;
-            var ui = DecisionLogic.newInstance(elem, parent);
+            aWakeTask();
         }
     }
 
@@ -44,7 +59,9 @@ public class ChaoTScene : MonoBehaviour
     }
 
     private List<GameObject> _listOfficeUI = new List<GameObject>();
+    private static event Action aWakeTask;
 }
+
 //public class ChaoTScene : MonoBehaviour 
 //{
 //	void Awake()

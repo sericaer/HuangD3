@@ -25,6 +25,7 @@ namespace HuangDAPI
 
         public DefDecision()
         {
+            
             Debug.Log(this.GetType().Name);
             affect = new Affect(this);
 
@@ -54,10 +55,12 @@ namespace HuangDAPI
             {
                 if (elem.Value._funcEnablePublish())
                 {
+                    Debug.Log(elem.Key + "enabled");
                     evtEnablePublish(elem.Key);
                 }
                 else if(elem.Value._funcEnableCancel())
                 {
+                    Debug.Log(elem.Key + "disabled");
                     evtEnableCancel(elem.Key);
                 }
             }

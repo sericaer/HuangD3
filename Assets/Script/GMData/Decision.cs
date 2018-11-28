@@ -11,11 +11,14 @@ namespace GMDATA
     [JsonObject(MemberSerialization.OptIn)]
     public class Decision
     {
+        public static event Action<string, Decision.State> evtStateChange;
+
         public enum State
         {
             PUBLISH_ENABLE,
             PUBLISH_ING,
             PUBLISH_ED,
+            CANCEL_ENABLE,
         }
 
         public Decision()
@@ -51,6 +54,12 @@ namespace GMDATA
         public void EnableCancel(bool value)
         {
             _isEnableCancel = value;
+            if(_currState == State.PUBLISH_ED)
+            {
+                _currState = State.CANCEL_ENABLE;
+
+                evtStateChange(name, _currState);
+            }
         }
 
         public void OnPublish()
@@ -60,12 +69,21 @@ namespace GMDATA
                 throw new ArgumentException();
             }
 
-            _currState = State.PUBLISH_ED;
+            if(_isEnableCancel)
+            {
+                _currState = State.PUBLISH_ED;
+            }
+            else
+            {
+                _currState = State.CANCEL_ENABLE;
+            }
+
+            evtStateChange(name, _currState);
         }
 
         public void OnCancel()
         {
-            if (_currState != State.PUBLISH_ED)
+            if (_currState != State.CANCEL_ENABLE)
             {
                 throw new ArgumentException();
             }
@@ -87,7 +105,7 @@ namespace GMDATA
     [JsonObject(MemberSerialization.OptIn)]
     public class Decisions
     {
-        public static event Action<Func<dynamic>> evtAdd;
+        public static event Action<Decision> evtAdd;
         public static event Action<string> evtDel;
 
         public void EnablePublish(string name)
@@ -124,9 +142,9 @@ namespace GMDATA
         public void Add(Decision decision)
         {
             _list.Add(decision);
-            if (evtAddProv != null)
+            if (evtAdd != null)
             {
-                evtAdd(decision.Info);
+                evtAdd(decision);
             }
 
         }
@@ -134,7 +152,10 @@ namespace GMDATA
         public void Del(Decision decision)
         {
             _list.Remove(decision);
-            evtDel(decision.name);
+            if (evtDel != null)
+            {
+                evtDel(decision.name);
+            }
         }
 
         public Decision[] All
@@ -145,23 +166,46 @@ namespace GMDATA
             }
         }
 
+        public void OnPublish(string name)
+        {
+            Debug.Log("OnPublish" + name);
+            var decision = _list.Find((Decision obj) => obj.name == name);
+            if (decision == null)
+            {
+                throw new ArgumentException();
+            }
+
+            decision.OnPublish();
+        }
+
+        public void OnCancel(string name)
+        {
+            var decision = _list.Find((Decision obj) => obj.name == name);
+            if (decision == null)
+            {
+                throw new ArgumentException();
+            }
+
+            decision.OnCancel();
+        }
 
         [JsonProperty]
         private List<Decision> _list = new List<Decision>();
-        private object evtAddProv;
 
         [OnDeserialized]
         internal void OnDeserializedMethod(StreamingContext context)
         {
-            if (evtAddProv == null)
+            if (evtAdd == null)
             {
                 return;
             }
 
             foreach (var prov in _list)
             {
-                evtAdd(prov.Info);
+                evtAdd(prov);
             }
         }
+
+
     }
 }

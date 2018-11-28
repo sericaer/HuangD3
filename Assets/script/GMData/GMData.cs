@@ -17,7 +17,9 @@ namespace GMDATA
 
         public static void NewGMData(string dynastyName, string yearName, string emperorName)
         {
+            GMControll.Init();
             Inist = new GMData(dynastyName, yearName, emperorName);
+            Inist.Initializer();
         }
 
         public static void Save()
@@ -41,6 +43,7 @@ namespace GMDATA
             JsonSerializer serializer = new JsonSerializer();
             StringReader sr = new StringReader(json);
 
+            GMControll.Init();
             Inist = serializer.Deserialize(new JsonTextReader(sr), typeof(GMData)) as GMData;
             Inist.Initializer();
 
@@ -49,6 +52,8 @@ namespace GMDATA
 
         private void Initializer()
         {
+            
+
             economy.funcIncomeDetail = () => {
                 var rlst = new List<Tuple<string, double>>();
                 foreach (var prov in provinces.All)
@@ -102,8 +107,6 @@ namespace GMDATA
             {
                 offices.Add(new Office((IDictionary<string, object>)elem));
             }
-
-            Initializer();
 
             Debug.Log("GMData New");
         }

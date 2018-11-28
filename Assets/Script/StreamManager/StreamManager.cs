@@ -70,6 +70,11 @@ public partial class StreamManager
                      select x).Single();
         System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(qurey.TypeHandle);
 
+        qurey = (from x in Types
+                     where x.Name == "Decisions"
+                     select x).Single();
+        System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(qurey.TypeHandle);
+
         Debug.Log(string.Format("******************End Load mod {0}********************", path));
     }
 

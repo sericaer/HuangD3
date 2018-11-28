@@ -8,6 +8,36 @@ namespace native
 {
     public class DEC_SSYD : DefDecision
     {
+        public bool EnablePublish()
+        {
+            return true;
+        }
+
+        public bool EnableCancel()
+        {
+            return true;
+        }
+
+        public double affectProvinceTax(double baseValue)
+        {
+            return baseValue * provinceTaxAffect;
+        }
+
+        public double provinceTaxAffect = -0.1;
+    }
+
+    public class DEC_SSYD2 : DefDecision
+    {
+        public bool EnablePublish()
+        {
+            return true;
+        }
+
+        public bool EnableCancel()
+        {
+            return true;
+        }
+
         public double affectProvinceTax(double baseValue)
         {
             return baseValue * provinceTaxAffect;

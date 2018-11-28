@@ -7,8 +7,43 @@ using UnityEngine.UI;
 
 public class DecisionLogic : MonoBehaviour
 {
+    public static List<DecisionLogic> list = new List<DecisionLogic>();
+    public static Action<string> evtPublish;
+    public static Action<string> evtCancel;
+
+    public static void OnStateChange(string name, Decision.State currState)
+    {
+        var Inst = list.Find(x => x.name == name);
+        if(Inst == null)
+        {
+            return;
+        }
+
+        switch (currState)
+        {
+            case Decision.State.PUBLISH_ED:
+                {
+                    Inst.btnPublish.gameObject.SetActive(false);
+                    Inst.btnCancel.gameObject.SetActive(true);
+                    Inst.btnCancel.interactable = false;
+                }
+                break;
+            case Decision.State.CANCEL_ENABLE:
+                {
+                    Inst.btnPublish.gameObject.SetActive(false);
+                    Inst.btnCancel.gameObject.SetActive(true);
+                    Inst.btnCancel.interactable = true;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     void Awake()
     {
+        Debug.Log("DecisionLogic Awake");
+
         title = this.transform.Find("Text").GetComponent<Text>();
 
         slider = this.transform.Find("Slider").GetComponent<Slider>();
@@ -18,13 +53,17 @@ public class DecisionLogic : MonoBehaviour
 
         btnCancel = this.transform.Find("BtnCancel").GetComponent<Button>();
         btnCancel.onClick.AddListener(OnBtnCancelClick);
+
+        btnCancel.gameObject.SetActive(false);
+
+        list.Add(this);
     }
 
 	// Use this for initialization
 	void Start ()
     {
-        //decplan = MyGame.DecisionManager.Plans.Find((obj) => obj.name == this.name) as MyGame.DecisionPlan;
-
+         
+        Debug.Log("DecisionLogic Start");
     }
 	
 	// Update is called once per frame
@@ -69,6 +108,12 @@ public class DecisionLogic : MonoBehaviour
         //btnDo.interactable = decplan.IsEnable() && !GameFrame.eventManager.isEventDialogExit;
 	}
 
+    void OnDestroy()
+    {
+        Debug.Log("DecisionLogic Destroy ");
+        list.Remove(this);
+    }
+
     internal static object newInstance(Decision decision, Transform parent)
     {
         var decisionUI = Instantiate(Resources.Load("Prefabs/decision"), parent) as GameObject;
@@ -78,15 +123,27 @@ public class DecisionLogic : MonoBehaviour
         return decisionUI;
     }
 
+    internal static void DestroyInstance(string name)
+    {
+        var Inst = list.Find(x => x.name == name);
+        if (Inst == null)
+        {
+            return;
+        }
+        list.Remove(Inst);
+        Destroy(Inst.gameObject);
+    }
+
     public void onBtnPublishClick()
     {
         Debug.Log("publish Decision:" + this.name);
-        //MyGame.DecisionProcess.current.Find(x => x.name == this.name).Publish();
+        evtPublish(this.name);
     }
 
     public void OnBtnCancelClick()
     {
         Debug.Log("cancel Decision:" + this.name);
+        evtCancel(this.name);
         //MyGame.DecisionProcess.current.Find(x => x.name == this.name).Cancel();
     }
 
