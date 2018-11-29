@@ -41,6 +41,7 @@ namespace HuangDAPI
                 evtEnable(this.GetType().Name);
             }
 
+            Affect.Start(this.GetType().Name);
         }
 
         public void Disable()
@@ -50,6 +51,7 @@ namespace HuangDAPI
                 evtDisable(this.GetType().Name);
             }
 
+            Affect.End(this.GetType().Name);
         }
 
         public bool isEnabled
@@ -75,6 +77,23 @@ namespace HuangDAPI
             EmperorHeath = GetDelegate<Func<int, int>>("affectEmperorHeath");
             ProvinceTax = GetDelegate <Func<double, double>>("affectProvinceTax");
             CountryReb = GetDelegate <Func<double, double>>("affectCountryReb");
+
+            All.Add(outter.GetType().Name, this);
         }
+
+        internal static void Start(string name)
+        {
+            Started.Add(name, All[name]);
+        }
+
+        internal static void End(string name)
+        {
+            Started.Remove(name);
+        }
+
+        public static Dictionary<string, Affect> Started = new Dictionary<string, Affect>();
+        private static Dictionary<string, Affect> All = new Dictionary<string, Affect>();
+
+
     }
 }

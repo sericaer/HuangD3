@@ -13,7 +13,7 @@ namespace GMDATA
     {
         public static event Action<Func<ProvInfo>> evtAddProv;
         public static event Action<string> evtDelProv;
-        
+
         public  Province Find(string name)
         {
             return (from x in _list
@@ -68,6 +68,7 @@ namespace GMDATA
     public class Province
     {
         public static Func<string[]> CurrentCountyFlags;
+        public static Func<string[]> PubishedDecision;
 
         public Province()
         {
@@ -121,13 +122,11 @@ namespace GMDATA
                 var rslt = new List<Tuple<string, double>>();
                 rslt.Add(new Tuple<string, double>("BASE", _taxbase));
 
-                string[] flags = CurrentCountyFlags();
-                foreach (var flagname in flags)
+                foreach (var elem in HuangDAPI.Affect.Started)
                 {
-                    var flag = HuangDAPI.DefCountryFlag.Find(flagname);
-                    if (flag.affect.ProvinceTax != null)
+                    if(elem.Value.ProvinceTax != null)
                     {
-                        rslt.Add(new Tuple<string, double>(flagname, flag.affect.ProvinceTax((double)_taxbase)));
+                        rslt.Add(new Tuple<string, double>(elem.Key, elem.Value.ProvinceTax((double)_taxbase)));
                     }
                 }
 

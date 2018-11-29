@@ -1,12 +1,14 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Collections.Generic;
+using System.Linq;
 
 using UnityEngine;
 using Newtonsoft.Json;
 
 using Tools;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Collections.Generic;
+
 
 namespace GMDATA
 {
@@ -72,6 +74,11 @@ namespace GMDATA
 
             emperor.CurrentCountyFlags = countryFlag.current;
             Province.CurrentCountyFlags = countryFlag.current;
+            Province.PubishedDecision = ()=>{
+                return (from x in decisions.All
+                        where x._currState == Decision.State.PUBLISH_ED || x._currState == Decision.State.CANCEL_ENABLE
+                        select x.name).ToArray();
+            };
         }
 
         private GMData()

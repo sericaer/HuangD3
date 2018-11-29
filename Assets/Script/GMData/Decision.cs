@@ -78,6 +78,8 @@ namespace GMDATA
                 _currState = State.CANCEL_ENABLE;
             }
 
+            HuangDAPI.Affect.Start(_name);
+
             evtStateChange(name, _currState);
         }
 
@@ -87,6 +89,8 @@ namespace GMDATA
             {
                 throw new ArgumentException();
             }
+
+            HuangDAPI.Affect.End(_name);
 
             GMData.Inist.decisions.Del(this);
         }
