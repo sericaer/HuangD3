@@ -46,7 +46,6 @@ namespace GMDATA
             _name = param["name"] as string;
             _power = Int32.Parse((string)param["power"]);
             _group = (GROUP)Enum.Parse(typeof(GROUP), (string)param["group"]);
-            _implevel = (IMPLEVEL)Enum.Parse(typeof(IMPLEVEL), (string)param["importance"]);
         }
 
         public string name
@@ -73,17 +72,10 @@ namespace GMDATA
             }
         }
 
-        public IMPLEVEL implevel
-        {
-            get
-            {
-                return _implevel;
-            }
-        }
-
         public enum GROUP
         {
-            Center,
+            Center1,
+            Center2,
             LOCAL,
         }
 

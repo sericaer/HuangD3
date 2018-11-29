@@ -47,6 +47,13 @@ namespace GMDATA
             };
 
 
+            Relationship.evtOffice2PersonChange += (string office, string person) =>{
+                OfficeCenterGroup1.Task(() =>
+                {
+                    OfficeCenterGroup1.Inst.PersonChange(office, GMData.Inist.persons.Find(person));
+                });
+            };
+
             Timer.evtOnTimer += ()=>{
                 GMData.Inist.date.Increase();
             };

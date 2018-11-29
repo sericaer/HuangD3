@@ -9,7 +9,6 @@ using GMDATA;
 
 public class CountryStatusLogic : MonoBehaviour
 {
-    
     public static CountryStatusLogic inst = null;
 
     public static void Task(Action action)

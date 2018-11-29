@@ -28,18 +28,19 @@ public class ChaoTScene : MonoBehaviour
         Inst = this;
         panelDecision = GameObject.Find("Canvas/Panel/PanelDecision");
 
+        var panelOfficeGroup1 = GameObject.Find("Canvas/Panel/Center1");
+        var panelOfficeGroup2 = GameObject.Find("Canvas/Panel/Center2");
+
         foreach(var elem in GMData.Inist.offices.All)
         {
-            if (elem.group != Office.GROUP.Center) 
+            if(elem.group == Office.GROUP.Center1)
             {
-                continue;
+                panelOfficeGroup1.GetComponent<OfficeCenterGroup1>().newOffice(elem);
             }
-
-            var parent = GameObject.Find("Canvas/Panel/"+elem.implevel).transform;
-            var officeUI = Instantiate(Resources.Load(string.Format("Prefabs/Office/{0}_{1}", elem.group, elem.implevel)), parent) as GameObject;
-            officeUI.name = elem.name;
-
-            _listOfficeUI.Add(officeUI);
+            else if(elem.group == Office.GROUP.Center2)
+            {
+                
+            }
         }
 
         if(aWakeTask != null)
@@ -58,7 +59,6 @@ public class ChaoTScene : MonoBehaviour
 
     }
 
-    private List<GameObject> _listOfficeUI = new List<GameObject>();
     private static event Action aWakeTask;
 }
 

@@ -54,8 +54,6 @@ namespace GMDATA
 
         private void Initializer()
         {
-            
-
             economy.funcIncomeDetail = () => {
                 var rlst = new List<Tuple<string, double>>();
                 foreach (var prov in provinces.All)
@@ -104,6 +102,11 @@ namespace GMDATA
 
             decisions = new Decisions();
 
+            persons = new Persons();
+
+
+            Relationship = new Relationship();
+
             //decisions.Add(new Decision(){_name = "TEST"});
 
             foreach (var elem in StreamManager.CSVManager.Province)
@@ -114,6 +117,10 @@ namespace GMDATA
             {
                 offices.Add(new Office((IDictionary<string, object>)elem));
             }
+
+            persons.GenerateData(offices.All.Count());
+            Relationship.Init(this);
+
 
             Debug.Log("GMData New");
         }
@@ -151,6 +158,12 @@ namespace GMDATA
 
         [JsonProperty]
         public Decisions decisions;
+
+        [JsonProperty]
+        public Persons persons;
+
+        [JsonProperty]
+        public Relationship Relationship;
 
         private static string savePath = Application.persistentDataPath + "/save";
     }
