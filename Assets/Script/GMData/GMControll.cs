@@ -38,20 +38,24 @@ namespace GMDATA
             CountryFlag.evtAddFlag += (string flagname) => {
                 CountryStatusLogic.Task(() =>
                 {
-                    CountryStatusLogic.inst.AddFlag(flagname);
+                    CountryStatusLogic.Inst.AddFlag(flagname);
                 });
             };
 
             CountryFlag.evtDelFlag += (string flagname) => {
-                CountryStatusLogic.OnDelFlag(flagname);
+                CountryStatusLogic.Inst.DelFlag(flagname);
             };
 
 
             Relationship.evtOffice2PersonChange += (string office, string person) =>{
-                OfficeCenterGroup1.Task(() =>
-                {
-                    OfficeCenterGroup1.Inst.PersonChange(office, GMData.Inist.persons.Find(person));
+                OfficeCenterGroup1.Task(() => {
+                    OfficeCenterGroup1.Inst.PersonOfficeChange(office, GMData.Inist.persons.Find(person));
                 });
+            };
+
+            Relationship.evtPerson2FactionChange += (string person, string faction) =>{
+                    PersonInOfficeLogic inst = PersonInOfficeLogic.Find(person);
+                    inst.PersonFactionChange(GMData.Inist.persons.Find(person), faction);
             };
 
             Timer.evtOnTimer += ()=>{

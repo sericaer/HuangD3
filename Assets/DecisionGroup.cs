@@ -4,20 +4,8 @@ using UnityEngine;
 using GMDATA;
 using System;
 
-public class DecisionGroup : MonoBehaviour 
+public class DecisionGroup : AwakeTaskBehaviour<DecisionGroup> 
 {
-    public static DecisionGroup Inst;
-
-    public static void Task(Action action)
-    {
-        if (Inst != null)
-        {
-            action();
-        }
-
-        aWakeTask += action;
-    }
-
     public GameObject NewDecisionUI(Decision decision)
     {
         var rslt =  DecisionLogic.newInstance(decision, this.transform);
@@ -44,14 +32,9 @@ public class DecisionGroup : MonoBehaviour
 
     }
 
-    private void Awake()
+    void Awake()
     {
         Inst = this;
-
-        if (aWakeTask != null)
-        {
-            aWakeTask();
-        }
     }
 
     // Use this for initialization
@@ -66,6 +49,5 @@ public class DecisionGroup : MonoBehaviour
 		
 	}
 
-    private static event Action aWakeTask;
     private List<GameObject> list = new List<GameObject>();
 }

@@ -103,7 +103,7 @@ namespace GMDATA
             decisions = new Decisions();
 
             persons = new Persons();
-
+            factions = new Factions();
 
             Relationship = new Relationship();
 
@@ -119,6 +119,8 @@ namespace GMDATA
             }
 
             persons.GenerateData(offices.All.Count());
+            factions.GenerateData();
+
             Relationship.Init(this);
 
 
@@ -164,6 +166,9 @@ namespace GMDATA
 
         [JsonProperty]
         public Relationship Relationship;
+
+        [JsonProperty]
+        public Factions factions;
 
         private static string savePath = Application.persistentDataPath + "/save";
     }

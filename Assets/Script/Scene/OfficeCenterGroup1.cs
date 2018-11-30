@@ -17,10 +17,15 @@ public class OfficeCenterGroup1 : AwakeTaskBehaviour<OfficeCenterGroup1>
         list.Add(officeUI);
     }
 
-    public void PersonChange(string office, Person person)
+    public void PersonOfficeChange(string office, Person person)
     {
         var officeUI = Find(office);
         officeUI.OnPersonChange(person);
+    }
+
+    void Awake()
+    {
+        Inst = this;
     }
 
 	// Use this for initialization

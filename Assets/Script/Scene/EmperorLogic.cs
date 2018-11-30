@@ -20,7 +20,7 @@ public class EmperorLogic : MonoBehaviour
             this.GetComponent<Button>().onClick.AddListener(() =>
             {
                 uiEmperorDetail.SetActive(!uiEmperorDetail.activeSelf);
-                CountryStatusLogic.inst.gameObject.SetActive(!CountryStatusLogic.inst.gameObject.activeSelf);
+                CountryStatusLogic.Inst.gameObject.SetActive(!CountryStatusLogic.Inst.gameObject.activeSelf);
             });
         }
     }

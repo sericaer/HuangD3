@@ -7,46 +7,45 @@ using UnityEngine.UI;
 
 using GMDATA;
 
-public class CountryStatusLogic : MonoBehaviour
+public class CountryStatusLogic : AwakeTaskBehaviour<CountryStatusLogic>
 {
-    public static CountryStatusLogic inst = null;
-
-    public static void Task(Action action)
+    public void AddFlag(string name)
     {
-        if (inst != null)
+        GameObject Text = new GameObject(name, typeof(RectTransform));
+        Text.AddComponent<CanvasRenderer>();
+        Text.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 30);
+
+        var text = Text.AddComponent<Text>();
+        text.text = name;
+        text.font = Resources.FindObjectsOfTypeAll<Font>()[0];
+        text.color = Color.black;
+        text.alignment = TextAnchor.MiddleCenter;
+
+
+        var desc = HuangDAPI.DefCountryFlag.Find(name).describe;
+        if (desc != null)
         {
-            action();
+            var tooltip = Text.AddComponent<TooltipElement>();
+            tooltip.TooltipText = desc();
         }
 
-        aWakeTask += action;
+        Text.transform.SetParent(this.transform.Find("Status").transform);
     }
 
-    public static void OnAddFlag(string name)
+    public void DelFlag(string name)
     {
-        if (inst == null)
-            return;
-        
-        inst.AddFlag(name);
-    }
-
-    public static void OnDelFlag(string name)
-    {
-        if (inst == null)
-            return;
-        
-        inst.DelFlag(name);
+        var currFlag = this.transform.Find("Status/" + name);
+        if (currFlag != null)
+        {
+            Destroy(currFlag.gameObject);
+        }
     }
 
     void Awake()
     {
+        Inst = this;
         Debug.Log("CountryStatusLogic Awake");
         this.gameObject.SetActive(false);
-        inst = this;
-
-        if(aWakeTask != null)
-        {
-            aWakeTask();
-        }
     }
 
 	// Use this for initialization
@@ -61,38 +60,6 @@ public class CountryStatusLogic : MonoBehaviour
     {
 		
 	}
-
-    public void AddFlag(string name)
-    {        
-        GameObject Text = new GameObject(name, typeof(RectTransform));
-        Text.AddComponent<CanvasRenderer>();
-        Text.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 30);
-
-        var text = Text.AddComponent<Text>();
-        text.text = name;
-        text.font = Resources.FindObjectsOfTypeAll<Font>()[0];
-        text.color = Color.black;
-        text.alignment = TextAnchor.MiddleCenter;
-
-
-        var desc = HuangDAPI.DefCountryFlag.Find(name).describe;
-        if(desc != null)
-        {
-            var tooltip = Text.AddComponent<TooltipElement>();
-            tooltip.TooltipText = desc();
-        }
-
-        Text.transform.SetParent(this.transform.Find("Status").transform);
-    }
-
-    void DelFlag(string name)
-    {
-        var currFlag = this.transform.Find("Status/" + name);
-        if (currFlag != null)
-        {
-            Destroy(currFlag.gameObject);
-        }
-    }
 
     private static event Action aWakeTask;
 }

@@ -17,6 +17,8 @@ public abstract class AwakeTaskBehaviour<T> : MonoBehaviour where T: AwakeTaskBe
         aWakeTask += action;
     }
 
+
+
     void OnEnable()
     {
         if (Inst != null && Inst != this)

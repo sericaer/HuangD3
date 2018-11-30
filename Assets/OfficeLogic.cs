@@ -15,13 +15,14 @@ public class OfficeLogic : MonoBehaviour
 
     public void OnPersonChange(Person newPerson)
     {
-        personName.text = newPerson.name;
+        Destroy(personUI);
+        personUI = PersonInOfficeLogic.newInstance(newPerson, this.transform);
     }
 
     private void Awake()
     {
         officeName = transform.Find("Text").GetComponent<Text>();
-        personName = transform.Find("value").GetComponent<Text>();
+        //personName = transform.Find("value").GetComponent<Text>();
         //personScore = transform.Find("score");
         //factionName = transform.Find("faction");
 
@@ -39,6 +40,8 @@ public class OfficeLogic : MonoBehaviour
 		
 	}
 
+    private GameObject personUI;
     private Text officeName;
     private Text personName;
+
 }

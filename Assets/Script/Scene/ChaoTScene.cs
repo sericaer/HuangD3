@@ -13,16 +13,6 @@ public class ChaoTScene : MonoBehaviour
     public static ChaoTScene Inst;
     public GameObject panelDecision;
 
-    public static void Task(Action action)
-    {
-        if (Inst != null)
-        {
-            action();
-        }
-
-        aWakeTask += action;
-    }
-
     private void Awake()
     {
         Inst = this;
@@ -42,11 +32,6 @@ public class ChaoTScene : MonoBehaviour
                 
             }
         }
-
-        if(aWakeTask != null)
-        {
-            aWakeTask();
-        }
     }
 
     private void Start()
@@ -58,8 +43,6 @@ public class ChaoTScene : MonoBehaviour
     {
 
     }
-
-    private static event Action aWakeTask;
 }
 
 //public class ChaoTScene : MonoBehaviour 

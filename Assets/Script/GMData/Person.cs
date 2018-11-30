@@ -12,8 +12,20 @@ namespace GMDATA
             this.name = name;
         }
 
+        public Dictionary<string, object> info
+        {
+            get
+            {
+                var rslt = new Dictionary<string, object>();
+                rslt.Add("name", name);
+                rslt.Add("faction", GMData.Inist.Relationship.person2faction[name]);
+                return rslt;
+            }
+        }
+
         [JsonProperty]
         public string name;
+
     }
 
     [JsonObject(MemberSerialization.Fields)]
