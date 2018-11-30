@@ -98,12 +98,11 @@ namespace GMDATA
 
             countryFlag = new CountryFlag();
             provinces = new Provinces();
-            offices = new Offices();
+            //offices = new Offices();
 
             decisions = new Decisions();
 
             persons = new Persons();
-            factions = new Factions();
 
             Relationship = new Relationship();
 
@@ -113,13 +112,12 @@ namespace GMDATA
             {
                 provinces.Add(new Province((IDictionary<string, object>)elem));
             }
-            foreach (var elem in StreamManager.CSVManager.Office)
-            {
-                offices.Add(new Office((IDictionary<string, object>)elem));
-            }
+            //foreach (var elem in StreamManager.CSVManager.Office)
+            //{
+            //    offices.Add(new Office((IDictionary<string, object>)elem));
+            //}
 
-            persons.GenerateData(offices.All.Count());
-            factions.GenerateData();
+            persons.GenerateData(HuangDAPI.Office.All.Count());
 
             Relationship.Init(this);
 
@@ -166,9 +164,6 @@ namespace GMDATA
 
         [JsonProperty]
         public Relationship Relationship;
-
-        [JsonProperty]
-        public Factions factions;
 
         private static string savePath = Application.persistentDataPath + "/save";
     }

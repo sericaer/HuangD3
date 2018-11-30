@@ -42,12 +42,18 @@ public partial class StreamManager
     {
         Debug.Log(string.Format("*****************Start Load mod {0}********************", path));
 
+        CSVManager.Load(path);
+
         CSGenerator.csharpLoader = csharpLoader;
         CSGenerator.path = path;
 
         List<string> sourceCodes = new List<string>();
+        sourceCodes.Add(CSGenerator.MakeOffices());
+        sourceCodes.Add(CSGenerator.MakeFactions());
+
         sourceCodes.Add(CSGenerator.MakeFlags());
-        sourceCodes.Add(CSGenerator.MakeDecisions());
+        sourceCodes.Add(CSGenerator.MakeDecisions(sourceCodes.ToArray()));
+
 
         foreach (string filename in Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories))
         {
@@ -63,7 +69,7 @@ public partial class StreamManager
         YearName.Load(Types);
         PersonName.Load(Types);
         EventManager.Load(Types);
-        CSVManager.Load(path);
+
 
         var qurey = (from x in Types
                      where x.Name == "CountryFlags"
@@ -73,6 +79,16 @@ public partial class StreamManager
         qurey = (from x in Types
                      where x.Name == "Decisions"
                      select x).Single();
+        System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(qurey.TypeHandle);
+
+        qurey = (from x in Types
+                 where x.Name == "Offices"
+                 select x).Single();
+        System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(qurey.TypeHandle);
+
+        qurey = (from x in Types
+                 where x.Name == "Factions"
+                 select x).Single();
         System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(qurey.TypeHandle);
 
         Debug.Log(string.Format("******************End Load mod {0}********************", path));

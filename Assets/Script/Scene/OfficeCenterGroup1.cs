@@ -11,7 +11,7 @@ public class OfficeCenterGroup1 : AwakeTaskBehaviour<OfficeCenterGroup1>
         return rslt.GetComponent<OfficeLogic>();
     }
 
-    public void newOffice(Office office)
+    public void newOffice(dynamic office)
     {
         var officeUI = OfficeLogic.newInstance(string.Format("Prefabs/Office/{0}", office.group.ToString()), office, this.transform) as GameObject;
         list.Add(officeUI);

@@ -19,8 +19,8 @@ namespace GMDATA
         public void Init(GMData gmdata)
         {
             var persons = gmdata.persons.All;
-            var offices = gmdata.offices.All;
-            var factions = gmdata.factions.All;
+            var offices = HuangDAPI.Office.All;
+            var factions = HuangDAPI.Faction.All;
 
             for (int i = 0; i < Math.Min(persons.Length, offices.Length); i++)
             {

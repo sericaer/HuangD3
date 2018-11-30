@@ -21,13 +21,13 @@ public class ChaoTScene : MonoBehaviour
         var panelOfficeGroup1 = GameObject.Find("Canvas/Panel/Center1");
         var panelOfficeGroup2 = GameObject.Find("Canvas/Panel/Center2");
 
-        foreach(var elem in GMData.Inist.offices.All)
+        foreach(var elem in HuangDAPI.Office.All)
         {
-            if(elem.group == Office.GROUP.Center1)
+            if(elem.group == HuangDAPI.Office.GROUP.Center1)
             {
-                panelOfficeGroup1.GetComponent<OfficeCenterGroup1>().newOffice(elem);
+                panelOfficeGroup1.GetComponent<OfficeCenterGroup1>().newOffice(elem.info);
             }
-            else if(elem.group == Office.GROUP.Center2)
+            else if(elem.group == HuangDAPI.Office.GROUP.Center2)
             {
                 
             }

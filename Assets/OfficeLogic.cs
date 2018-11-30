@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class OfficeLogic : MonoBehaviour 
 {
-    public static GameObject newInstance(string perfabsName, Office office, Transform parent)
+    public static GameObject newInstance(string perfabsName, dynamic office, Transform parent)
     {
         var officeUI = Instantiate(Resources.Load(perfabsName), parent) as GameObject;
         officeUI.name = office.name;

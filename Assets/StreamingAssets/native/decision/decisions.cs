@@ -10,27 +10,13 @@ namespace native
     {
         public bool EnablePublish()
         {
-            return true;
-        }
+            if(Offices.SG1.person.faction == Factions.SHI)
+            {
+                return true;
+            }
 
-        public bool EnableCancel()
-        {
-            return true;
-        }
-
-        public double affectProvinceTax(double baseValue)
-        {
-            return baseValue * provinceTaxAffect;
-        }
-
-        public double provinceTaxAffect = -0.1;
-    }
-
-    public class DEC_SSYD2 : DefDecision
-    {
-        public bool EnablePublish()
-        {
-            return true;
+            return false;
+            //return true;
         }
 
         public bool EnableCancel()

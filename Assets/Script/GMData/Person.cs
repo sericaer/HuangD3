@@ -23,6 +23,11 @@ namespace GMDATA
             }
         }
 
+        public HuangDAPI.DefPerson GetDef()
+        {
+            return new HuangDAPI.DefPerson(name);
+        }
+
         [JsonProperty]
         public string name;
 
