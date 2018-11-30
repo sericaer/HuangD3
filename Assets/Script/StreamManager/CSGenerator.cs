@@ -38,12 +38,6 @@ public class CSGenerator
     public static string MakeDecisions(string[] dependCS)
     {
         List<string> SourceCodes = new List<string>(dependCS);
-        string[] fileNames = Directory.GetFiles(path + "/decision", "*.cs", SearchOption.AllDirectories);
-        foreach (string filename in Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories))
-        {
-            string script = File.ReadAllText(filename);
-            SourceCodes.Add(script);
-        }
 
         CSharpCompiler.ScriptBundleLoader.IScriptBundle bd = csharpLoader.LoadAndWatchSourceBundle(SourceCodes);
 

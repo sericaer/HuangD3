@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace native
 {
-    class EVENT_SSYD_START : EventDef
+    class EVENT_FORCE_SSYD : EventDef
     {
         bool Precondition()
         {
@@ -15,7 +15,7 @@ namespace native
         {
             void OnSelect()
             {
-                CountryFlags.SSYD.Enable();
+                Decisions.SSYD.OnPublish();
                 Stability.current++;
 
                 Debug.Log("OPTION1");

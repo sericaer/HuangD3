@@ -6,21 +6,26 @@ using UnityEngine;
 
 namespace native
 {
-    public class DEC_SSYD : DefDecision
+    public class SSYD : DefDecision
     {
         public bool EnablePublish()
         {
-            if(Offices.SG1.person.faction == Factions.SHI)
+            if(Offices.SG1.person.faction == Factions.SHI
+              && Factions.SHI.power > 0.3)
             {
                 return true;
             }
 
             return false;
-            //return true;
         }
 
         public bool EnableCancel()
         {
+            if (Offices.SG1.person.faction != Factions.SHI
+                && Factions.SHI.power < 0.2)
+            {
+                return true;
+            }
             return true;
         }
 

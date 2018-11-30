@@ -47,6 +47,11 @@ namespace HuangDAPI
             _dict.Add(this.GetType().Name, this);
         }
 
+        public void OnPublish()
+        {
+            GMDATA.GMData.Inist.decisions.OnPublish(this.GetType().Name);
+        }
+
         private static Dictionary<string, DefDecision> _dict = new Dictionary<string, DefDecision>();
 
         internal static void OnTimer()

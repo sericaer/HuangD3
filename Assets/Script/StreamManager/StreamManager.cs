@@ -51,15 +51,14 @@ public partial class StreamManager
         sourceCodes.Add(CSGenerator.MakeOffices());
         sourceCodes.Add(CSGenerator.MakeFactions());
 
+        sourceCodes.AddRange(ReadAllCSInPath(path + "/name"));
+        sourceCodes.AddRange(ReadAllCSInPath(path + "/flag"));
+        sourceCodes.AddRange(ReadAllCSInPath(path + "/decision"));
+
         sourceCodes.Add(CSGenerator.MakeFlags());
         sourceCodes.Add(CSGenerator.MakeDecisions(sourceCodes.ToArray()));
 
-
-        foreach (string filename in Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories))
-        {
-            string script = File.ReadAllText(filename);
-            sourceCodes.Add(script);
-        }
+        sourceCodes.AddRange(ReadAllCSInPath(path + "/event"));
 
         CSharpCompiler.ScriptBundleLoader.IScriptBundle bd = csharpLoader.LoadAndWatchSourceBundle(sourceCodes.ToArray());
 
@@ -92,6 +91,18 @@ public partial class StreamManager
         System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(qurey.TypeHandle);
 
         Debug.Log(string.Format("******************End Load mod {0}********************", path));
+    }
+
+    private string[] ReadAllCSInPath(string path)
+    {
+        List<string> sourceCode = new List<string>();
+        foreach (string filename in Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories))
+        {
+            string script = File.ReadAllText(filename);
+            sourceCode.Add(script);
+        }
+
+        return sourceCode.ToArray();
     }
 
     private static StreamManager _inst;

@@ -34,6 +34,12 @@ namespace HuangDAPI
             }
         }
 
+        public static Office Find(string name)
+        {
+            return list.Find(x => x.name == name);
+        }
+
+
         public dynamic info
         {
             get
@@ -57,6 +63,7 @@ namespace HuangDAPI
                 return GMDATA.GMData.Inist.persons.Find(personname).GetDef();
             }
         }
+
 
         public string name;
         public int power;
