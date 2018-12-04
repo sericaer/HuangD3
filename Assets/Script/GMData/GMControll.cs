@@ -8,6 +8,10 @@ namespace GMDATA
     {
         public static void Init()
         {
+            GMData.evtInited += () => {
+                HuangDAPI.Faction.OnPowerChange();
+            };
+
             DialogLogic.evntCreate += Timer.Pause;
             DialogLogic.evntDestory += Timer.unPause;
 
@@ -51,11 +55,21 @@ namespace GMDATA
                 OfficeCenterGroup1.Task(() => {
                     OfficeCenterGroup1.Inst.PersonOfficeChange(office, GMData.Inist.persons.Find(person));
                 });
+
+                if (GMData.isInited)
+                {
+                    HuangDAPI.Faction.OnPowerChange();
+                }
             };
 
             Relationship.evtPerson2FactionChange += (string person, string faction) =>{
                     PersonInOfficeLogic inst = PersonInOfficeLogic.Find(person);
                     inst.PersonFactionChange(GMData.Inist.persons.Find(person), faction);
+                    
+                    if (GMData.isInited)
+                    {
+                        HuangDAPI.Faction.OnPowerChange();
+                    }
             };
 
             Timer.evtOnTimer += ()=>{
@@ -116,6 +130,13 @@ namespace GMDATA
             };
             HuangDAPI.DefDecision.evtEnableCancel +=  (string name) =>{
                 GMData.Inist.decisions.EnableCancel(name);
+            };
+
+            HuangDAPI.Faction.evtPowerChange += (IDictionary<string, int> dict) =>{
+                StatistLogic.Task(() =>
+                {
+                    StatistLogic.Inst.OnFactionPowerChange(dict);
+                });
             };
 
             HuangDAPI.Stability.evtChange += (int value) => {

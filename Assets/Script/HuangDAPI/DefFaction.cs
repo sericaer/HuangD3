@@ -10,6 +10,13 @@ namespace HuangDAPI
 {
     public class Faction
     {
+        public static event Action<IDictionary<string, int>> evtPowerChange;
+
+        public static void OnPowerChange()
+        {
+            evtPowerChange(powerDict);
+        }
+
         public Faction(string name)
         {
             this.name = name;
@@ -30,17 +37,46 @@ namespace HuangDAPI
             }
         }
 
+        public static IDictionary<string, int> powerDict
+        {
+            get
+            {
+                Dictionary<string, int> rslt = new Dictionary<string, int>();
+                foreach (var elem in All)
+                {
+                    rslt.Add(elem.name, elem.power);
+                }
+
+                return rslt;
+            }
+        }
+
+        public double powerPercent
+        {
+            get
+            {
+                int num = 0;
+                foreach(var elem in powerDetail)
+                {
+                    num += elem.Item2;
+                }
+
+                int den = 0;
+                foreach(var elem in HuangDAPI.Office.All)
+                {
+                    den += elem.power;
+                }
+
+                return (double)num/den;
+            }
+        }
+
         public int power
         {
             get
             {
-                int rslt = 0;
-                foreach(var elem in powerDetail)
-                {
-                    rslt += elem.Item2;
-                }
-
-                return rslt;
+                return (from x in powerDetail
+                        select x.Item2).Sum();
             }
         }
 

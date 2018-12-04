@@ -16,12 +16,15 @@ namespace GMDATA
     public class GMData
     {
         public static GMData Inist;
+        public static event Action evtInited;
 
         public static void NewGMData(string dynastyName, string yearName, string emperorName)
         {
             GMControll.Init();
             Inist = new GMData(dynastyName, yearName, emperorName);
             Inist.Initializer();
+
+            isInited = true;
         }
 
         public static void Save()
@@ -48,6 +51,8 @@ namespace GMDATA
             GMControll.Init();
             Inist = serializer.Deserialize(new JsonTextReader(sr), typeof(GMData)) as GMData;
             Inist.Initializer();
+
+            isInited = true;
 
             Debug.Log("GMData Load");
         }
@@ -77,6 +82,8 @@ namespace GMDATA
                         where x._currState == Decision.State.PUBLISH_ED || x._currState == Decision.State.CANCEL_ENABLE
                         select x.name).ToArray();
             };
+
+            evtInited();
         }
 
         private GMData()
@@ -121,7 +128,6 @@ namespace GMDATA
 
             Relationship.Init(this);
 
-
             Debug.Log("GMData New");
         }
 
@@ -165,6 +171,7 @@ namespace GMDATA
         [JsonProperty]
         public Relationship Relationship;
 
+        public static bool isInited = false;
         private static string savePath = Application.persistentDataPath + "/save";
     }
 
