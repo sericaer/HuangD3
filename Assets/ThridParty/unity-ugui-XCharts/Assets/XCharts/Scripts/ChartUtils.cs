@@ -192,7 +192,7 @@ namespace xcharts
         {
             if (segments <= 0)
             {
-                segments = (int)((2 * Mathf.PI * radius) / CRICLE_SMOOTHNESS);
+                segments = (int)((Mathf.PI * 50) / CRICLE_SMOOTHNESS);
             }
             List<UIVertex> vertexs = new List<UIVertex>();
             vh.GetUIVertexStream(vertexs);
