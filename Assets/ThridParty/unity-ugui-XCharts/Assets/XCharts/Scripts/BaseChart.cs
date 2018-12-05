@@ -283,7 +283,7 @@ namespace xcharts
             {
                 LegendData data = legend.dataList[i];
                 Button btn = ChartUtils.AddButtonObject(LEGEND_TEXT + i, transform, themeInfo.font,
-                                                        themeInfo.textColor, Vector2.zero, Vector2.zero, new Vector2 { x = 0.5f, y = 0.5f },
+                                                        themeInfo.textColor, Vector2.zero, Vector2.zero, Vector2.zero,
                     new Vector2(legend.itemWidth, legend.itemHeight));
                 legend.dataList[i].button = btn;
                 Color bcolor = data.show ? themeInfo.GetColor(i) : themeInfo.unableColor;

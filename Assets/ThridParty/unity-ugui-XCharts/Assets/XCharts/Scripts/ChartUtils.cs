@@ -28,6 +28,7 @@ namespace xcharts
                 txtObj.AddComponent<Text>();
             }
             Text txt = txtObj.GetComponent<Text>();
+            txtObj.GetComponent<RectTransform>().sizeDelta = sizeDelta;
             txt.font = font;
             txt.fontSize = fontSize;
             txt.text = "Text";
@@ -36,7 +37,6 @@ namespace xcharts
             txt.verticalOverflow = VerticalWrapMode.Overflow;
             txt.color = color;
             txt.transform.localPosition = new Vector3(0, 0, 0);
-
             txtObj.GetComponent<Text>().alignment = anchor;
             return txtObj.GetComponent<Text>();
         }
