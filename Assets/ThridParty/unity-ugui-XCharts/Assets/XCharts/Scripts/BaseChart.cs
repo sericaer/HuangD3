@@ -1,6 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Linq;
 using System.Collections.Generic;
+
+using UnityEngine;
+using UnityEngine.UI;
+
 
 namespace xcharts
 {
@@ -62,7 +65,7 @@ namespace xcharts
         public float itemHeight = 20.0f;
         public float itemGap = 5;
         public float left;
-        public float right = 5;
+        public float right = 50;
         public float top;
         public float bottom;
         public List<LegendData> dataList = new List<LegendData>();
@@ -191,6 +194,15 @@ namespace xcharts
             }
         }
 
+        public Button[] buttons
+        {
+            get
+            {
+                return (from x in legend.dataList
+                        select x.button).ToArray();
+            }
+        }
+
         public void AddData(string legend, string key, float value)
         {
             for (int i = 0; i < seriesList.Count; i++)
@@ -271,7 +283,7 @@ namespace xcharts
             {
                 LegendData data = legend.dataList[i];
                 Button btn = ChartUtils.AddButtonObject(LEGEND_TEXT + i, transform, themeInfo.font,
-                    themeInfo.textColor, Vector2.zero,Vector2.zero, Vector2.zero,
+                                                        themeInfo.textColor, Vector2.zero, Vector2.zero, new Vector2 { x = 0.5f, y = 0.5f },
                     new Vector2(legend.itemWidth, legend.itemHeight));
                 legend.dataList[i].button = btn;
                 Color bcolor = data.show ? themeInfo.GetColor(i) : themeInfo.unableColor;
@@ -281,11 +293,12 @@ namespace xcharts
                 btn.GetComponentInChildren<Text>().text = data.text;
                 btn.onClick.AddListener(delegate ()
                 {
-                    data.show = !data.show;
-                    btn.GetComponent<Image>().color = data.show ? themeInfo.GetColor(i) : themeInfo.unableColor;
-                    OnYMaxValueChanged();
-                    OnLegendButtonClicked();
-                    RefreshChart();
+                    Debug.Log(btn.name + "Clicked!");
+                    //data.show = !data.show;
+                    //btn.GetComponent<Image>().color = data.show ? themeInfo.GetColor(i) : themeInfo.unableColor;
+                    //OnYMaxValueChanged();
+                    //OnLegendButtonClicked();
+                    //RefreshChart();
                 });
             }
         }
