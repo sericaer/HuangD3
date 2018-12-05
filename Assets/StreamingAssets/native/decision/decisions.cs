@@ -11,7 +11,7 @@ namespace native
         public bool EnablePublish()
         {
             if(Offices.SG1.person.faction == Factions.SHI
-              && Factions.SHI.power > 0.3)
+              && Factions.SHI.power > 0.2)
             {
                 return true;
             }

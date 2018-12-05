@@ -75,8 +75,9 @@ namespace GMDATA
             Timer.evtOnTimer += ()=>{
                 GMData.Inist.date.Increase();
             };
-            Timer.evtOnTimer += StreamManager.EventManager.OnTimer;
             Timer.evtOnTimer += HuangDAPI.DefDecision.OnTimer;
+            Timer.evtOnTimer += StreamManager.EventManager.OnTimer;
+
 
             Timer.Register("DATE:*/1/2", () => {
                 string desc = "";
