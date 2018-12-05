@@ -24,6 +24,16 @@ namespace HuangDAPI
             }
         }
 
+        public Office office
+        {
+            get
+            {
+                return (from x in GMDATA.GMData.Inist.Relationship.office2person
+                        where x.Value == this.name
+                        select HuangDAPI.Office.Find(x.Key)).SingleOrDefault();
+            }
+        }
+
         public string name;
     }
 

@@ -51,6 +51,7 @@ namespace WDT
 
         [HideInInspector] public event WMsgHandle MsgHandle;
 
+        public bool isDestroyAble = false;
         public string rowPrefab;
         public string defaultHeadPrefabName;
         public string defaultElementPrefabName;
@@ -69,6 +70,7 @@ namespace WDT
         private readonly IList<RowElementInfo> m_rowInfos = new List<RowElementInfo>();
         private readonly IList<int> m_columnWidths = new List<int>();
         private readonly List<SortItem> m_sortItems = new List<SortItem>();
+        private Button m_destoryButton;
 
         #region public
 
@@ -284,9 +286,19 @@ namespace WDT
             Assert.IsNotNull(m_scrollRect);
             Assert.IsNotNull(m_head);
             m_scrollRectTransform = m_scrollRect.GetComponent<RectTransform>();
+            m_destoryButton = GetComponentInChildren<Button>();
             m_scrollbarRectTransform = m_scrollRect.verticalScrollbar.GetComponent<RectTransform>();
             Assert.IsNotNull(m_scrollRectTransform);
             Assert.IsNotNull(m_scrollbarRectTransform);
+
+            m_destoryButton.onClick.AddListener(() =>
+            {
+                if (isDestroyAble)
+                {
+                    Destroy(this.gameObject);
+                }
+            });
+
             m_init = true;
         }
 

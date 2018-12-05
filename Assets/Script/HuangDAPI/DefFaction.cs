@@ -80,6 +80,16 @@ namespace HuangDAPI
             }
         }
 
+        public DefPerson[] persons
+        {
+            get
+            {
+                return (from x in GMDATA.GMData.Inist.Relationship.person2faction
+                        where x.Value == this.name
+                        select GMDATA.GMData.Inist.persons.Find(x.Key).GetDef()).ToArray();
+            }
+        }
+
         public Tuple<string, int>[] powerDetail
         {
             get

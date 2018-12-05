@@ -285,22 +285,36 @@ namespace xcharts
                 Button btn = ChartUtils.AddButtonObject(LEGEND_TEXT + i, transform, themeInfo.font,
                                                         themeInfo.textColor, Vector2.zero, Vector2.zero, Vector2.zero,
                     new Vector2(legend.itemWidth, legend.itemHeight));
+                btn.name = data.key;
                 legend.dataList[i].button = btn;
                 Color bcolor = data.show ? themeInfo.GetColor(i) : themeInfo.unableColor;
                 btn.gameObject.SetActive(legend.show);
                 btn.transform.localPosition = GetLegendPosition(i);
                 btn.GetComponent<Image>().color = bcolor;
                 btn.GetComponentInChildren<Text>().text = data.text;
-                btn.onClick.AddListener(delegate ()
-                {
-                    Debug.Log(btn.name + "Clicked!");
-                    //data.show = !data.show;
-                    //btn.GetComponent<Image>().color = data.show ? themeInfo.GetColor(i) : themeInfo.unableColor;
-                    //OnYMaxValueChanged();
-                    //OnLegendButtonClicked();
-                    //RefreshChart();
-                });
+                //btn.onClick.AddListener(delegate ()
+                //{
+                //    Debug.Log(btn.name + "Clicked!");
+                //    //data.show = !data.show;
+                //    //btn.GetComponent<Image>().color = data.show ? themeInfo.GetColor(i) : themeInfo.unableColor;
+                //    //OnYMaxValueChanged();
+                //    //OnLegendButtonClicked();
+                //    //RefreshChart();
+                //});
             }
+
+            checkTheme = theme;
+
+            checkLegend.checkDataListCount = legend.dataList.Count;
+            checkLegend.itemWidth = legend.itemWidth;
+            checkLegend.itemHeight = legend.itemHeight;
+            checkLegend.itemGap = legend.itemGap;
+            checkLegend.left = legend.left;
+            checkLegend.right = legend.right;
+            checkLegend.bottom = legend.bottom;
+            checkLegend.top = legend.top;
+            checkLegend.location = legend.location;
+            checkLegend.show = legend.show;
         }
 
         private Vector3 GetLegendPosition(int i)

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using WDT;
 using xcharts;
 
 public class StatistLogic : AwakeTaskBehaviour<StatistLogic> 
@@ -21,15 +22,45 @@ public class StatistLogic : AwakeTaskBehaviour<StatistLogic>
     public void OnFactionPowerChange(IDictionary<string, int> dict)
     {
         _uiPieChart.SetData(dict);
-        foreach (var elem in _uiPieChart.buttons)
-        {
-        }
     }
 
     // Use this for initialization
     void Start()
     {
+        var btns = GameObject.Find("Canvas/PieChart").GetComponentsInChildren<Button>();
+        foreach (var elem in btns)
+        {
+            elem.onClick.AddListener(() =>
+            {
 
+                HuangDAPI.Faction faction = HuangDAPI.Faction.Find(elem.name);
+                List<IList<object>> datas = new List<IList<object>>();
+                foreach (var p in faction.persons)
+                {
+                    datas.Add(new List<object> { p.name, p.office.name });
+                }
+                if(datas.Count == 0)
+                {
+                    return;
+                }
+
+                var columnDefs = new List<WColumnDef>();
+                columnDefs.Add(new WColumnDef { name = "person" });
+                columnDefs.Add(new WColumnDef { name = "office" });
+
+                GameObject obj = Instantiate(Resources.Load("Prefabs/DataTable"), GameObject.Find("Canvas").transform) as GameObject;
+                var dataTable = obj.GetComponent<WDataTable>();
+                dataTable.rowPrefab = "RowCotainter";
+                dataTable.itemHeight = 20;
+                dataTable.tableWidth = 600;
+                dataTable.tableHeight = Math.Min(300, (datas.Count + 1) * dataTable.itemHeight);
+                dataTable.isUseSort = true;
+                dataTable.isUseSelect = true;
+                dataTable.isDestroyAble = true;
+
+                dataTable.InitDataTable(datas, columnDefs);
+            });
+        }
     }
 	
 	// Update is called once per frame
