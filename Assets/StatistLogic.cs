@@ -7,6 +7,8 @@ using xcharts;
 
 public class StatistLogic : AwakeTaskBehaviour<StatistLogic> 
 {
+    public bool isTest;
+    public static Func<string, string> funcFactionDetail;
     void Awake()
     {
         Inst = this;
@@ -19,6 +21,9 @@ public class StatistLogic : AwakeTaskBehaviour<StatistLogic>
     public void OnFactionPowerChange(IDictionary<string, int> dict)
     {
         _uiPieChart.SetData(dict);
+        foreach (var elem in _uiPieChart.buttons)
+        {
+        }
     }
 
     // Use this for initialization
@@ -30,7 +35,13 @@ public class StatistLogic : AwakeTaskBehaviour<StatistLogic>
 	// Update is called once per frame
 	void Update () 
     {
-		
+        //if (isTest)
+        //{
+        //    var dict = new Dictionary<string, int>();
+        //    dict.Add("AAA", 1);
+        //    dict.Add("BBB", 2);
+        //    OnFactionPowerChange(dict);
+        //}
 	}
 
 
