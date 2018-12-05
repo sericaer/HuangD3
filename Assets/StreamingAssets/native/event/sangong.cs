@@ -8,6 +8,21 @@ namespace native
     {
         bool Precondition()
         {
+            if (Decisions.SSYD.isPublished)
+            {
+                return false;
+            }
+
+            if (Offices.SG1.person.faction != Factions.SHI)
+            {
+                return false;
+            }
+
+            if(Factions.SHI.power < 0.4)
+            {
+                return false;
+            }
+
             return true;
         }
 

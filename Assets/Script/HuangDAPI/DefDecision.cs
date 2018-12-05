@@ -52,6 +52,21 @@ namespace HuangDAPI
             GMDATA.GMData.Inist.decisions.OnPublish(this.GetType().Name);
         }
 
+        public bool isPublished
+        {
+            get
+            {
+                var decision = GMDATA.GMData.Inist.decisions.All.Where(x => x.name == this.GetType().Name).SingleOrDefault();
+                if(decision == null)
+                {
+                    return false;
+                }
+                return (decision._currState == GMDATA.Decision.State.PUBLISH_ED 
+                        || decision._currState == GMDATA.Decision.State.CANCEL_ENABLE);
+            }
+
+        }
+
         private static Dictionary<string, DefDecision> _dict = new Dictionary<string, DefDecision>();
 
         internal static void OnTimer()
