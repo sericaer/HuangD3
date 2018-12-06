@@ -18,7 +18,7 @@ namespace native
                 return false;
             }
 
-            if(Factions.SHI.power < 0.4)
+            if(Factions.SHI.power < 0.3)
             {
                 return false;
             }
@@ -34,6 +34,57 @@ namespace native
                 Stability.current++;
 
                 Debug.Log("OPTION1");
+            }
+        }
+    }
+
+    class EVENT_INC_SSYD_LEVEL : EventDef
+    {
+        bool Precondition()
+        {
+            if (!Decisions.SSYD.isPublished)
+            {
+                Debug.Log("EVENT_INC_SSYD_LEVEL1");
+                return false;
+            }
+
+            if (Offices.SG1.person.faction != Factions.SHI)
+            {
+                Debug.Log("EVENT_INC_SSYD_LEVEL2");
+                return false;
+            }
+
+            if (Factions.SHI.power > 0.4 && Decisions.SSYD.Level < 2)
+            {
+                return true;
+            }
+
+            if (Factions.SHI.power > 0.6 && Decisions.SSYD.Level < 3)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        class OPTION1 : Option
+        {
+            void OnSelect()
+            {
+                Decisions.SSYD.Level++;
+
+                Debug.Log("OPTION1");
+            }
+        }
+
+        class OPTION2 : Option
+        {
+            void OnSelect()
+            {
+                Decisions.SSYD.Level += 2;
+                Stability.current++;
+
+                Debug.Log("OPTION2");
             }
         }
     }

@@ -62,6 +62,7 @@ public class DecisionLogic : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        title.text = _funcTitle();
         //MyGame.DecisionProcess decision = MyGame.DecisionProcess.current.Find(x => x.name == decisionname);
         //title.text = HuangDAPI.DECISION.All[name]._funcTitle();
 
@@ -105,7 +106,9 @@ public class DecisionLogic : MonoBehaviour
     {
         var decisionUI = Instantiate(Resources.Load("Prefabs/decision"), parent) as GameObject;
         decisionUI.name = decision.name;
-        decisionUI.GetComponent<DecisionLogic>().title.text = decision.name;
+        decisionUI.GetComponent<DecisionLogic>()._funcTitle = () =>{
+            return decision.title;
+        };
 
         return decisionUI;
     }
@@ -127,6 +130,7 @@ public class DecisionLogic : MonoBehaviour
     private Button btnCancel;
     private Slider slider;
     private Text title;
+    private Func<string> _funcTitle;
 
     //private MyGame.DecisionPlan decplan;
 }

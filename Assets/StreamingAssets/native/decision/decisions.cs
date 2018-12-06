@@ -10,7 +10,7 @@ namespace native
     {
         public bool EnablePublish()
         {
-            if(Offices.SG1.person.faction == Factions.SHI
+            if (Offices.SG1.person.faction == Factions.SHI
               && Factions.SHI.power > 0.2)
             {
                 return true;
@@ -26,15 +26,37 @@ namespace native
             {
                 return true;
             }
-            return true;
+            return false;
         }
 
         public double affectProvinceTax(double baseValue)
         {
-            return baseValue * provinceTaxAffect;
+            return baseValue * data.level * -0.1;
         }
 
-        public double provinceTaxAffect = -0.1;
+        public string Title()
+        {
+            return string.Format("DEC_{0}_{1}_TITLE", this.GetType().Name, Level);
+        }
+
+        public void InitData()
+        {
+            data.level = 1;
+        }
+
+        public int Level
+        {
+            get
+            {
+                return data.level;
+            }
+            set
+            {
+                data.level = value;
+            }
+        }
+
+        //public double provinceTaxAffect = -0.1;
     }
 
     //public class SSYD : COUNTRY_FLAG
