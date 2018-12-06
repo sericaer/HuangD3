@@ -78,7 +78,7 @@ namespace GMDATA
                 throw new ArgumentException();
             }
 
-            if(_isEnableCancel)
+            if(!_isEnableCancel)
             {
                 _currState = State.PUBLISH_ED;
             }
