@@ -29,6 +29,7 @@ namespace GMDATA
         public Decision(string name)
         {
             this._name = name;
+            data = HuangDAPI.DefDecision.Find(name).data;
         }
 
         public dynamic Info()
@@ -48,6 +49,14 @@ namespace GMDATA
             get
             {
                 return _name;
+            }
+        }
+
+        public string title
+        {
+            get
+            {
+                return HuangDAPI.DefDecision.Find(name)._funcTitle();
             }
         }
 
@@ -103,6 +112,9 @@ namespace GMDATA
 
         [JsonProperty]
         public bool _isEnableCancel = false;
+
+        [JsonProperty]
+        public dynamic data;
 
         internal void OnDeserialized()
         {
