@@ -83,6 +83,11 @@ namespace HuangDAPI
 
         internal static void Start(string name)
         {
+            if(Started.ContainsKey(name))
+            {
+                return;
+            }
+
             Started.Add(name, All[name]);
         }
 

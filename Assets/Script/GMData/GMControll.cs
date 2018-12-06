@@ -37,7 +37,12 @@ namespace GMDATA
                     DecisionGroup.Inst.StateChange(name, currState);
                 });
             };
-
+            Decision.evtStateChange += (string name, Decision.State currState) => {
+                if (currState == Decision.State.PUBLISH_ED || currState == Decision.State.CANCEL_ENABLE)
+                {
+                    HuangDAPI.Affect.Start(name);
+                }
+            };
 
             CountryFlag.evtAddFlag += (string flagname) => {
                 CountryStatusLogic.Task(() =>

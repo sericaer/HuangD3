@@ -87,8 +87,6 @@ namespace GMDATA
                 _currState = State.CANCEL_ENABLE;
             }
 
-            HuangDAPI.Affect.Start(_name);
-
             evtStateChange(name, _currState);
         }
 
