@@ -31,7 +31,9 @@ namespace native
 
         public double affectProvinceTax(double baseValue)
         {
-            return baseValue * data.level * -0.1;
+            Debug.Log("affectProvinceTax");
+
+            return baseValue * Level * -0.1;
         }
 
         public string Title()
