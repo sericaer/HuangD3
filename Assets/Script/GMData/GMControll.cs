@@ -13,13 +13,15 @@ namespace GMDATA
             };
 
             DialogLogic.evntCreate += Timer.Pause;
+            DialogLogic.evntCreate += GMData.RequestLock;
             DialogLogic.evntDestory += Timer.unPause;
+            DialogLogic.evntDestory += GMData.RequestunLock;
 
             DecisionLogic.evtPublish += (string name) =>{
-                GMData.Inist.decisions.OnPublish(name);
+                GMData.Inist.ModifyRequest<Decisions>("OnPublish", name);
             };
             DecisionLogic.evtCancel += (string name) =>{
-                GMData.Inist.decisions.OnCancel(name);
+                GMData.Inist.ModifyRequest<Decisions>("OnCancel", name);
             };
 
             Decisions.evtDel += (string name)=>{

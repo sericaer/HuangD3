@@ -8,7 +8,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 
 using Tools;
-
+using System.Reflection;
 
 namespace GMDATA
 {
@@ -18,6 +18,16 @@ namespace GMDATA
         public static GMData Inist;
         public static event Action evtInited;
 
+        public static void RequestLock()
+        {
+            isLocked = true;
+        }
+
+        public static void RequestunLock()
+        {
+            isLocked = false;
+        }
+
         public static void NewGMData(string dynastyName, string yearName, string emperorName)
         {
             GMControll.Init();
@@ -25,6 +35,25 @@ namespace GMDATA
             Inist.Initializer();
 
             isInited = true;
+        }
+
+        internal void ModifyRequest<T>(string methodname, params object[] param)
+        {
+            if(!isLocked)
+            {
+                isLocked = true;
+
+                Type type = this.GetType();
+
+                var _subFields = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static).ToList();
+                var data = _subFields.Find(obj => obj.GetValue(this) is T).GetValue(this);
+
+                var _subMethods = data.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static).ToList();
+                var method = _subMethods.Find(obj => obj.Name == methodname);
+                method.Invoke(data, param);
+
+                isLocked = false;
+            }
         }
 
         public static void Save()
@@ -170,6 +199,8 @@ namespace GMDATA
 
         [JsonProperty]
         public Relationship Relationship;
+
+        public static bool isLocked = false;
 
         public static bool isInited = false;
         private static string savePath = Application.persistentDataPath + "/save";

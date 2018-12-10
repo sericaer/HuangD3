@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
+
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DialogLogic : MonoBehaviour
@@ -21,13 +24,25 @@ public class DialogLogic : MonoBehaviour
                 evntDestory();
             });
         }
+
+        selectedObj = EventSystem.current.currentSelectedGameObject;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-		
+        if (EventSystem.current.currentSelectedGameObject == null)
+            EventSystem.current.SetSelectedGameObject(selectedObj);
+
+        selectedObj = EventSystem.current.currentSelectedGameObject;
+
 	}
+
+    void OnGUI()
+    {
+       
+
+    }
 
     public static GameObject newDialogInstace(string title, string content, List<Tuple<string, Action>> options)
 	{
@@ -78,4 +93,6 @@ public class DialogLogic : MonoBehaviour
 
         return button;
     }
+
+    private GameObject selectedObj;
 }
