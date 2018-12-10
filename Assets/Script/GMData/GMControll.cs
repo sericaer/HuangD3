@@ -46,15 +46,17 @@ namespace GMDATA
                 }
             };
 
-            CountryFlag.evtAddFlag += (string flagname) => {
-                CountryStatusLogic.Task(() =>
+            CountryFlag.evtAddFlag += (string flagname) =>
+            {
+                PanelFlagLogic.Task(() =>
                 {
-                    CountryStatusLogic.Inst.AddFlag(flagname);
+                    PanelFlagLogic.Inst.AddFlag(flagname);
                 });
             };
 
-            CountryFlag.evtDelFlag += (string flagname) => {
-                CountryStatusLogic.Inst.DelFlag(flagname);
+            CountryFlag.evtDelFlag += (string flagname) =>
+            {
+                PanelFlagLogic.Inst.DelFlag(flagname);
             };
 
 

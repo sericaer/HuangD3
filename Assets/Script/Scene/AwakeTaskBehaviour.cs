@@ -13,8 +13,10 @@ public abstract class AwakeTaskBehaviour<T> : MonoBehaviour where T: AwakeTaskBe
         {
             action();
         }
-
-        aWakeTask += action;
+        else
+        {
+            aWakeTask += action;
+        }
     }
 
 
@@ -33,6 +35,7 @@ public abstract class AwakeTaskBehaviour<T> : MonoBehaviour where T: AwakeTaskBe
         if (aWakeTask != null)
         {
             aWakeTask();
+            aWakeTask = null;
         }
     }
 

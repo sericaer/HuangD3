@@ -13,7 +13,7 @@ namespace native
                 return false;
             }
 
-            return Probability.OccurPerDays(2000);
+            return Probability.OccurPerDays(1);
         }
 
         class OPTION1 : Option

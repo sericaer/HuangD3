@@ -7,59 +7,34 @@ using UnityEngine.UI;
 
 using GMDATA;
 
-public class CountryStatusLogic : AwakeTaskBehaviour<CountryStatusLogic>
+public class CountryStatusLogic : MonoBehaviour
 {
-    public void AddFlag(string name)
-    {
-        GameObject Text = new GameObject(name, typeof(RectTransform));
-        Text.AddComponent<CanvasRenderer>();
-        Text.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 30);
-
-        var text = Text.AddComponent<Text>();
-        text.text = name;
-        text.font = Resources.FindObjectsOfTypeAll<Font>()[0];
-        text.color = Color.black;
-        text.alignment = TextAnchor.MiddleCenter;
-
-
-        var desc = HuangDAPI.DefCountryFlag.Find(name).describe;
-        if (desc != null)
-        {
-            var tooltip = Text.AddComponent<TooltipElement>();
-            tooltip.TooltipText = desc();
-        }
-
-        Text.transform.SetParent(this.transform.Find("Status").transform);
-    }
-
-    public void DelFlag(string name)
-    {
-        var currFlag = this.transform.Find("Status/" + name);
-        if (currFlag != null)
-        {
-            Destroy(currFlag.gameObject);
-        }
-    }
-
     void Awake()
     {
         Inst = this;
-        Debug.Log("CountryStatusLogic Awake");
         this.gameObject.SetActive(false);
+
+        Debug.Log("CountryStatusLogic AWAKE");
     }
 
-	// Use this for initialization
-	void Start ()
+    private void Start()
     {
-        Debug.Log("CountryStatusLogic Start");
+        var Toggles = GameObject.Find("Canvas/PanelCountry/").GetComponentsInChildren<Toggle>();
+        foreach (var toggle in Toggles)
+        {
+            if (toggle.isOn)
+            {
+                GameObject.Find("Canvas/PanelCountry/"+ toggle.name.Replace("Toggle", "Panel")).SetActive(true);
+            }
 
+            toggle.onValueChanged.AddListener((bool isOn) => {
+                GameObject.Find("Canvas/PanelCountry/" + toggle.name.Replace("Toggle", "Panel")).SetActive(isOn);
+            });
+        }
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
 
-    private static event Action aWakeTask;
+    public static CountryStatusLogic Inst;
+
+
 }
+

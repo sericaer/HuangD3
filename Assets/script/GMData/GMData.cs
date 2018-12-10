@@ -20,12 +20,12 @@ namespace GMDATA
 
         public static void RequestLock()
         {
-            isLocked = true;
+            lockcount++;
         }
 
         public static void RequestunLock()
         {
-            isLocked = false;
+            lockcount--;
         }
 
         public static void NewGMData(string dynastyName, string yearName, string emperorName)
@@ -39,9 +39,9 @@ namespace GMDATA
 
         internal void ModifyRequest<T>(string methodname, params object[] param)
         {
-            if(!isLocked)
+            if(lockcount == 0)
             {
-                isLocked = true;
+                lockcount++;
 
                 Type type = this.GetType();
 
@@ -52,7 +52,7 @@ namespace GMDATA
                 var method = _subMethods.Find(obj => obj.Name == methodname);
                 method.Invoke(data, param);
 
-                isLocked = false;
+                lockcount--;
             }
         }
 
@@ -200,7 +200,7 @@ namespace GMDATA
         [JsonProperty]
         public Relationship Relationship;
 
-        public static bool isLocked = false;
+        public static int lockcount;
 
         public static bool isInited = false;
         private static string savePath = Application.persistentDataPath + "/save";
