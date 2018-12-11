@@ -10,22 +10,28 @@ namespace GMDATA
     {
         public class TaxElem
         {
-            public float max;
-            public float min;
-            public float curr;
+            public double max = 2;
+            public double min = 0;
+            public double curr = 1;
+        }
+
+        public CountryTax()
+        {
+            SHIZTax = new TaxElem();
+            MIINTax = new TaxElem();
         }
 
         internal void OnChanged(Tuple<string, float, float> argc)
         {
             if(argc.Item1 == "SHIZ")
             {
-                SHIZTax.max = argc.Item2;
-                SHIZTax.curr = argc.Item3;
+                SHIZTax.max = Math.Round(argc.Item2, 1);
+                SHIZTax.curr = Math.Round(argc.Item3, 1);
             }
             if (argc.Item1 == "MIIN")
             {
-                MIINTax.max = argc.Item2;
-                MIINTax.curr = argc.Item3;
+                MIINTax.max = Math.Round(argc.Item2, 1);
+                MIINTax.curr = Math.Round(argc.Item3, 1);
             }
         }
 

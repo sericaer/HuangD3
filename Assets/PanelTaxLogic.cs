@@ -22,7 +22,7 @@ public class PanelTaxLogic : AwakeTaskBehaviour<PanelTaxLogic>
         slider.maxValue = param.max;
     }
 
-    public static event Action<Tuple<string, float>> evtPlayerChangeTax;
+    public static event Action<Tuple<string, float, float>> evtPlayerChangeTax;
 
     private void Awake()
     {
@@ -32,12 +32,12 @@ public class PanelTaxLogic : AwakeTaskBehaviour<PanelTaxLogic>
 
         _SliderSHIZ = this.transform.Find("SHIZTax").GetComponent<Slider>();
         _SliderSHIZ.onValueChanged.AddListener((float value) =>{
-            evtPlayerChangeTax(new Tuple<string, float>("SHIZ", value));
+            evtPlayerChangeTax(new Tuple<string, float, float>("SHIZ", _SliderSHIZ.maxValue, value));
         });
 
         _SliderMIIN = this.transform.Find("MIINTax").GetComponent<Slider>();
         _SliderMIIN.onValueChanged.AddListener((float value) => {
-            evtPlayerChangeTax(new Tuple<string, float>("MIIN", value));
+            evtPlayerChangeTax(new Tuple<string, float, float>("MIIN", _SliderMIIN.maxValue, value));
         });
 
     }
