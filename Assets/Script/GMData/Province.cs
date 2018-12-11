@@ -121,6 +121,8 @@ namespace GMDATA
             {
                 var rslt = new List<Tuple<string, double>>();
                 rslt.Add(new Tuple<string, double>("BASE", _taxbase));
+                rslt.Add(new Tuple<string, double>("SHIZ", (GMData.Inist.countryTax.SHIZTax.curr - 1) * _taxbase));
+                rslt.Add(new Tuple<string, double>("MIIN", (GMData.Inist.countryTax.MIINTax.curr - 1) * _taxbase));
 
                 foreach (var elem in HuangDAPI.Affect.Started)
                 {

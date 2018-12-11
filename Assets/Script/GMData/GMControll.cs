@@ -46,6 +46,10 @@ namespace GMDATA
                 }
             };
 
+            PanelTaxLogic.evtPlayerChangeTax += (argc) =>{
+                GMData.Inist.countryTax.OnChanged(argc);
+            };
+
             CountryFlag.evtAddFlag += (string flagname) =>
             {
                 PanelFlagLogic.Task(() =>
@@ -59,6 +63,12 @@ namespace GMDATA
                 PanelFlagLogic.Inst.DelFlag(flagname);
             };
 
+            //CountryTax.evtTaxChanged += (dynamic param) =>
+            //{
+            //    PanelTaxLogic.Task(() =>{
+            //        PanelTaxLogic.Inst.TaxChanged(param);
+            //    });
+            //};
 
             Relationship.evtOffice2PersonChange += (string office, string person) =>{
                 OfficeCenterGroup1.Task(() => {

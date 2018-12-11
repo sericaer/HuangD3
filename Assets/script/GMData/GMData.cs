@@ -142,6 +142,8 @@ namespace GMDATA
 
             Relationship = new Relationship();
 
+            countryTax = new CountryTax();
+
             //decisions.Add(new Decision(){_name = "TEST"});
 
             foreach (var elem in StreamManager.CSVManager.Province)
@@ -199,6 +201,9 @@ namespace GMDATA
 
         [JsonProperty]
         public Relationship Relationship;
+
+        [JsonProperty]
+        public CountryTax countryTax;
 
         public static int lockcount;
 

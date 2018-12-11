@@ -68,6 +68,8 @@ namespace HuangDAPI
 
     public class Affect : ReflectBase
     {
+        public static event Action evtTaxChanged;
+
         public Func<int, int> EmperorHeath = null;
         public Func<double, double> ProvinceTax = null;
         public Func<double, double> CountryReb = null;
@@ -78,7 +80,7 @@ namespace HuangDAPI
             ProvinceTax = GetDelegate <Func<double, double>>("affectProvinceTax");
             CountryReb = GetDelegate <Func<double, double>>("affectCountryReb");
 
-            All.Add(outter.GetType().Name, this);
+            dict.Add(outter.GetType().Name, this);
         }
 
         internal static void Start(string name)
@@ -88,7 +90,11 @@ namespace HuangDAPI
                 return;
             }
 
-            Started.Add(name, All[name]);
+            Started.Add(name, dict[name]);
+            if(dict[name].ProvinceTax != null)
+            {
+                evtTaxChanged();
+            }
         }
 
         internal static void End(string name)
@@ -97,7 +103,7 @@ namespace HuangDAPI
         }
 
         public static Dictionary<string, Affect> Started = new Dictionary<string, Affect>();
-        private static Dictionary<string, Affect> All = new Dictionary<string, Affect>();
+        private static Dictionary<string, Affect> dict = new Dictionary<string, Affect>();
 
 
     }
