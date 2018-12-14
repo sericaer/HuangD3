@@ -58,7 +58,9 @@ namespace Mopsicus.TwinSlider {
 		/// <summary>
 		/// Border limit between sliders
 		/// </summary>
-		public float Border = 3f;
+		public float Border = 0f;
+
+        public float Locked = 1f;
 
 		/// <summary>
 		/// Filler rect cache
@@ -89,6 +91,12 @@ namespace Mopsicus.TwinSlider {
 			}
 		}
 
+
+        public void OnLockedChange(float value)
+        {
+            SliderTwo.value = value;
+        }
+
         /// <summary>
         /// Callback on first slider change
         /// </summary>
@@ -112,6 +120,8 @@ namespace Mopsicus.TwinSlider {
 				OnSliderChange.Invoke (SliderOne.value, SliderTwo.value);
 			}
 		}
+
+
 
 		/// <summary>
 		/// Draw filler

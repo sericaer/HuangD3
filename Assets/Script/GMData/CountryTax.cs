@@ -2,6 +2,7 @@
 using Tools;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace GMDATA
 {
@@ -15,31 +16,49 @@ namespace GMDATA
             public double curr = 1;
         }
 
-        public CountryTax()
-        {
-            SHIZTax = new TaxElem();
-            MIINTax = new TaxElem();
-        }
-
         internal void OnChanged(Tuple<string, float, float> argc)
         {
             if(argc.Item1 == "SHIZ")
             {
-                SHIZTax.max = Math.Round(argc.Item2, 1);
-                SHIZTax.curr = Math.Round(argc.Item3, 1);
+                SHIZTax = Math.Round(argc.Item3, 1);
             }
             if (argc.Item1 == "MIIN")
             {
-                MIINTax.max = Math.Round(argc.Item2, 1);
-                MIINTax.curr = Math.Round(argc.Item3, 1);
+                MIINTax = Math.Round(argc.Item3, 1);
             }
         }
 
-        [JsonProperty]
-        public TaxElem SHIZTax;
+        public Tuple<string, double>[] SHIZTaxMAX
+        {
+            get
+            {
+                var rslt = new List<Tuple<string, double>>();
+                foreach (var elem in HuangDAPI.Affect.Started)
+                {
+                    if (elem.Value.SHIZTaxPercent != null)
+                    {
+                        rslt.Add(new Tuple<string, double>(elem.Key, elem.Value.SHIZTaxPercent(1)));
+                    }
+                }
+
+                return rslt.ToArray();
+            }
+        }
+
+
+        //public double MIINTaxMAX
+        //{
+        //    get
+        //    {
+
+        //    }
+        //}
 
         [JsonProperty]
-        public TaxElem MIINTax;
+        public double SHIZTax = 1;
+
+        [JsonProperty]
+        public double MIINTax = 1;
 
 
     }

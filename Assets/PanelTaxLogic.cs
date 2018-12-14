@@ -4,25 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Mopsicus.TwinSlider;
 
 public class PanelTaxLogic : AwakeTaskBehaviour<PanelTaxLogic>
 {
-    public void TaxChanged(dynamic param)
-    {
-        Slider slider = null;
-        if (param.name == "SHIZTax")
-        {
-            slider = _SliderSHIZ;
-        }
-        else if (param.name == "MIINTax")
-        {
-            slider = _SliderMIIN;
-        }
-
-        slider.maxValue = param.max;
-    }
-
     public static event Action<Tuple<string, float, float>> evtPlayerChangeTax;
+
+    public static Func< Tuple<string, double>[] > funcSHIZMaxDetail;
+    //public Tuple<string, double> funcMIINMax = 1.0f;
 
     private void Awake()
     {
@@ -30,14 +19,14 @@ public class PanelTaxLogic : AwakeTaskBehaviour<PanelTaxLogic>
 
         this.gameObject.SetActive(false);
 
-        _SliderSHIZ = this.transform.Find("SHIZTax").GetComponent<Slider>();
-        _SliderSHIZ.onValueChanged.AddListener((float value) =>{
-            evtPlayerChangeTax(new Tuple<string, float, float>("SHIZ", _SliderSHIZ.maxValue, value));
+        _SliderSHIZ = this.transform.Find("SHIZTax").GetComponent<TwinSlider>();
+        _SliderSHIZ.OnSliderChange = ((float value1, float value2) =>{
+            evtPlayerChangeTax(new Tuple<string, float, float>("SHIZ", value2, value1));
         });
 
-        _SliderMIIN = this.transform.Find("MIINTax").GetComponent<Slider>();
-        _SliderMIIN.onValueChanged.AddListener((float value) => {
-            evtPlayerChangeTax(new Tuple<string, float, float>("MIIN", _SliderMIIN.maxValue, value));
+        _SliderMIIN = this.transform.Find("MIINTax").GetComponent<TwinSlider>();
+        _SliderMIIN.OnSliderChange = ((float value1, float value2) => {
+            evtPlayerChangeTax(new Tuple<string, float, float>("MIIN", value2, value1));
         });
 
     }
@@ -51,9 +40,18 @@ public class PanelTaxLogic : AwakeTaskBehaviour<PanelTaxLogic>
 	// Update is called once per frame
 	void Update () 
     {
-		
+        float value = 1f + (float)(from x in funcSHIZMaxDetail()
+                           select x.Item2).Sum();
+        if(Math.Abs(currLockedValue - value) < float.MinValue)
+        {
+            return;
+        }
+
+        currLockedValue = value;
+        _SliderSHIZ.OnLockedChange(currLockedValue);
 	}
 
-    private Slider _SliderSHIZ;
-    private Slider _SliderMIIN;
+    private float currLockedValue;
+    private TwinSlider _SliderSHIZ;
+    private TwinSlider _SliderMIIN;
 }

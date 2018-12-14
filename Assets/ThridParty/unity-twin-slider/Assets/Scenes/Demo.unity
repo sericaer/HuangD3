@@ -113,79 +113,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &77828593
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 1625344751163074, guid: 460984f0e714049d7bc1d18b507c0667,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 77828594}
-  - component: {fileID: 77828596}
-  - component: {fileID: 77828595}
-  m_Layer: 5
-  m_Name: Filler1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &77828594
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 224045331931680454, guid: 460984f0e714049d7bc1d18b507c0667,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 77828593}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2098367651}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &77828595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114694731791093052, guid: 460984f0e714049d7bc1d18b507c0667,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 77828593}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.16470589, g: 0.16470589, b: 0.16470589, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &77828596
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 222493422392171710, guid: 460984f0e714049d7bc1d18b507c0667,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 77828593}
-  m_CullTransparentMesh: 0
 --- !u!1 &311115463
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,6 +639,11 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 224317512761085004, guid: 460984f0e714049d7bc1d18b507c0667,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 224974322029632312, guid: 460984f0e714049d7bc1d18b507c0667,
         type: 2}
       propertyPath: m_AnchorMin.x
@@ -726,41 +658,6 @@ Prefab:
         type: 2}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224317512761085004, guid: 460984f0e714049d7bc1d18b507c0667,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114648218509591090, guid: 460984f0e714049d7bc1d18b507c0667,
-        type: 2}
-      propertyPath: Color.r
-      value: 0.8941177
-      objectReference: {fileID: 0}
-    - target: {fileID: 114648218509591090, guid: 460984f0e714049d7bc1d18b507c0667,
-        type: 2}
-      propertyPath: Color.g
-      value: 0.15294118
-      objectReference: {fileID: 0}
-    - target: {fileID: 114648218509591090, guid: 460984f0e714049d7bc1d18b507c0667,
-        type: 2}
-      propertyPath: Color.b
-      value: 0.15294118
-      objectReference: {fileID: 0}
-    - target: {fileID: 224014051399437716, guid: 460984f0e714049d7bc1d18b507c0667,
-        type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 224398473651892900, guid: 460984f0e714049d7bc1d18b507c0667,
-        type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114648218509591090, guid: 460984f0e714049d7bc1d18b507c0667,
-        type: 2}
-      propertyPath: Filler
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 460984f0e714049d7bc1d18b507c0667, type: 2}

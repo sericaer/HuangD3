@@ -72,6 +72,7 @@ namespace HuangDAPI
 
         public Func<int, int> EmperorHeath = null;
         public Func<double, double> ProvinceTax = null;
+        public Func<double, double> SHIZTaxPercent = null;
         public Func<double, double> CountryReb = null;
 
         public Affect(object outter) : base(outter)
@@ -79,6 +80,7 @@ namespace HuangDAPI
             EmperorHeath = GetDelegate<Func<int, int>>("affectEmperorHeath");
             ProvinceTax = GetDelegate <Func<double, double>>("affectProvinceTax");
             CountryReb = GetDelegate <Func<double, double>>("affectCountryReb");
+            SHIZTaxPercent = GetDelegate<Func<double, double>>("affectMaxTaxPercent");
 
             dict.Add(outter.GetType().Name, this);
         }

@@ -50,6 +50,10 @@ namespace GMDATA
                 GMData.Inist.countryTax.OnChanged(argc);
             };
 
+            PanelTaxLogic.funcSHIZMaxDetail = () =>{
+                return GMData.Inist.countryTax.SHIZTaxMAX;
+            };
+
             CountryFlag.evtAddFlag += (string flagname) =>
             {
                 PanelFlagLogic.Task(() =>
