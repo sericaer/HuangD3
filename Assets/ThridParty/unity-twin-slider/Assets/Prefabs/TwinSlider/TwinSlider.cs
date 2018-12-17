@@ -58,9 +58,9 @@ namespace Mopsicus.TwinSlider {
 		/// <summary>
 		/// Border limit between sliders
 		/// </summary>
-		public float Border = 0f;
+        public float Lock;
 
-        public float Locked = 1f;
+        public float Curr = 0f;
 
 		/// <summary>
 		/// Filler rect cache
@@ -81,20 +81,43 @@ namespace Mopsicus.TwinSlider {
 
             _fillerRect = Filler.GetComponent<RectTransform> ();
 			_width = GetComponent<RectTransform> ().sizeDelta.x / 2f;
-			SliderOne.minValue = Min;
-			SliderOne.maxValue = Max;
-			SliderTwo.minValue = Min;
-			SliderTwo.maxValue = Max;
+
 			Filler.color = Color;
 			if (OnSliderChange == null) {
 				OnSliderChange += delegate { };
 			}
 		}
 
+        private void Start()
+        {
+            SliderOne.minValue = Min;
+            SliderOne.maxValue = Max;
+            SliderOne.value = Curr;
+
+            SliderTwo.minValue = Min;
+            SliderTwo.maxValue = Max;
+            SliderTwo.value = Lock;
+        }
 
         public void OnLockedChange(float value)
         {
-            SliderTwo.value = value;
+            Lock = value;
+            if(SliderOne.value > Lock)
+            {
+                SliderOne.value = Lock;
+                OnCorrectSliderOne(Lock);
+            }
+            SliderTwo.value = Lock;
+            OnCorrectSliderTwo(Lock);
+
+            if(Lock.CompareTo(Max) == 0)
+            {
+                SliderTwo.transform.Find("Handle Slide Area").gameObject.SetActive(false);
+            }
+            else
+            {
+                SliderTwo.transform.Find("Handle Slide Area").gameObject.SetActive(true);
+            }
         }
 
         /// <summary>
@@ -102,8 +125,8 @@ namespace Mopsicus.TwinSlider {
         /// </summary>
         public void OnCorrectSliderOne(float value) {
             DrawFiller(SliderOne.handleRect.localPosition, SliderTwo.handleRect.localPosition);
-			if (value > SliderTwo.value - Border) {
-				SliderOne.value = SliderTwo.value - Border;
+			if (value > SliderTwo.value) {
+				SliderOne.value = SliderTwo.value;
 			} else {
 				OnSliderChange.Invoke (SliderOne.value, SliderTwo.value);
 			}
@@ -114,8 +137,8 @@ namespace Mopsicus.TwinSlider {
 		/// </summary>
 		public void OnCorrectSliderTwo (float value) {
 			DrawFiller (SliderOne.handleRect.localPosition, SliderTwo.handleRect.localPosition);
-			if (value < SliderOne.value + Border) {
-				SliderTwo.value = SliderOne.value + Border;
+			if (value < SliderOne.value) {
+				SliderTwo.value = SliderOne.value;
 			} else {
 				OnSliderChange.Invoke (SliderOne.value, SliderTwo.value);
 			}

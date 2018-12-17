@@ -29,11 +29,19 @@ namespace native
             return false;
         }
 
-        public double affectProvinceTax(double baseValue)
+        public double affectMaxTaxPercent(double baseValue)
         {
-            Debug.Log("affectProvinceTax");
-
-            return baseValue * Level * -0.1;
+            switch(Level)
+            {
+                case 1:
+                    return -0.3;
+                case 2:
+                    return -0.5;
+                case 3:
+                    return -1;
+                default:
+                    return 0;
+            }
         }
 
         public string Title()

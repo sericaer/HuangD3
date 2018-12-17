@@ -12,6 +12,15 @@ namespace GMDATA
                 HuangDAPI.Faction.OnPowerChange();
             };
 
+            GMData.evtInited += () => {
+                PanelTaxLogic.Task(() =>{
+                    PanelTaxLogic.Inst._SliderSHIZ.Max = 2;
+                    PanelTaxLogic.Inst._SliderMIIN.Max = 2;
+                    PanelTaxLogic.Inst._SliderSHIZ.Curr = (float)GMData.Inist.countryTax.SHIZTax;
+                    PanelTaxLogic.Inst._SliderMIIN.Curr = (float)GMData.Inist.countryTax.MIINTax;
+                });
+            };
+
             DialogLogic.evntCreate += Timer.Pause;
             DialogLogic.evntCreate += GMData.RequestLock;
             DialogLogic.evntDestory += Timer.unPause;
@@ -52,6 +61,10 @@ namespace GMDATA
 
             PanelTaxLogic.funcSHIZMaxDetail = () =>{
                 return GMData.Inist.countryTax.SHIZTaxMAX;
+            };
+
+            PanelTaxLogic.funcMIINMaxDetail = () => {
+                return GMData.Inist.countryTax.MIINTaxMAX;
             };
 
             CountryFlag.evtAddFlag += (string flagname) =>

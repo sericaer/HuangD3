@@ -68,8 +68,6 @@ namespace HuangDAPI
 
     public class Affect : ReflectBase
     {
-        public static event Action evtTaxChanged;
-
         public Func<int, int> EmperorHeath = null;
         public Func<double, double> ProvinceTax = null;
         public Func<double, double> SHIZTaxPercent = null;
@@ -93,9 +91,9 @@ namespace HuangDAPI
             }
 
             Started.Add(name, dict[name]);
-            if(dict[name].ProvinceTax != null)
+            if(dict[name].SHIZTaxPercent != null)
             {
-                evtTaxChanged();
+                
             }
         }
 

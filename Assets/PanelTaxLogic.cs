@@ -11,6 +11,8 @@ public class PanelTaxLogic : AwakeTaskBehaviour<PanelTaxLogic>
     public static event Action<Tuple<string, float, float>> evtPlayerChangeTax;
 
     public static Func< Tuple<string, double>[] > funcSHIZMaxDetail;
+    public static Func<Tuple<string, double>[]> funcMIINMaxDetail;
+
     //public Tuple<string, double> funcMIINMax = 1.0f;
 
     private void Awake()
@@ -40,18 +42,25 @@ public class PanelTaxLogic : AwakeTaskBehaviour<PanelTaxLogic>
 	// Update is called once per frame
 	void Update () 
     {
-        float value = 1f + (float)(from x in funcSHIZMaxDetail()
+        float value = (float)(from x in funcSHIZMaxDetail()
                            select x.Item2).Sum();
-        if(Math.Abs(currLockedValue - value) < float.MinValue)
+        if(_SliderSHIZ.Lock.CompareTo(value) == 0)
         {
             return;
         }
 
-        currLockedValue = value;
-        _SliderSHIZ.OnLockedChange(currLockedValue);
+        _SliderSHIZ.OnLockedChange(value);
+
+        float value2 = (float)(from x in funcMIINMaxDetail()
+                              select x.Item2).Sum();
+        if (_SliderMIIN.Lock.CompareTo(value2) == 0)
+        {
+            return;
+        }
+
+        _SliderMIIN.OnLockedChange(value2);
 	}
 
-    private float currLockedValue;
-    private TwinSlider _SliderSHIZ;
-    private TwinSlider _SliderMIIN;
+    public TwinSlider _SliderSHIZ;
+    public TwinSlider _SliderMIIN;
 }

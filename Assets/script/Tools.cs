@@ -27,7 +27,7 @@ namespace Tools
                 return true;
             }
 
-            if (Math.Abs(prob-1.0D) < Double.Epsilon)
+            if (prob.CompareTo(1.0) == 0)
             {
                 return true;
             }
@@ -107,7 +107,7 @@ namespace Tools
 						V1 = 2 * U1 - 1;
 						V2 = 2 * U2 - 1;
 						S = V1 * V1 + V2 * V2;
-					} while(S >= 1 || S == 0);
+                } while(S >= 1 || S.CompareTo(0) == 0);
 
 					X = V1 * Math.Sqrt (-2 * Math.Log (S) / S);
 	

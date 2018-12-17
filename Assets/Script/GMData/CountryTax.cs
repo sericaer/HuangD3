@@ -9,13 +9,6 @@ namespace GMDATA
     [JsonObject(MemberSerialization.OptIn)]
     public class CountryTax
     {
-        public class TaxElem
-        {
-            public double max = 2;
-            public double min = 0;
-            public double curr = 1;
-        }
-
         internal void OnChanged(Tuple<string, float, float> argc)
         {
             if(argc.Item1 == "SHIZ")
@@ -33,6 +26,7 @@ namespace GMDATA
             get
             {
                 var rslt = new List<Tuple<string, double>>();
+
                 foreach (var elem in HuangDAPI.Affect.Started)
                 {
                     if (elem.Value.SHIZTaxPercent != null)
@@ -41,18 +35,28 @@ namespace GMDATA
                     }
                 }
 
+                if(rslt.Count != 0)
+                {
+                    rslt.Add(new Tuple<string, double>("BASE", 1.0));
+                }
+                else
+                {
+                    rslt.Add(new Tuple<string, double>("", 2.0));
+                }
+
                 return rslt.ToArray();
             }
         }
 
-
-        //public double MIINTaxMAX
-        //{
-        //    get
-        //    {
-
-        //    }
-        //}
+        public Tuple<string, double>[] MIINTaxMAX
+        {
+            get
+            {
+                var rslt = new List<Tuple<string, double>>();
+                rslt.Add(new Tuple<string, double>("", 2.0));
+                return rslt.ToArray();
+            }
+        }
 
         [JsonProperty]
         public double SHIZTax = 1;
